@@ -1,0 +1,119 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:background="@color/flesh"
+    tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminLogin">
+
+
+
+
+    <ImageView
+        android:id="@+id/lw_adminImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/login_worker"
+        android:layout_above="@+id/lw_relativeLayout1"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:elevation="@dimen/elevation"
+        tools:targetApi="lollipop"
+        tools:ignore="ContentDescription" />
+
+    <RelativeLayout
+        android:id="@+id/lw_relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/custom_rectangle_white"
+        android:layout_marginStart="@dimen/activity_start_margin"
+        android:layout_marginEnd="@dimen/activity_end_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        >
+
+        <!--email-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/lw_emailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            />
+
+        <EditText
+            android:id="@+id/lw_emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lw_emailTextView"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:background="@color/whiteSmoke"
+            android:drawableEnd="@drawable/ic_email"
+            android:inputType="textEmailAddress"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor" />
+
+
+        <!--password-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/lw_passwordTextView"
+            android:layout_below="@+id/lw_emailEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            />
+
+        <EditText
+            android:id="@+id/lw_passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lw_passwordTextView"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:background="@color/whiteSmoke"
+            android:drawableEnd="@drawable/ic_password"
+            android:inputType="textPassword"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor" />
+
+
+        <!--login button-->
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_spotify"
+            android:layout_below="@+id/lw_passwordEditText"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:layout_marginEnd="@dimen/activity_end_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/lightCoral"
+            fancy:fb_focusColor="@color/googleGreen"
+            fancy:fb_fontIconResource="&#xf084;"
+            fancy:fb_iconPosition="right"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="Login"
+            fancy:fb_textColor="@color/black"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
