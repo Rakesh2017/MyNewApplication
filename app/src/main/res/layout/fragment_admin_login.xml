@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/googleGreen"
+    android:id="@+id/la_parentRelativeLayout"
     tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminLogin">
 
 
-
-
+<!--admin image logo-->
     <ImageView
         android:id="@+id/la_adminImage"
         android:layout_width="100dp"

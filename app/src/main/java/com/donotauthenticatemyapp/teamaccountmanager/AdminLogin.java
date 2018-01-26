@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 
 /**
@@ -13,6 +17,8 @@ import android.view.ViewGroup;
  */
 public class AdminLogin extends Fragment {
 
+    View view;
+    RelativeLayout parentRelativeLayout;
 
 
 
@@ -25,7 +31,26 @@ public class AdminLogin extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_login, container, false);
+        view = inflater.inflate(R.layout.fragment_admin_login, container, false);
+
+//        relative layout ids
+        parentRelativeLayout = view.findViewById(R.id.la_parentRelativeLayout);
+
+
+        return view;
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+//        function call
+        LoadAnimations();
+    }
+
+//  load  Animations
+    private void LoadAnimations() {
+        YoYo.with(Techniques.SlideInRight)
+                .duration(500)
+                .playOn(parentRelativeLayout);
+    }
 }
