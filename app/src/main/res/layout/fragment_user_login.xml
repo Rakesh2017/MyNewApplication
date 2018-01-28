@@ -5,6 +5,8 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/flesh"
     android:id="@+id/lu_parentRelativeLayout"
+    android:clickable="true"
+    android:focusable="true"
     tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminLogin">
 
 
@@ -104,7 +106,7 @@
             android:paddingTop="10dp"
             fancy:fb_borderWidth="1dp"
             fancy:fb_defaultColor="@color/lightCoral"
-            fancy:fb_focusColor="@color/googleGreen"
+            fancy:fb_focusColor="@color/whiteSmoke"
             fancy:fb_fontIconResource="&#xf084;"
             fancy:fb_iconPosition="right"
             fancy:fb_radius="2dp"

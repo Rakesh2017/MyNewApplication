@@ -1,12 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <!-- Base application theme. -->
     <style name="MyCustomAppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/appColor</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/appColor</item>
     </style>
 
     <!--text style medium-->
@@ -36,7 +35,7 @@
         <item name="android:padding">@dimen/textPadding</item>
         <item name="android:drawablePadding">@dimen/drawablePadding</item>
         <item name="android:fontFamily">ubuntu.ttf</item>
-        <item name="android:background">@color/wheat</item>
+        <item name="android:background">@color/whiteSmoke</item>
     </style>
 
 </resources>

@@ -5,6 +5,8 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/googleGreen"
     android:id="@+id/la_parentRelativeLayout"
+    android:clickable="true"
+    android:focusable="true"
     tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminLogin">
 
 
@@ -51,7 +53,6 @@
             android:layout_below="@+id/la_emailTextView"
             android:layout_marginTop="@dimen/paddingBetweenET"
             style="@style/MyCustomEditTextStyle"
-            android:background="@color/whiteSmoke"
             android:drawableEnd="@drawable/ic_email"
             android:inputType="textEmailAddress"
             android:elevation="@dimen/elevation"
@@ -79,7 +80,6 @@
             android:layout_below="@+id/la_passwordTextView"
             android:layout_marginTop="@dimen/paddingBetweenET"
             style="@style/MyCustomEditTextStyle"
-            android:background="@color/whiteSmoke"
             android:drawableEnd="@drawable/ic_password"
             android:inputType="textPassword"
             android:elevation="@dimen/elevation"
@@ -90,7 +90,7 @@
         <!--login button-->
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_spotify"
+            android:id="@+id/la_btn"
             android:layout_below="@+id/la_passwordEditText"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
@@ -103,7 +103,7 @@
             android:paddingTop="10dp"
             fancy:fb_borderWidth="1dp"
             fancy:fb_defaultColor="@color/lightCoral"
-            fancy:fb_focusColor="@color/googleGreen"
+            fancy:fb_focusColor="@color/whiteSmoke"
             fancy:fb_fontIconResource="&#xf084;"
             fancy:fb_iconPosition="right"
             fancy:fb_radius="2dp"
@@ -112,6 +112,7 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:elevation="@dimen/elevation"
             tools:targetApi="lollipop" />
+
 
 
     </RelativeLayout>

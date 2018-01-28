@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/appColor"
+    tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminHomePage">
+
+
+    <!--horizontal divider-->
+    <android.support.v4.widget.Space
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:id="@+id/adh_dividerHorizontal"
+        />
+
+    <!--vertical divider-->
+    <android.support.v4.widget.Space
+        android:layout_height="match_parent"
+        android:layout_width="1dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/adh_dividerVertical"
+        />
+
+    <!--bottom orange-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/adh_dividerHorizontal"
+        android:background="@color/appColor"
+        android:layout_marginTop="50dp"
+        android:layout_alignEnd="@+id/adh_dividerVertical"
+        >
+
+        <!--worker-->
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_add_aangadia"
+            android:id="@+id/login_workerImage"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop"
+            tools:ignore="ContentDescription" />
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/login_angadiaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addAangadia"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/login_workerImage"
+            android:padding="@dimen/generalPaddingFive"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
