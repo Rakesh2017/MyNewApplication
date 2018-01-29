@@ -2,23 +2,14 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -38,8 +29,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
 //      circular images button
         admin_ib = findViewById(R.id.login_adminImage);
-        worker_ib = findViewById(R.id.login_workerImage);
-        user_ib = findViewById(R.id.login_userImage);
+        worker_ib = findViewById(R.id.adh_addAangadiaImage);
+        user_ib = findViewById(R.id.adh_allAngadiaImage);
 
 //        text view is
         admin_tv = findViewById(R.id.login_adminTextView);
@@ -128,11 +119,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             getSupportFragmentManager().beginTransaction().replace(R.id.login_fragment_container, new AdminLogin()).addToBackStack("loginAdmin").commit();
         }
 //        worker
-        else if (id == R.id.login_workerImage){
+        else if (id == R.id.adh_addAangadiaImage){
             getSupportFragmentManager().beginTransaction().replace(R.id.login_fragment_container, new WorkerLogin()).addToBackStack("loginWorker").commit();
         }
 //        user
-        else if (id == R.id.login_userImage){
+        else if (id == R.id.adh_allAngadiaImage){
             getSupportFragmentManager().beginTransaction().replace(R.id.login_fragment_container, new UserLogin()).addToBackStack("loginUser").commit();
         }
     }

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appColor"
+    android:id="@+id/adh_fragment_container"
     tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminHomePage">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
     <!--horizontal divider-->
@@ -35,29 +40,62 @@
         >
 
         <!--worker-->
-        <ImageView
+        <ImageButton
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_centerInParent="true"
             android:background="@drawable/ic_add_aangadia"
-            android:id="@+id/login_workerImage"
+            android:id="@+id/adh_addAangadiaImage"
             android:elevation="@dimen/elevation"
             tools:targetApi="lollipop"
             tools:ignore="ContentDescription" />
 
         <util.android.textviews.FontTextView
-            android:id="@+id/login_angadiaTextView"
+            android:id="@+id/adh_angadiaTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/addAangadia"
             style="@style/MyCustomTextStyleMedium"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/login_workerImage"
+            android:layout_below="@+id/adh_addAangadiaImage"
             android:padding="@dimen/generalPaddingFive"
             android:elevation="@dimen/elevation"
             tools:targetApi="lollipop" />
 
     </RelativeLayout>
 
+    <!--user-->
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/adh_dividerHorizontal"
+        android:background="@color/appColor"
+        android:layout_marginTop="50dp"
+        android:layout_alignStart="@+id/adh_dividerVertical"
+        >
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_list"
+            android:id="@+id/adh_allAngadiaImage"
+            tools:ignore="ContentDescription" />
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/adh_allAangadiaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/allAangadia"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/adh_allAngadiaImage"
+            android:padding="@dimen/generalPaddingFive"
+            />
+
+    </RelativeLayout>
+
+ </RelativeLayout>
+
+
+</FrameLayout>

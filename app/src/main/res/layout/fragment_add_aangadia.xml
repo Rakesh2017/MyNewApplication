@@ -3,25 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    android:background="@color/googleGreen"
-    android:id="@+id/la_parentRelativeLayout"
-    android:clickable="true"
-    android:focusable="true"
-    tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminLogin">
+    android:background="@color/appColor"
+    android:id="@+id/fad_mainRelativeLayout"
+    tools:context="com.donotauthenticatemyapp.teamaccountmanager.AddAangadia">
 
-
-<!--admin image logo-->
-    <ImageView
-        android:id="@+id/la_adminImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/login_admin"
-        android:layout_above="@+id/la_relativeLayout1"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:elevation="@dimen/elevation"
-        tools:targetApi="lollipop"
-        tools:ignore="ContentDescription" />
+    <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
         android:id="@+id/la_relativeLayout1"
@@ -34,9 +20,23 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         >
 
-        <!--email-->
+        <!--header-->
+
         <util.android.textviews.FontTextView
-            android:id="@+id/la_emailTextView"
+            android:id="@+id/fad_headerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addAangadiaU"
+            android:layout_centerHorizontal="true"
+            style="@style/MyCustomTextStyleLarge"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            />
+
+        <!--username-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/fad_userNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/userName"
@@ -44,17 +44,18 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
             android:fontFamily="ubuntu"
+            android:layout_below="@+id/fad_headerTextView"
             />
 
         <EditText
-            android:id="@+id/la_emailEditText"
+            android:id="@+id/fad_userNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/la_emailTextView"
+            android:layout_below="@+id/fad_userNameTextView"
             android:layout_marginTop="@dimen/paddingBetweenET"
             style="@style/MyCustomEditTextStyle"
             android:drawableEnd="@drawable/ic_user_name"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:elevation="@dimen/elevation"
             tools:targetApi="lollipop"
             tools:ignore="LabelFor" />
@@ -62,8 +63,7 @@
 
         <!--password-->
         <util.android.textviews.FontTextView
-            android:id="@+id/la_passwordTextView"
-            android:layout_below="@+id/la_emailEditText"
+            android:id="@+id/fad_passwordTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/password"
@@ -71,13 +71,14 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
             android:fontFamily="ubuntu"
+            android:layout_below="@+id/fad_userNameEditText"
             />
 
         <EditText
-            android:id="@+id/la_passwordEditText"
+            android:id="@+id/fad_passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/la_passwordTextView"
+            android:layout_below="@+id/fad_passwordTextView"
             android:layout_marginTop="@dimen/paddingBetweenET"
             style="@style/MyCustomEditTextStyle"
             android:drawableEnd="@drawable/ic_password"
@@ -87,11 +88,38 @@
             tools:ignore="LabelFor" />
 
 
+        <!--registered email-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/fad_emailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            android:layout_below="@+id/fad_passwordEditText"
+            />
+
+        <EditText
+            android:id="@+id/fad_emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fad_emailTextView"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:drawableEnd="@drawable/ic_email"
+            android:inputType="textEmailAddress"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor" />
+
+
         <!--login button-->
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/la_btn"
-            android:layout_below="@+id/la_passwordEditText"
+            android:id="@+id/fad_submitButton"
+            android:layout_below="@+id/fad_emailEditText"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
             android:layout_marginEnd="@dimen/activity_end_margin"
@@ -107,7 +135,7 @@
             fancy:fb_fontIconResource="&#xf084;"
             fancy:fb_iconPosition="right"
             fancy:fb_radius="2dp"
-            fancy:fb_text="Login"
+            fancy:fb_text="Create Account"
             fancy:fb_textColor="@color/black"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:elevation="@dimen/elevation"
@@ -115,6 +143,10 @@
 
 
 
+
+
     </RelativeLayout>
+
+
 
 </RelativeLayout>
