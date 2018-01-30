@@ -7,12 +7,17 @@
     <string name="email">E-mail Id</string>
     <string name="password">Password</string>
     <string name="owner">OWNER</string>
-    <string name="angadia">ANGADIA</string>
-    <string name="addAangadia">ADD ANGADIA</string>
-    <string name="addAangadiaU"><u>ADD ANGADIA</u></string>
-    <string name="allAangadia">ALL AANGADIAS</string>
+    <string name="angadia">AANGADIA</string>
+    <string name="addAangadia">ADD \nAANGADIA</string>
+    <string name="addAangadiaU"><b>ADD AANGADIA</b></string>
+    <string name="allAangadia">ALL \nAANGADIAS</string>
     <string name="user">USER</string>
     <string name="masterKey">Enter a Master Key</string>
     <string name="ok">Okay</string>
+    <string name="uniqueIdOfAangadia">Unique Identity Of Aangadia</string>
+    <string name="lengthOfPassword">Keep Password Length at least 8</string>
+    <string name="UserNameVisible">This Name will be Visible To Users</string>
+    <string name="phoneNumber">Mobile Number</string>
+    <string name="phoneNumberOptional">10 Digit Number (Optional)</string>
 </resources>
 

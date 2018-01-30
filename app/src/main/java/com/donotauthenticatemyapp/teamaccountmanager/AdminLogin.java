@@ -141,20 +141,39 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
                                             public void onInput(MaterialDialog dialog, final CharSequence input) {
                                                 progressDialog.show();
 //                                                matching master key
-                                                databaseReference.child("data")
+                                                databaseReference
                                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                                             @Override
                                                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                String masterKey = dataSnapshot.child("masterKey").getValue(String.class);
+                                                                String masterKey = dataSnapshot.child("security").child("masterKey").getValue(String.class);
                                                                 if (TextUtils.equals(masterKey, input)){
-                                                                    startActivity(new Intent(getActivity(), AdminHomePage.class));
-                                                                    progressDialog.dismiss();
+//check whether is really admin email
+                                                                    String isAdmin = dataSnapshot.child("adminProfile").child("email").getValue(String.class);
+                                                                    if (TextUtils.equals(isAdmin, userName_tx)){
+                                                                        startActivity(new Intent(getActivity(), AdminHomePage.class));
+                                                                        progressDialog.dismiss();
 //                                                                    shared preference
-                                                                    SharedPreferences sharedpreferences = getActivity().getSharedPreferences("LogDetail", MODE_PRIVATE);
-                                                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                                    editor.putString("firstScreen", "HomePage");
-                                                                    editor.apply();
-                                                                    getActivity().finish();
+                                                                        SharedPreferences sharedpreferences = getActivity().getSharedPreferences("LogDetail", MODE_PRIVATE);
+                                                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                                        editor.putString("firstScreen", "HomePage");
+                                                                        editor.apply();
+                                                                        getActivity().finish();
+                                                                    }
+                                                                    else {
+                                                                        new MaterialDialog.Builder(getActivity())
+                                                                                .title("Suspicious Activity!")
+                                                                                .titleColor(Color.WHITE)
+                                                                                .content("This is not a Admin UserName.")
+                                                                                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                                                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                                                                .backgroundColor(getResources().getColor(R.color.black90))
+                                                                                .positiveText(R.string.ok)
+                                                                                .show();
+                                                                        progressDialog.dismiss();
+
+                                                                    } // admin email check ends
+
+
                                                                 }
                                                                 else {
                                                                     new MaterialDialog.Builder(getActivity())
@@ -168,7 +187,7 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
                                                                             .show();
                                                                     progressDialog.dismiss();
 
-                                                                }
+                                                                }//master key check ends
                                                             }
 
                                                             @Override
@@ -208,7 +227,7 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
             }// if 2
         }//if 1
 
-    }// onclick ebds
+    }// onclick ends
 
     public boolean editTextValidations(){
         try {

@@ -5,9 +5,12 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/appColor"
     android:id="@+id/fad_mainRelativeLayout"
+    android:clickable="true"
+    android:focusable="true"
     tools:context="com.donotauthenticatemyapp.teamaccountmanager.AddAangadia">
 
     <!-- TODO: Update blank fragment layout -->
+
 
     <RelativeLayout
         android:id="@+id/la_relativeLayout1"
@@ -21,71 +24,26 @@
         >
 
         <!--header-->
-
         <util.android.textviews.FontTextView
             android:id="@+id/fad_headerTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/addAangadiaU"
+            android:layout_alignParentEnd="true"
+            style="@style/MyCustomTextStyleSmall"
+            android:fontFamily="ubuntu"
+            android:textColor="@color/black90"
+            android:padding="@dimen/generalPaddingFive"
+            />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_centerHorizontal="true"
-            style="@style/MyCustomTextStyleLarge"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_start_margin"
-            android:fontFamily="ubuntu"
+            android:background="@drawable/ic_worker"
+            android:id="@+id/fad_workerImage"
             />
-
-        <!--username-->
-        <util.android.textviews.FontTextView
-            android:id="@+id/fad_userNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/userName"
-            style="@style/MyCustomTextStyleMedium"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_start_margin"
-            android:fontFamily="ubuntu"
-            android:layout_below="@+id/fad_headerTextView"
-            />
-
-        <EditText
-            android:id="@+id/fad_userNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fad_userNameTextView"
-            android:layout_marginTop="@dimen/paddingBetweenET"
-            style="@style/MyCustomEditTextStyle"
-            android:drawableEnd="@drawable/ic_user_name"
-            android:inputType="text"
-            android:elevation="@dimen/elevation"
-            tools:targetApi="lollipop"
-            tools:ignore="LabelFor" />
-
-
-        <!--password-->
-        <util.android.textviews.FontTextView
-            android:id="@+id/fad_passwordTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password"
-            style="@style/MyCustomTextStyleMedium"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_start_margin"
-            android:fontFamily="ubuntu"
-            android:layout_below="@+id/fad_userNameEditText"
-            />
-
-        <EditText
-            android:id="@+id/fad_passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fad_passwordTextView"
-            android:layout_marginTop="@dimen/paddingBetweenET"
-            style="@style/MyCustomEditTextStyle"
-            android:drawableEnd="@drawable/ic_password"
-            android:inputType="textPassword"
-            android:elevation="@dimen/elevation"
-            tools:targetApi="lollipop"
-            tools:ignore="LabelFor" />
 
 
         <!--registered email-->
@@ -98,7 +56,7 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
             android:fontFamily="ubuntu"
-            android:layout_below="@+id/fad_passwordEditText"
+            android:layout_below="@+id/fad_workerImage"
             />
 
         <EditText
@@ -108,6 +66,7 @@
             android:layout_below="@+id/fad_emailTextView"
             android:layout_marginTop="@dimen/paddingBetweenET"
             style="@style/MyCustomEditTextStyle"
+            android:hint="@string/uniqueIdOfAangadia"
             android:drawableEnd="@drawable/ic_email"
             android:inputType="textEmailAddress"
             android:elevation="@dimen/elevation"
@@ -115,11 +74,99 @@
             tools:ignore="LabelFor" />
 
 
+
+        <!--password-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/fad_passwordTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            android:layout_below="@+id/fad_emailEditText"
+            />
+
+        <EditText
+            android:id="@+id/fad_passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fad_passwordTextView"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:hint="@string/lengthOfPassword"
+            android:drawableEnd="@drawable/ic_password"
+            android:inputType="textPassword"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop"
+            android:maxLength="15"
+            tools:ignore="LabelFor" />
+
+
+        <!--username-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/fad_userNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/userName"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            android:layout_below="@+id/fad_passwordEditText"
+            />
+
+        <EditText
+            android:id="@+id/fad_userNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fad_userNameTextView"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:hint="@string/UserNameVisible"
+            android:drawableEnd="@drawable/ic_user_name"
+            android:inputType="text"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor" />
+
+
+        <!--phone-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/fad_phoneTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phoneNumber"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            android:layout_below="@+id/fad_userNameEditText"
+            />
+
+        <EditText
+            android:id="@+id/fad_phoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fad_phoneTextView"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:hint="@string/phoneNumberOptional"
+            android:drawableEnd="@drawable/ic_phone"
+            android:maxLength="10"
+            android:inputType="phone"
+            android:elevation="@dimen/elevation"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor" />
+
+
+
         <!--login button-->
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/fad_submitButton"
-            android:layout_below="@+id/fad_emailEditText"
+            android:layout_below="@+id/fad_phoneEditText"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
             android:layout_marginEnd="@dimen/activity_end_margin"
@@ -142,11 +189,7 @@
             tools:targetApi="lollipop" />
 
 
-
-
-
     </RelativeLayout>
-
 
 
 </RelativeLayout>

@@ -58,6 +58,7 @@
             style="@style/MyCustomTextStyleMedium"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/adh_addAangadiaImage"
+            android:gravity="center"
             android:padding="@dimen/generalPaddingFive"
             android:elevation="@dimen/elevation"
             tools:targetApi="lollipop" />
@@ -91,6 +92,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/adh_allAngadiaImage"
             android:padding="@dimen/generalPaddingFive"
+            android:gravity="center"
             />
 
     </RelativeLayout>

@@ -30,7 +30,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
 
         switch (id){
             case R.id.adh_addAangadiaImage:
-                getSupportFragmentManager().beginTransaction().add(R.id.adh_fragment_container, new AddAangadia()).addToBackStack("addAangadia").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.adh_fragment_container, new AddAangadia()).addToBackStack("addAangadia").commit();
 
         }
 
