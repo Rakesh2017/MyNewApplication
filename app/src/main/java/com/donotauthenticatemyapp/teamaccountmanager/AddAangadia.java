@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
 
         CreatingFirebaseAuthInstance();
 
+
         userName_et = view.findViewById(R.id.fad_userNameEditText);
         password_et = view.findViewById(R.id.fad_passwordEditText);
         email_et = view.findViewById(R.id.fad_emailEditText);
@@ -84,7 +86,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
         button = view.findViewById(R.id.fad_submitButton);
 
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Creating Aangadia Account");
+        progressDialog.setMessage("Creating Aangadia Account...");
 
         button.setOnClickListener(this);
 
@@ -226,7 +228,6 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
             }
             return true;
     }
-
 
     //    validate email
     public boolean validateEmail(String email) {

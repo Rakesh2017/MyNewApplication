@@ -91,7 +91,7 @@
                 android:id="@+id/login_angadiaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/angadia"
+                android:text="@string/aangadia"
                 style="@style/MyCustomTextStyleMedium"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/adh_addAangadiaImage"

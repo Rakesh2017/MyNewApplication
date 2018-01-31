@@ -155,7 +155,7 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
 //                                                                    shared preference
                                                                         SharedPreferences sharedpreferences = getActivity().getSharedPreferences("LogDetail", MODE_PRIVATE);
                                                                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                                        editor.putString("firstScreen", "HomePage");
+                                                                        editor.putString("firstScreen", "AdminHomePage");
                                                                         editor.apply();
                                                                         getActivity().finish();
                                                                     }

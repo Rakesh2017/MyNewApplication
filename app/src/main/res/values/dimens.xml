@@ -20,6 +20,7 @@
     <dimen name="rotateLoadingBreadth">3dp</dimen>
     <dimen name="paddingBetweenET">3dp</dimen>
     <dimen name="generalPaddingFive">5dp</dimen>
+    <dimen name="paddingInDashBoardIcons">10dp</dimen>
 
 
 </resources>

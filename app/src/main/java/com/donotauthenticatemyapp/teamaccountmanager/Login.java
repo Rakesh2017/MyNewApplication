@@ -120,7 +120,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         }
 //        worker
         else if (id == R.id.adh_addAangadiaImage){
-            getSupportFragmentManager().beginTransaction().replace(R.id.login_fragment_container, new WorkerLogin()).addToBackStack("loginWorker").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.login_fragment_container, new AangadiaLogin()).addToBackStack("loginWorker").commit();
         }
 //        user
         else if (id == R.id.adh_allAngadiaImage){
@@ -133,10 +133,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         SharedPreferences sharedpreferences = getSharedPreferences("LogDetail", MODE_PRIVATE);
         String decider = sharedpreferences.getString("firstScreen", "");
-        if (TextUtils.equals(decider, "HomePage")) {
+        if (TextUtils.equals(decider, "AdminHomePage")) {
             startActivity(new Intent(Login.this, AdminHomePage.class));
             Login.this.finish();
         }
+        if (TextUtils.equals(decider, "AangadiaHomePage")) {
+            startActivity(new Intent(Login.this, AangadiaHomePage.class));
+            Login.this.finish();
+        }
+
     }
 
 //    end

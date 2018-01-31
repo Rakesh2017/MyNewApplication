@@ -3,21 +3,20 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
+public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    Button addAangadia_btn;
     ImageButton logout_ib;
 
     FirebaseAuth mAuth;
@@ -25,13 +24,12 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_home_page);
+        setContentView(R.layout.activity_aangadia_home_page);
+        FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
+        Toast.makeText(AangadiaHomePage.this, ""+mAuth.getEmail(), Toast.LENGTH_SHORT).show();
+        logout_ib = findViewById(R.id.ahg_logoutButton);
 
-        addAangadia_btn = findViewById(R.id.adh_addAangadiaImage);
 
-        logout_ib = findViewById(R.id.adh_logoutButton);
-
-        addAangadia_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
 
     }
@@ -41,13 +39,10 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         int id = view.getId();
 
-        switch (id){
-//            add aangadia
-            case R.id.adh_addAangadiaImage:
-                getSupportFragmentManager().beginTransaction().replace(R.id.adh_fragment_container, new AddAangadia()).addToBackStack("addAangadia").commit();
-                break;
-//            logout
-            case R.id.adh_logoutButton:
+        switch (id) {
+
+            //            logout
+            case R.id.ahg_logoutButton:
                 new MaterialDialog.Builder(this)
                         .title("Logout")
                         .content("Are You Sure to Logout?")
@@ -68,8 +63,8 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                                 mAuth = FirebaseAuth.getInstance();
                                 mAuth.signOut();
 
-                                AdminHomePage.this.finish();
-                                startActivity(new Intent(AdminHomePage.this, Login.class));
+                                AangadiaHomePage.this.finish();
+                                startActivity(new Intent(AangadiaHomePage.this, Login.class));
 
                                 // TODO
                             }
@@ -88,24 +83,8 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                         .show();
                 break;
 
-        }//switch ends
+        }
+
 
     }//onclick
-
-//    onBackPressed
-    public void onBackPressed(){
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        int s =fragmentManager.getBackStackEntryCount() - 1;
-        if (s >= 0){
-            super.onBackPressed();
-
-        }
-        else {
-            super.onBackPressed();
-            moveTaskToBack(true);
-            finish();
-        }
-    }//onBackPressed ends
-
-//    end
 }

@@ -24,9 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdminHomePage"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            />
+        <activity
+            android:name=".AdminHomePage"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity android:name=".AangadiaHomePage"></activity>
     </application>
 
 </manifest>

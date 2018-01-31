@@ -91,7 +91,7 @@
         <!--login button-->
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_spotify"
+            android:id="@+id/lw_submitButton"
             android:layout_below="@+id/lw_passwordEditText"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
