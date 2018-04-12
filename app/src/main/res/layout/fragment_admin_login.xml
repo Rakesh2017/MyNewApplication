@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    android:background="@color/googleGreen"
+    android:background="@drawable/fading_1"
     android:id="@+id/la_parentRelativeLayout"
     android:clickable="true"
     android:focusable="true"
@@ -19,7 +19,7 @@
         android:background="@drawable/login_admin"
         android:layout_above="@+id/la_relativeLayout1"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:elevation="@dimen/elevation"
+        android:elevation="@dimen/elevation_5"
         tools:targetApi="lollipop"
         tools:ignore="ContentDescription" />
 
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/custom_rectangle_white"
+        android:background="@drawable/background_shadow"
         android:layout_marginStart="@dimen/activity_start_margin"
         android:layout_marginEnd="@dimen/activity_end_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -55,7 +55,7 @@
             style="@style/MyCustomEditTextStyle"
             android:drawableEnd="@drawable/ic_user_name"
             android:inputType="textEmailAddress"
-            android:elevation="@dimen/elevation"
+            android:elevation="@dimen/elevation_5"
             tools:targetApi="lollipop"
             tools:ignore="LabelFor" />
 
@@ -82,7 +82,7 @@
             style="@style/MyCustomEditTextStyle"
             android:drawableEnd="@drawable/ic_password"
             android:inputType="textPassword"
-            android:elevation="@dimen/elevation"
+            android:elevation="@dimen/elevation_5"
             tools:targetApi="lollipop"
             tools:ignore="LabelFor" />
 
@@ -110,7 +110,7 @@
             fancy:fb_text="Login"
             fancy:fb_textColor="@color/black"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:elevation="@dimen/elevation"
+            android:elevation="@dimen/elevation_5"
             tools:targetApi="lollipop" />
 
 

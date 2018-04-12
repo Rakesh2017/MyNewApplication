@@ -59,6 +59,10 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     ProgressDialog progressDialog;
 
+    private static final String LANDING_ACTIVITY = "landingActivity";
+    private static final String FIRST_SCREEN = "firstScreen";
+    private static final String ADMIN_HOME_PAGE = "adminHomePage";
+
     public AdminLogin() {
         // Required empty public constructor
     }
@@ -153,38 +157,18 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
                                                                         startActivity(new Intent(getActivity(), AdminHomePage.class));
                                                                         progressDialog.dismiss();
 //                                                                    shared preference
-                                                                        SharedPreferences sharedpreferences = getActivity().getSharedPreferences("LogDetail", MODE_PRIVATE);
-                                                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                                        editor.putString("firstScreen", "AdminHomePage");
-                                                                        editor.apply();
+                                                                        settingSharedPrefForLandingPageHandling();
                                                                         getActivity().finish();
                                                                     }
                                                                     else {
-                                                                        new MaterialDialog.Builder(getActivity())
-                                                                                .title("Suspicious Activity!")
-                                                                                .titleColor(Color.WHITE)
-                                                                                .content("This is not a Admin UserName.")
-                                                                                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                                                                .contentColor(getResources().getColor(R.color.lightCoral))
-                                                                                .backgroundColor(getResources().getColor(R.color.black90))
-                                                                                .positiveText(R.string.ok)
-                                                                                .show();
+                                                                        suspiciousActivityMessage();
                                                                         progressDialog.dismiss();
 
                                                                     } // admin email check ends
 
-
                                                                 }
                                                                 else {
-                                                                    new MaterialDialog.Builder(getActivity())
-                                                                            .title("Incorrect Master Key")
-                                                                            .titleColor(Color.WHITE)
-                                                                            .content("Either your entered master key is incorrect or it can be old one.")
-                                                                            .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                                                            .contentColor(getResources().getColor(R.color.lightCoral))
-                                                                            .backgroundColor(getResources().getColor(R.color.black90))
-                                                                            .positiveText(R.string.ok)
-                                                                            .show();
+                                                                    incorrectMasterKeyMessage();
                                                                     progressDialog.dismiss();
 
                                                                 }//master key check ends
@@ -203,15 +187,7 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     try {
-                                        new MaterialDialog.Builder(getActivity())
-                                                .title("Authentication Failed!")
-                                                .titleColor(Color.BLACK)
-                                                .content("Either UserName or Password is incorrect")
-                                                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                                .contentColor(getResources().getColor(R.color.lightCoral))
-                                                .backgroundColor(getResources().getColor(R.color.white))
-                                                .positiveText(R.string.ok)
-                                                .show();
+                                       authenticationFailedMessage();
                                         progressDialog.dismiss();
 
                                     }
@@ -229,6 +205,16 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
 
     }// onclick ends
 
+//    setting shared login pref
+    public void settingSharedPrefForLandingPageHandling(){
+        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(FIRST_SCREEN, ADMIN_HOME_PAGE);
+        editor.apply();
+    }
+
+
+//validations
     public boolean editTextValidations(){
         try {
             if(!validateEmail(userName_tx)){
@@ -269,6 +255,50 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+//    display message is another account is being used
+    public void suspiciousActivityMessage(){
+        new MaterialDialog.Builder(getActivity())
+                .title("Suspicious Activity!")
+                .titleColor(Color.WHITE)
+                .content("This is not a Admin UserName.")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.lightCoral))
+                .backgroundColor(getResources().getColor(R.color.black90))
+                .positiveText(R.string.ok)
+                .show();
+    }
+    //    display message is another account is being used
+
+//    if wrong master key is entered
+    public void incorrectMasterKeyMessage(){
+        new MaterialDialog.Builder(getActivity())
+                .title("Incorrect Master Key")
+                .titleColor(Color.WHITE)
+                .content("Either your entered master key is incorrect or it can be old one.")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.lightCoral))
+                .backgroundColor(getResources().getColor(R.color.black90))
+                .positiveText(R.string.ok)
+                .show();
+    }
+//    if wrong master key is entered
+
+    //    authentication failed
+    public void authenticationFailedMessage(){
+        new MaterialDialog.Builder(getActivity())
+                .title("Authentication Failed!")
+                .titleColor(Color.BLACK)
+                .content("Either UserName or Password is incorrect")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.lightCoral))
+                .backgroundColor(getResources().getColor(R.color.white))
+                .positiveText(R.string.ok)
+                .show();
+    }
+    //    authentication failed
+
+
 
 //    ends
 }

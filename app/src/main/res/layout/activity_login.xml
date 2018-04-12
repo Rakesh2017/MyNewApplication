@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/googleGreen"
+        android:background="@drawable/background_shadow_1"
         >
 
         <!--horizontal divider-->
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignBottom="@+id/login_dividerHorizontal"
-            android:background="@color/googleGreen"
+            android:background="@drawable/background_shadow"
             >
 
             <com.mikhaellopez.circularimageview.CircularImageView
@@ -65,20 +65,21 @@
 
         </RelativeLayout>
 
+
         <!--bottom orange-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/login_dividerHorizontal"
-            android:background="@color/flesh"
-            android:layout_marginTop="50dp"
+            android:background="@drawable/background_shadow_2"
+            android:layout_marginTop="70dp"
             android:layout_alignEnd="@+id/login_dividerVertical"
             >
 
             <!--worker-->
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_centerInParent="true"
                 app:civ_shadow="true"
                 app:civ_shadow_radius="20"
@@ -107,13 +108,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/login_dividerHorizontal"
-            android:background="@color/flesh"
-            android:layout_marginTop="50dp"
+            android:background="@drawable/background_shadow_2"
+            android:layout_marginTop="70dp"
             android:layout_alignStart="@+id/login_dividerVertical"
             >
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             app:civ_shadow="true"
             app:civ_shadow_radius="20"

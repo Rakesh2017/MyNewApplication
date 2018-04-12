@@ -22,10 +22,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     FontTextView admin_tv, worker_tv, user_tv;
     FrameLayout frameLayout;
 
+    SharedPreferences sharedPreferences;
+    private static final String LANDING_ACTIVITY = "landingActivity";
+    private static final String FIRST_SCREEN = "firstScreen";
+    private static final String AANGADIA_HOME_PAGE = "aangadiaHomePage";
+    private static final String ADMIN_HOME_PAGE = "adminHomePage";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
 //      circular images button
         admin_ib = findViewById(R.id.login_adminImage);
@@ -43,11 +51,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 //        frame layout
         frameLayout = findViewById(R.id.login_fragment_container);
 
+        //        landing page shared pref
+        sharedPreferences = getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
+
+
 
 //        on click calls
         admin_ib.setOnClickListener(this);
         worker_ib.setOnClickListener(this);
         user_ib.setOnClickListener(this);
+
 
     }
 
@@ -58,9 +71,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     public void onStart(){
         super.onStart();
         //        function call
-        ButtonAnimations();
         checkLandingPage();
-
+        ButtonAnimations();
     }
 
 //    onBAckPressed
@@ -131,13 +143,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     // landing page
     public void checkLandingPage() {
 
-        SharedPreferences sharedpreferences = getSharedPreferences("LogDetail", MODE_PRIVATE);
-        String decider = sharedpreferences.getString("firstScreen", "");
-        if (TextUtils.equals(decider, "AdminHomePage")) {
+        String decider = sharedPreferences.getString(FIRST_SCREEN, "");
+        if (TextUtils.equals(decider, ADMIN_HOME_PAGE)) {
             startActivity(new Intent(Login.this, AdminHomePage.class));
             Login.this.finish();
         }
-        if (TextUtils.equals(decider, "AangadiaHomePage")) {
+        if (TextUtils.equals(decider, AANGADIA_HOME_PAGE)) {
             startActivity(new Intent(Login.this, AangadiaHomePage.class));
             Login.this.finish();
         }

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <!--<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />-->
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
     <application
@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyCustomAppTheme">
-        <activity android:name=".Login">
+        <activity android:name=".Login"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +29,9 @@
         <activity
             android:name=".AdminHomePage"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".AangadiaHomePage"></activity>
+        <activity android:name=".AangadiaHomePage"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
     </application>
 
 </manifest>

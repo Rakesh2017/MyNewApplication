@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appColor"
+    android:background="@color/whiteSmoke"
     android:id="@+id/adh_fragment_container"
     tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminHomePage">
 
@@ -11,8 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:background="@color/appColor"
+        android:background="@color/whiteSmoke"
         >
         <!--admin-->
         <util.android.textviews.FontTextView
@@ -23,7 +22,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:textColor="@color/black50"
+            android:textColor="@color/black90"
             />
         <!--logout-->
         <ImageButton
@@ -36,94 +35,139 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             tools:ignore="ContentDescription,RelativeOverlap" />
-
-    <!--vertical divider-->
-    <android.support.v4.widget.Space
-        android:layout_height="match_parent"
-        android:layout_width="1dp"
-        android:layout_centerInParent="true"
-        android:id="@+id/adh_dividerVertical"
-        />
-
-        <!--linear layout 1-->
-        <LinearLayout
-            android:id="@+id/dash_linearLayout1"
+        
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/adh_dividerVertical"
-            android:orientation="vertical"
-            android:weightSum="2"
-            >
-
-            <!--add aangadia-->
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:drawableTop="@drawable/ic_add_aangadia"
-                android:drawablePadding="@dimen/paddingInDashBoardIcons"
-                android:background="@color/appColor"
-                android:text="@string/addAangadia"
-                style="@style/MyCustomTextStyleMedium"
-                android:id="@+id/adh_addAangadiaImage"
-                tools:ignore="ContentDescription"
-                android:padding="@dimen/generalPaddingFive"
-                android:layout_weight="1"
-                />
-
-            <!--add aangadia-->
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:drawableTop="@drawable/ic_manage"
-                android:padding="@dimen/generalPaddingFive"
-                android:drawablePadding="@dimen/paddingInDashBoardIcons"
-                android:background="@color/appColor"
-                android:text="@string/manageAangadia"
-                style="@style/MyCustomTextStyleMedium"
-                android:id="@+id/adh_manageAangadiaImage"
-                android:layout_weight="1"
-                />
-
-
-        </LinearLayout>
-
-
-        <!--linear layout 2-->
-        <LinearLayout
-            android:id="@+id/dash_linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/adh_dividerVertical"
-            android:orientation="vertical"
-            android:weightSum="1"
+            android:layout_height="150dp"
             android:background="@color/appColor"
-            >
-
-            <!--Manage aangadia-->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:drawableTop="@drawable/ic_list"
-                    android:padding="@dimen/generalPaddingFive"
-                    android:drawablePadding="@dimen/paddingInDashBoardIcons"
-                    android:background="@color/appColor"
-                    android:text="@string/allAangadia"
-                    style="@style/MyCustomTextStyleMedium"
-                    android:id="@+id/adh_allAngadiaImage"
-                    android:layout_weight="1"
-                    />
-
-
-        </LinearLayout>
-
-
-
-
-
-
-
+            />
 
     </RelativeLayout>
 
 
+    <!--actual enteries-->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <!--empty space-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/aap_emptyRelativeLayout"
+                tools:ignore="UselessLeaf">
+
+            </RelativeLayout>
+
+            <!--Add Aangadia-->
+            <RelativeLayout
+                android:id="@+id/aap_facebookRelativeLayout"
+                android:layout_below="@+id/aap_emptyRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_1"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                >
+
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_add_aangadia"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/adh_addAangadiaImage"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_bkdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Aangadia"
+                    android:layout_toEndOf="@+id/adh_addAangadiaImage"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Related stats will be shown in rest of portion"
+                    android:layout_toEndOf="@+id/adh_addAangadiaImage"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/adh_bkdf"
+                    android:layout_marginStart="10dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    />
+
+            </RelativeLayout>
+
+
+            <!--Add Aangadia-->
+            <RelativeLayout
+                android:id="@+id/aap_facebookRelativeLayout1"
+                android:layout_below="@+id/aap_facebookRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_2"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                >
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_all_aangadias"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/aap_facebookImageButton1"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_bkdf1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Aangadia"
+                    android:layout_toEndOf="@+id/aap_facebookImageButton1"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Related stats will be shown in rest of portion"
+                    android:layout_toEndOf="@+id/aap_facebookImageButton1"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/adh_bkdf1"
+                    android:layout_marginStart="10dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    />
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
 </FrameLayout>
+
+
+

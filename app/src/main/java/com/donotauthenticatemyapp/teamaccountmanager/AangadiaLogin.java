@@ -10,19 +10,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,6 +58,11 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     ProgressDialog progressDialog;
 
+    SharedPreferences sharedPreferences;
+    private static final String LANDING_ACTIVITY = "landingActivity";
+    private static final String FIRST_SCREEN = "firstScreen";
+    private static final String AANGADIA_HOME_PAGE = "aangadiaHomePage";
+
     public AangadiaLogin() {
         // Required empty public constructor
     }
@@ -75,6 +77,9 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
 
 //        relative layout ids
         parentRelativeLayout = view.findViewById(R.id.lw_parentRelativeLayout);
+
+//        landing page shared pref
+        sharedPreferences = getActivity().getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
 
         progressDialog = new ProgressDialog(getContext());
 
@@ -130,9 +135,9 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                                             if (dataSnapshot.child("AangadiaProfile").hasChild(user.getUid())){//if 4
                                                 startActivity(new Intent(getActivity(), AangadiaHomePage.class));
 
-                                                SharedPreferences sharedpreferences = getActivity().getSharedPreferences("LogDetail", MODE_PRIVATE);
-                                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                editor.putString("firstScreen", "AangadiaHomePage");
+
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.putString(FIRST_SCREEN, AANGADIA_HOME_PAGE);
                                                 editor.apply();
                                                 getActivity().finish();
                                                 progressDialog.dismiss();
@@ -190,6 +195,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
     }//onclick
 
 
+//    validations
     public boolean editTextValidations(){
         try {
             if(!validateEmail(userName_tx)){

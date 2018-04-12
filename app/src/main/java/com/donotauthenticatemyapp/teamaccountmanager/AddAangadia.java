@@ -6,13 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -23,11 +21,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -145,6 +140,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                                     database.child("AangadiaProfile").child(aangadiaUid).child("email").setValue(email_tx);
                                     database.child("AangadiaProfile").child(aangadiaUid).child("password").setValue(password_tx);
                                     database.child("AangadiaProfile").child(aangadiaUid).child("phone").setValue(phone_tx);
+
                                     new MaterialDialog.Builder(getActivity())
                                             .title("Account Successfully Created")
                                             .titleColor(Color.WHITE)

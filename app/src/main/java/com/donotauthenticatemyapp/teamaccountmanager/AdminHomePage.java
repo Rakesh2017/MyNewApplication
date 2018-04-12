@@ -20,6 +20,9 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     Button addAangadia_btn;
     ImageButton logout_ib;
 
+    private static final String LANDING_ACTIVITY = "landingActivity";
+    private static final String FIRST_SCREEN = "firstScreen";
+
     FirebaseAuth mAuth;
 
     @Override
@@ -60,9 +63,9 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
-                                SharedPreferences sharedpreferences = getSharedPreferences("LogDetail", MODE_PRIVATE);
+                                SharedPreferences sharedpreferences = getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString("firstScreen", "LoginPage");
+                                editor.putString(FIRST_SCREEN, "");
                                 editor.apply();
 
                                 mAuth = FirebaseAuth.getInstance();
