@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    android:background="@color/wheat_red"
+    android:background="@drawable/fading_wheat_red"
     android:id="@+id/lu_parentRelativeLayout"
     android:clickable="true"
     android:focusable="true"

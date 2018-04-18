@@ -34,7 +34,8 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10' // gif display
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.google.firebase:firebase-database:12.0.1'
-    implementation 'com.google.firebase:firebase-auth:12.0.1'
+    implementation 'com.google.firebase:firebase-auth:12.0.1' //server time
+    implementation 'commons-net:commons-net:3.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

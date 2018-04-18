@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
 //      circular images button
         admin_ib = findViewById(R.id.login_adminImage);
-        worker_ib = findViewById(R.id.adh_addAangadiaImage);
+        worker_ib = findViewById(R.id.adh_addAangadiaButton);
         user_ib = findViewById(R.id.adh_allAngadiaImage);
 
 //        text view is
@@ -131,7 +131,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             getSupportFragmentManager().beginTransaction().replace(R.id.login_fragment_container, new AdminLogin()).addToBackStack("loginAdmin").commit();
         }
 //        worker
-        else if (id == R.id.adh_addAangadiaImage){
+        else if (id == R.id.adh_addAangadiaButton){
             getSupportFragmentManager().beginTransaction().replace(R.id.login_fragment_container, new AangadiaLogin()).addToBackStack("loginWorker").commit();
         }
 //        user

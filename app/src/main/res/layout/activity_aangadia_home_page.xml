@@ -8,16 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aangadia Home Page"
-            android:layout_centerInParent="true"
-            android:textSize="24sp"
-            />
-
+        android:layout_height="match_parent"
+        android:background="@color/whiteSmoke"
+        >
         <!--admin-->
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
@@ -27,11 +20,11 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:textColor="@color/black50"
+            android:textColor="@color/black90"
             />
         <!--logout-->
         <ImageButton
-            android:id="@+id/ahg_logoutButton"
+            android:id="@+id/adh_addAangadiaButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_logout"
@@ -41,6 +34,85 @@
             android:layout_alignParentBottom="true"
             tools:ignore="ContentDescription,RelativeOverlap" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/appColor"
+            />
+
     </RelativeLayout>
+
+
+    <!--actual enteries-->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <!--empty space-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/aap_emptyRelativeLayout"
+                tools:ignore="UselessLeaf">
+
+            </RelativeLayout>
+
+            <!--Add Aangadia-->
+            <RelativeLayout
+                android:id="@+id/adh_addAangadiaRelativeLayout"
+                android:layout_below="@+id/aap_emptyRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_1"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                >
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_add_aangadia"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/ahp_addUserButton"
+                    />
+
+                <TextView
+                    android:id="@+id/ahp_addUserTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Aangadia"
+                    android:layout_toEndOf="@+id/ahp_addUserButton"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Related stats will be shown in rest of portion"
+                    android:layout_toEndOf="@+id/ahp_addUserButton"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/ahp_addUserTextView"
+                    android:layout_marginStart="10dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

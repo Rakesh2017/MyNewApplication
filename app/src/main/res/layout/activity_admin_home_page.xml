@@ -38,7 +38,7 @@
         
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:background="@color/appColor"
             />
 
@@ -50,7 +50,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
 
             <!--Add Aangadia-->
             <RelativeLayout
-                android:id="@+id/aap_facebookRelativeLayout"
+                android:id="@+id/adh_addAangadiaRelativeLayout"
                 android:layout_below="@+id/aap_emptyRelativeLayout"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_width="match_parent"
@@ -80,20 +80,20 @@
                 android:layout_marginEnd="@dimen/activity_vertical_margin"
                 >
 
-                <Button
+                <ImageButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:background="@drawable/ic_add_aangadia"
                     tools:ignore="ContentDescription"
-                    android:id="@+id/adh_addAangadiaImage"
+                    android:id="@+id/adh_addAangadiaButton"
                     />
 
                 <TextView
-                    android:id="@+id/adh_bkdf"
+                    android:id="@+id/adh_addAangadiaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add Aangadia"
-                    android:layout_toEndOf="@+id/adh_addAangadiaImage"
+                    android:layout_toEndOf="@+id/adh_addAangadiaButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
                     android:layout_marginStart="10dp"
@@ -103,9 +103,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Related stats will be shown in rest of portion"
-                    android:layout_toEndOf="@+id/adh_addAangadiaImage"
+                    android:layout_toEndOf="@+id/adh_addAangadiaButton"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/adh_bkdf"
+                    android:layout_below="@+id/adh_addAangadiaTextView"
                     android:layout_marginStart="10dp"
                     style="@style/MyCustomTextStyleSmall"
                     />
@@ -115,8 +115,8 @@
 
             <!--Add Aangadia-->
             <RelativeLayout
-                android:id="@+id/aap_facebookRelativeLayout1"
-                android:layout_below="@+id/aap_facebookRelativeLayout"
+                android:id="@+id/adg_allAangadiaRelativeLayout"
+                android:layout_below="@+id/adh_addAangadiaRelativeLayout"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,33 +133,37 @@
                     android:layout_height="70dp"
                     android:background="@drawable/ic_all_aangadias"
                     tools:ignore="ContentDescription"
-                    android:id="@+id/aap_facebookImageButton1"
+                    android:id="@+id/adh_allAangadiaButton"
                     />
 
                 <TextView
-                    android:id="@+id/adh_bkdf1"
+                    android:id="@+id/adh_allAangadiaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="All Aangadia"
-                    android:layout_toEndOf="@+id/aap_facebookImageButton1"
+                    android:layout_toEndOf="@+id/adh_allAangadiaButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
                     android:layout_marginStart="10dp"
                     />
 
                 <TextView
+                    android:id="@+id/adh_totalAangadiasTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Related stats will be shown in rest of portion"
-                    android:layout_toEndOf="@+id/aap_facebookImageButton1"
+                    android:hint="Total Aangadias: __ __"
+                    android:drawableStart="@drawable/ic_pointing_arrow"
+                    android:drawablePadding="@dimen/drawablePadding"
+                    android:gravity="center"
+                    android:layout_toEndOf="@+id/adh_allAangadiaButton"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/adh_bkdf1"
+                    android:layout_below="@+id/adh_allAangadiaTextView"
                     android:layout_marginStart="10dp"
                     style="@style/MyCustomTextStyleSmall"
+                    android:textStyle="bold"
                     />
 
             </RelativeLayout>
-
 
 
         </RelativeLayout>

@@ -6,7 +6,10 @@
     <string name="userName">UserName</string>
     <string name="email">E-mail Id</string>
     <string name="password">Password</string>
-    <string name="owner">OWNER</string>
+    <string name="answer">Answer</string>
+    <string name="answerQuestion">Answer Security Question</string>
+    <string name="owner">owner: admin@a.com</string>
+    <string name="owner1">owner</string>
     <string name="aangadia">AANGADIA</string>
     <string name="addAangadia">ADD \nAANGADIA</string>
     <string name="manageAangadia">MANAGE \nAANGADIA</string>
