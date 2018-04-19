@@ -38,7 +38,7 @@
             android:id="@+id/lw_emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/userName"
+            android:text="@string/uid"
             style="@style/MyCustomTextStyleMedium"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
@@ -54,9 +54,10 @@
             style="@style/MyCustomEditTextStyle"
             android:background="@color/whiteSmoke"
             android:drawableEnd="@drawable/ic_user_name"
-            android:inputType="textEmailAddress"
+            android:inputType="number"
             android:elevation="@dimen/elevation_5"
             tools:targetApi="lollipop"
+            android:maxLength="7"
             tools:ignore="LabelFor" />
 
 

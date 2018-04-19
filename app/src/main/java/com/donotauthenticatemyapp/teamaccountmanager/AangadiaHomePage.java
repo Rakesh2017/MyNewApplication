@@ -22,8 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton logout_ib;
-
+    ImageButton logout_ib, addUser_ib;
 
 
     private static final String LANDING_ACTIVITY = "landingActivity";
@@ -38,14 +37,12 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
        // Toast.makeText(AangadiaHomePage.this, ""+mAuth.getEmail(), Toast.LENGTH_SHORT).show();
         logout_ib = findViewById(R.id.adh_addAangadiaButton);
+        addUser_ib = findViewById(R.id.ahp_addUserButton);
 
-
-
+        addUser_ib.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
 
     }
-
-
 
     //    onclick
     @Override
@@ -95,6 +92,10 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                 })
                         .show();
                 break;
+
+//                add user
+            case R.id.ahp_addUserButton:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AddUser()).addToBackStack("addUser").commit();
 
         }
 

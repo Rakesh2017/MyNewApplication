@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PlayGamesAuthCredential;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +56,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
 
     EditText userName_et, password_et;
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
-    private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+    protected static final String PLAY_EMAIL = "@play.org";
     ProgressDialog progressDialog;
 
     SharedPreferences sharedPreferences;
@@ -123,6 +124,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
 
             if (editTextValidations()){ //if 2
                 progressDialog.show();
+                userName_tx = userName_tx + PLAY_EMAIL;
                 mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
                         .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                             @Override
@@ -198,11 +200,11 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
 //    validations
     public boolean editTextValidations(){
         try {
-            if(!validateEmail(userName_tx)){
+            if(userName_tx.length() != 7){
                 new MaterialDialog.Builder(getActivity())
-                        .title("Invalid Username")
+                        .title("Invalid UID")
                         .titleColor(Color.WHITE)
-                        .content("Please re-enter your username with correct format.")
+                        .content("UID is 7 in length")
                         .icon(getResources().getDrawable(R.drawable.ic_warning))
                         .contentColor(getResources().getColor(R.color.lightCoral))
                         .backgroundColor(getResources().getColor(R.color.black90))
@@ -231,11 +233,6 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
         return true;
     }// editTextValidations end
 
-    //    validate email
-    public boolean validateEmail(String email) {
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 
 //end
 }

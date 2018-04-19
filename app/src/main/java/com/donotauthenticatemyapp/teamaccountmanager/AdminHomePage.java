@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton addAangadia_btn, logout_ib, allAangadias_btn;
+    ImageButton addAangadia_btn, addUser_btn,logout_ib, allAangadias_btn;
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
@@ -42,6 +42,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_admin_home_page);
 
         addAangadia_btn = findViewById(R.id.adh_addAangadiaButton);
+        addUser_btn = findViewById(R.id.adh_addUserButton);
         allAangadias_btn = findViewById(R.id.adh_allAangadiaButton);
 
         logout_ib = findViewById(R.id.adh_logoutButton);
@@ -49,6 +50,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         totalAangadia_tv = findViewById(R.id.adh_totalAangadiasTextView);
 
         addAangadia_btn.setOnClickListener(this);
+        addUser_btn.setOnClickListener(this);
         allAangadias_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
 
@@ -66,6 +68,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         totalAangadia = (int) dataSnapshot.getChildrenCount();
+                        totalAangadia_tv.setText(String.valueOf(totalAangadia));
                         totalAangadia_tv.setText(String.valueOf(totalAangadia));
                     }
 
@@ -90,6 +93,11 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
             case R.id.adh_addAangadiaButton:
                 getSupportFragmentManager().beginTransaction().replace(R.id.adh_fragment_container, new AddAangadia()).addToBackStack("addAangadia").commit();
                 break;
+// add user
+            case R.id.adh_addUserButton:
+                getSupportFragmentManager().beginTransaction().replace(R.id.adh_fragment_container, new AddUser()).addToBackStack("addUser").commit();
+                break;
+
 //            logout
             case R.id.adh_logoutButton:
                 new MaterialDialog.Builder(this)

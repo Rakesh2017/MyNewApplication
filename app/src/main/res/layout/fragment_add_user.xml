@@ -1,14 +1,268 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddUser">
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/fading_wheat_red"
+    android:id="@+id/fau_mainRelativeLayout"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context="com.donotauthenticatemyapp.teamaccountmanager.AddUser">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:isScrollContainer="true"
+        >
+        <RelativeLayout
+            android:id="@+id/la_relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_rectangle_white"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:layout_marginEnd="@dimen/activity_end_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            >
 
-</FrameLayout>
+            <!--header-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/fau_headerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addUser"
+                android:layout_alignParentEnd="true"
+                style="@style/MyCustomTextStyleSmall"
+                android:fontFamily="ubuntu"
+                android:textColor="@color/black90"
+                android:padding="@dimen/generalPaddingFive"
+                />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/ic_worker"
+                android:id="@+id/fau_workerImage"
+                />
+
+
+            <!--username-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/fau_userNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/userName"
+                style="@style/MyCustomTextStyleMedium"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:fontFamily="ubuntu"
+                android:layout_below="@+id/fau_workerImage"
+                />
+
+            <EditText
+                android:id="@+id/fau_userNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fau_userNameTextView"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:hint="@string/UserNameVisible"
+                android:drawableEnd="@drawable/ic_user_name"
+                android:inputType="textCapWords"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                tools:ignore="LabelFor" />
+
+            <!--password-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/fau_passwordTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                style="@style/MyCustomTextStyleMedium"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:fontFamily="ubuntu"
+                android:layout_below="@+id/fau_userNameEditText"
+                />
+
+            <EditText
+                android:id="@+id/fau_passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fau_passwordTextView"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:hint="@string/lengthOfPassword"
+                android:drawableEnd="@drawable/ic_password"
+                android:inputType="textPassword"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:maxLength="15"
+                tools:ignore="LabelFor" />
+
+
+            <!--phone-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/fau_phoneTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phoneNumber"
+                style="@style/MyCustomTextStyleMedium"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:fontFamily="ubuntu"
+                android:layout_below="@+id/fau_passwordEditText"
+                />
+
+            <EditText
+                android:id="@+id/fau_phoneEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fau_phoneTextView"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:hint="@string/phoneNumberOptional"
+                android:drawableEnd="@drawable/ic_phone"
+                android:maxLength="10"
+                android:inputType="phone"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                tools:ignore="LabelFor" />
+
+            <!--state-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/fau_stateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/state"
+                style="@style/MyCustomTextStyleMedium"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:fontFamily="ubuntu"
+                android:layout_below="@+id/fau_phoneEditText"
+                />
+
+            <EditText
+                android:id="@+id/fau_stateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fau_stateTextView"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:hint="@string/enterState"
+                android:drawableEnd="@drawable/ic_state"
+                android:inputType="text"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                tools:ignore="LabelFor" />
+
+            <!--city-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/fau_cityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/city"
+                style="@style/MyCustomTextStyleMedium"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:fontFamily="ubuntu"
+                android:layout_below="@+id/fau_stateEditText"
+                />
+
+            <EditText
+                android:id="@+id/fau_cityEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fau_cityTextView"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:hint="@string/enterCity"
+                android:drawableEnd="@drawable/ic_city"
+                android:inputType="text"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                tools:ignore="LabelFor" />
+
+
+
+            <!--spinner-->
+            <Spinner
+                android:id="@+id/fau_securityQuestionsSpinner"
+                android:layout_below="@+id/fau_cityEditText"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/black50"
+                style="@style/MyCustomTextStyleSmall"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:layout_marginEnd="@dimen/activity_end_margin"
+                android:elevation="@dimen/elevation_5"
+                android:spinnerMode="dropdown"
+                tools:targetApi="lollipop" />
+
+            <!--security answer-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/fau_securityAnswerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer"
+                style="@style/MyCustomTextStyleMedium"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:fontFamily="ubuntu"
+                android:layout_below="@+id/fau_securityQuestionsSpinner"
+                />
+
+            <EditText
+                android:id="@+id/fau_securityAnswerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fau_securityAnswerTextView"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:hint="@string/answerQuestion"
+                android:drawableEnd="@drawable/ic_question"
+                android:inputType="text"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:maxLength="15"
+                tools:ignore="LabelFor" />
+
+
+            <!--login button-->
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/fau_submitButton"
+                android:layout_below="@+id/fau_securityAnswerEditText"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_start_margin"
+                android:layout_marginEnd="@dimen/activity_end_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/lightCoral"
+                fancy:fb_focusColor="@color/whiteSmoke"
+                fancy:fb_fontIconResource="&#xf084;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="2dp"
+                fancy:fb_text="Create Account"
+                fancy:fb_textColor="@color/black"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop" />
+
+
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>

@@ -66,8 +66,6 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
     protected FirebaseAuth mAuth1;
     protected FirebaseAuth mAuth2;
 
-    //private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
-    //private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     protected FirebaseApp myApp;
 
     protected static final String TIME_SERVER = "time-a.nist.gov";
@@ -257,7 +255,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                             {
                                 String aangadiaUid = mAuth2.getCurrentUser().getUid();
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("userName").setValue(userName_tx);
-                                databaseReference.child("AangadiaProfile").child(aangadiaUid).child("uid").setValue(unique_id);
+                                databaseReference.child("AangadiaProfile").child(aangadiaUid).child("uid").setValue(sub_id);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("password").setValue(password_tx);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("phone").setValue(phone_tx);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("security_answer").setValue(answer_tx);

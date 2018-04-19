@@ -62,8 +62,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         int id = view.getId();
 
         if (id == R.id.loa_backImageButton){
-            startActivity(new Intent(ListOfAangadias.this, AdminHomePage.class));
-            this.finish();
+            onBackPressed();
         }
     }
 

@@ -1,12 +1,10 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
-
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,16 +15,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-import static android.content.Context.MODE_PRIVATE;
-
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class AangadiaData extends Fragment {
+public class AangadiaDetails extends AppCompatActivity implements View.OnClickListener{
 
     TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv;
     String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx;
+
+    ImageButton back_btn;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -34,28 +28,22 @@ public class AangadiaData extends Fragment {
     private static final String AANGADIA_UID = "aangadia_uid";
     SharedPreferences sharedPreferences;
 
-    public AangadiaData() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_aangadia_data, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_aangadia_details);
 
-        name_tv = view.findViewById(R.id.ad_userNameTexView);
-        uid_tv = view.findViewById(R.id.ad_uidTextView);
-        password_tv = view.findViewById(R.id.ad_passwordTextView);
-        question_tv = view.findViewById(R.id.ad_questionTextView);
-        answer_tv = view.findViewById(R.id.ad_answerTextView);
+        name_tv = findViewById(R.id.ad_userNameTexView);
+        uid_tv = findViewById(R.id.ad_uidTextView);
+        password_tv = findViewById(R.id.ad_passwordTextView);
+        question_tv = findViewById(R.id.ad_questionTextView);
+        answer_tv = findViewById(R.id.ad_answerTextView);
 
-        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);
+        back_btn = findViewById(R.id.ad_backButton);
 
+        sharedPreferences = getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);
 
-        return view;
-
+        back_btn.setOnClickListener(this);
     }
 
     public void onStart(){
@@ -64,7 +52,7 @@ public class AangadiaData extends Fragment {
         loadData();
     }
 
-//    load data
+    //    load data
     private void loadData() {
         String uid = sharedPreferences.getString(AANGADIA_UID, "");
         databaseReference.child("AangadiaProfile").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,7 +66,7 @@ public class AangadiaData extends Fragment {
                 phone_tx = dataSnapshot.child("phone").getValue(String.class);
 
                 name_tv.setText(name_tx);
-                uid_tv.setText(uid_tx.substring(0,7));
+                uid_tv.setText(uid_tx);
                 password_tv.setText(password_tx);
                 question_tv.setText(question_tx);
                 answer_tv .setText(answer_tx);
@@ -92,4 +80,21 @@ public class AangadiaData extends Fragment {
         });
     }
 
+//    onClick
+    @Override
+    public void onClick(View view) {
+
+        int id = view.getId();
+
+        switch (id){
+//            back button
+            case R.id.ad_backButton:
+                onBackPressed();
+                break;
+        }
+
+    }
+//    onClick
+
+    //end
 }

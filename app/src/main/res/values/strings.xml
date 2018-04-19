@@ -3,7 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="userName">UserName</string>
+    <string name="userName">User Name</string>
     <string name="email">E-mail Id</string>
     <string name="password">Password</string>
     <string name="answer">Answer</string>
@@ -12,6 +12,7 @@
     <string name="owner1">owner</string>
     <string name="aangadia">AANGADIA</string>
     <string name="addAangadia">ADD \nAANGADIA</string>
+    <string name="addUser">ADD USER</string>
     <string name="manageAangadia">MANAGE \nAANGADIA</string>
     <string name="addAangadiaU"><b>ADD AANGADIA</b></string>
     <string name="allAangadia">ALL \nAANGADIAS</string>
@@ -24,6 +25,10 @@
     <string name="phoneNumber">Mobile Number</string>
     <string name="phoneNumberOptional">10 Digit Number (Optional)</string>
     <string name="logout">Logout</string>
+    <string name="state">State</string>
+    <string name="enterState">Enter name of State</string>
+    <string name="city">City</string>
+    <string name="enterCity">Enter name of City</string>
     <string name="aangadiaList">List of Aangadias</string>
     <string name="hintPlaceholderDouble">_______ _______</string>
     <string name="hintPlaceholderSingle">_______</string>
@@ -34,5 +39,6 @@
     <string name="SecurityQuestionSemi">S.Q:</string>
     <string name="AnswerSemi">Answer:</string>
     <string name="totalAangadias">Total Aangadias:</string>
+    <string name="uid">UID</string>
 </resources>
 

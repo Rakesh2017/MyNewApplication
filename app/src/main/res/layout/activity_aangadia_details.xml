@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fading_wheat_red"
-    tools:context=".AangadiaData">
+    tools:context=".AangadiaDetails">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-
             android:layout_alignParentEnd="true"
             style="@style/MyCustomTextStyleMedium"
             />
@@ -39,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_userNameTexView"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/fading_blury_wood"
-            android:padding="4dp"
+            android:background="@drawable/background_shadow_1"
+            android:padding="8dp"
             >
 
             <!-- uid -->
@@ -71,7 +70,7 @@
             <TextView
                 android:id="@+id/ad_password"
                 android:layout_below="@+id/ad_uidTextView"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/passwordSemi"
@@ -95,70 +94,71 @@
         </RelativeLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/ad_relativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ad_relativeLayout1"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:background="@drawable/fading_blury_wood"
-        android:padding="4dp"
-        >
-
-        <!-- question -->
-        <TextView
-            android:id="@+id/ad_question"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/ad_relativeLayout2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/SecurityQuestionSemi"
-            style="@style/MyCustomTextStyleSmall"
-            android:textStyle="bold"
-            android:textColor="@color/black90"
-            />
-
-        <TextView
-            android:id="@+id/ad_questionTextView"
-            android:layout_toEndOf="@+id/ad_question"
-            android:layout_marginStart="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hintPlaceholderSingle"
-            style="@style/MyCustomTextStyleSmall"
-            android:textStyle="bold"
-            android:layout_alignTop="@+id/ad_question"
-            />
-
-        <!-- answer -->
-        <TextView
-            android:id="@+id/ad_answer"
-            android:layout_below="@+id/ad_questionTextView"
+            android:layout_below="@+id/ad_relativeLayout1"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/AnswerSemi"
-            style="@style/MyCustomTextStyleSmall"
-            android:textStyle="bold"
-            android:textColor="@color/black90"
-            />
+            android:background="@drawable/background_shadow"
+            android:padding="8dp"
+            >
 
-        <TextView
-            android:id="@+id/ad_answerTextView"
-            android:layout_toEndOf="@+id/ad_answer"
-            android:layout_marginStart="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hintPlaceholderSingle"
-            style="@style/MyCustomTextStyleSmall"
-            android:textStyle="bold"
-            android:layout_alignTop="@+id/ad_answer"
-            />
+            <!-- question -->
+            <TextView
+                android:id="@+id/ad_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SecurityQuestionSemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ad_questionTextView"
+                android:layout_toEndOf="@+id/ad_question"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ad_question"
+                />
+
+            <!-- answer -->
+            <TextView
+                android:id="@+id/ad_answer"
+                android:layout_below="@+id/ad_questionTextView"
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AnswerSemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ad_answerTextView"
+                android:layout_toEndOf="@+id/ad_answer"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ad_answer"
+                />
+
+
+        </RelativeLayout>
+
+
+
 
 
     </RelativeLayout>
 
-
-
-
-
-    </RelativeLayout>
 </FrameLayout>

@@ -51,38 +51,6 @@
             />
 
 
-        <!--registered email
-        <util.android.textviews.FontTextView
-            android:id="@+id/fad_emailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            style="@style/MyCustomTextStyleMedium"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_start_margin"
-            android:fontFamily="ubuntu"
-            android:layout_below="@+id/fad_workerImage"
-            />
-
-        <EditText
-            android:id="@+id/fad_emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fad_emailTextView"
-            android:layout_marginTop="@dimen/paddingBetweenET"
-            style="@style/MyCustomEditTextStyle"
-            android:hint="@string/uniqueIdOfAangadia"
-            android:drawableEnd="@drawable/ic_email"
-            android:inputType="textEmailAddress"
-            android:elevation="@dimen/elevation_5"
-            tools:targetApi="lollipop"
-            tools:ignore="LabelFor" /> -->
-
-
-
-
-
-
         <!--username-->
         <util.android.textviews.FontTextView
             android:id="@+id/fad_userNameTextView"
@@ -110,6 +78,34 @@
             tools:targetApi="lollipop"
             tools:ignore="LabelFor" />
 
+        <!--password-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/fad_passwordTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:fontFamily="ubuntu"
+            android:layout_below="@+id/fad_userNameEditText"
+            />
+
+        <EditText
+            android:id="@+id/fad_passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fad_passwordTextView"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:hint="@string/lengthOfPassword"
+            android:drawableEnd="@drawable/ic_password"
+            android:inputType="textPassword"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
+            android:maxLength="15"
+            tools:ignore="LabelFor" />
+
 
         <!--phone-->
         <util.android.textviews.FontTextView
@@ -121,7 +117,7 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"
             android:fontFamily="ubuntu"
-            android:layout_below="@+id/fad_userNameEditText"
+            android:layout_below="@+id/fad_passwordEditText"
             />
 
         <EditText
@@ -140,38 +136,11 @@
             tools:ignore="LabelFor" />
 
 
-        <!--password-->
-        <util.android.textviews.FontTextView
-            android:id="@+id/fad_passwordTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password"
-            style="@style/MyCustomTextStyleMedium"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_start_margin"
-            android:fontFamily="ubuntu"
-            android:layout_below="@+id/fad_phoneEditText"
-            />
-
-        <EditText
-            android:id="@+id/fad_passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fad_passwordTextView"
-            android:layout_marginTop="@dimen/paddingBetweenET"
-            style="@style/MyCustomEditTextStyle"
-            android:hint="@string/lengthOfPassword"
-            android:drawableEnd="@drawable/ic_password"
-            android:inputType="textPassword"
-            android:elevation="@dimen/elevation_5"
-            tools:targetApi="lollipop"
-            android:maxLength="15"
-            tools:ignore="LabelFor" />
 
         <!--spinner-->
         <Spinner
             android:id="@+id/fad_securityQuestionsSpinner"
-            android:layout_below="@+id/fad_passwordEditText"
+            android:layout_below="@+id/fad_phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="@color/black50"

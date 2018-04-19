@@ -53,10 +53,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
         final RecyclerViewListAangadiaData UploadInfo = MainImageUploadInfoList.get(position);
 
         holder.name.setText(UploadInfo.getUserName());
-        String uid_tx = UploadInfo.getUid();
-        if (!TextUtils.isEmpty(uid_tx)) {
-            holder.uid.setText(uid_tx.substring(0,7));
-        }
+        holder.uid.setText(UploadInfo.getUid());
 
 
         holder.button.setOnClickListener(new View.OnClickListener() {
@@ -67,9 +64,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
                 editor.putString(AANGADIA_UID, UploadInfo.getKey());
                 editor.apply();
                 try {
-                    AppCompatActivity activity = (AppCompatActivity) context;
-                    activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_list_of_aangadias, new AangadiaData()).addToBackStack("aangadiaData").commit();
-
+                    context.startActivity(new Intent(context, AangadiaDetails.class));
                 }
                 catch (IllegalStateException e){
                     e.printStackTrace();

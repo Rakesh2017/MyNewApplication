@@ -32,7 +32,14 @@
         <activity
             android:name=".AangadiaHomePage"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".ListOfAangadias"></activity>
+        <activity android:name=".ListOfAangadias" />
+        <activity android:name=".AangadiaDetails">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
