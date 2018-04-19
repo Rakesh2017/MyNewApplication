@@ -262,6 +262,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("phone").setValue(phone_tx);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("security_answer").setValue(answer_tx);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("security_question").setValue(question_tx);
+                                databaseReference.child("AangadiaProfile").child(aangadiaUid).child("key").setValue(aangadiaUid);
 
                                 new MaterialDialog.Builder(getActivity())
                                         .title("Account Successfully Created")
@@ -288,20 +289,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
 //        create aangadia
 
     public boolean EditTextValidations(){
-        if (password_tx.length() < 8){
-                new MaterialDialog.Builder(getActivity())
-                        .title("Invalid Password")
-                        .titleColor(Color.WHITE)
-                        .content("Length of Password should be at least of length 8.")
-                        .icon(getResources().getDrawable(R.drawable.ic_warning))
-                        .contentColor(getResources().getColor(R.color.lightCoral))
-                        .backgroundColor(getResources().getColor(R.color.black90))
-                        .positiveText(R.string.ok)
-                        .show();
-                return false;
-            }
-
-            else if (userName_tx.isEmpty()){
+         if (userName_tx.isEmpty()){
                 new MaterialDialog.Builder(getActivity())
                         .title("Invalid UserName")
                         .titleColor(Color.WHITE)
@@ -327,6 +315,19 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                     return false;
                 }
             }
+       else if (password_tx.length() < 8){
+            new MaterialDialog.Builder(getActivity())
+                    .title("Invalid Password")
+                    .titleColor(Color.WHITE)
+                    .content("Length of Password should be at least of length 8.")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+            return false;
+        }
+
         else if(TextUtils.isEmpty(answer_tx)){
             new MaterialDialog.Builder(getActivity())
                     .title("Invalid Answer")

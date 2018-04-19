@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fading_wheat_red"
+    tools:context=".AangadiaData">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        >
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_back"
+            android:id="@+id/ad_backButton"
+            />
+
+        <TextView
+            android:id="@+id/ad_userNameTexView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+
+            android:layout_alignParentEnd="true"
+            style="@style/MyCustomTextStyleMedium"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/ad_relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ad_userNameTexView"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/fading_blury_wood"
+            android:padding="4dp"
+            >
+
+            <!-- uid -->
+            <TextView
+                android:id="@+id/ad_uid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/uidSemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ad_uidTextView"
+                android:layout_toEndOf="@+id/ad_uid"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ad_uid"
+                />
+
+
+            <!-- password -->
+            <TextView
+                android:id="@+id/ad_password"
+                android:layout_below="@+id/ad_uidTextView"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/passwordSemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ad_passwordTextView"
+                android:layout_toEndOf="@+id/ad_password"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ad_password"
+                />
+
+        </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/ad_relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ad_relativeLayout1"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@drawable/fading_blury_wood"
+        android:padding="4dp"
+        >
+
+        <!-- question -->
+        <TextView
+            android:id="@+id/ad_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SecurityQuestionSemi"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:textColor="@color/black90"
+            />
+
+        <TextView
+            android:id="@+id/ad_questionTextView"
+            android:layout_toEndOf="@+id/ad_question"
+            android:layout_marginStart="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/ad_question"
+            />
+
+        <!-- answer -->
+        <TextView
+            android:id="@+id/ad_answer"
+            android:layout_below="@+id/ad_questionTextView"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/AnswerSemi"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:textColor="@color/black90"
+            />
+
+        <TextView
+            android:id="@+id/ad_answerTextView"
+            android:layout_toEndOf="@+id/ad_answer"
+            android:layout_marginStart="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/ad_answer"
+            />
+
+
+    </RelativeLayout>
+
+
+
+
+
+    </RelativeLayout>
+</FrameLayout>

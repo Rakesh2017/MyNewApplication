@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/rya_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="5dp"
+    card_view:cardMaxElevation="5dp"
+    android:alwaysDrawnWithCache="true"
+    app:cardBackgroundColor="@color/whiteSmoke"
+    android:background="@color/whiteSmoke"
+    android:layout_centerHorizontal="true"
+    android:shape="ring"
+    android:layout_marginTop="5dp"
+    app:cardPreventCornerOverlap="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rya_relativeLayout"
+        android:background="@color/whiteSmoke"
+        xmlns:app="http://schemas.android.com/tools"
+        android:padding="8dp"
+        >
+
+        <!--username-->
+        <TextView
+            android:id="@+id/rla_nameTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name:  "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <!--username-->
+        <TextView
+            android:id="@+id/rla_nameTextView"
+            android:layout_toEndOf="@+id/rla_nameTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderDouble"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_toStartOf="@+id/rla_forwardImageButton"
+            android:layout_marginEnd="12dp"
+            />
+
+
+        <!--unique id-->
+        <TextView
+            android:id="@+id/rla_uidTextView1"
+            android:layout_below="@+id/rla_nameTextView"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unique Id(uid):   "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/rla_uidTextView"
+            android:layout_toEndOf="@+id/rla_uidTextView1"
+            android:layout_below="@+id/rla_nameTextView"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+        <ImageButton
+            android:id="@+id/rla_forwardImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:background="@drawable/ic_forward"
+            />
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+
+
+
+
+
+

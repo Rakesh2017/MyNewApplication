@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton addAangadia_btn, logout_ib;
+    ImageButton addAangadia_btn, logout_ib, allAangadias_btn;
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
@@ -42,12 +42,14 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_admin_home_page);
 
         addAangadia_btn = findViewById(R.id.adh_addAangadiaButton);
+        allAangadias_btn = findViewById(R.id.adh_allAangadiaButton);
 
         logout_ib = findViewById(R.id.adh_logoutButton);
 
         totalAangadia_tv = findViewById(R.id.adh_totalAangadiasTextView);
 
         addAangadia_btn.setOnClickListener(this);
+        allAangadias_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
 
     }
@@ -64,8 +66,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         totalAangadia = (int) dataSnapshot.getChildrenCount();
-                        totalAangadia_tv.setText(null);
-                        totalAangadia_tv.setText("Total Aangadias: "+ String.valueOf(totalAangadia));
+                        totalAangadia_tv.setText(String.valueOf(totalAangadia));
                     }
 
                     @Override
@@ -129,6 +130,11 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     }
                 })
                         .show();
+                break;
+
+//                list of all aangadias
+            case R.id.adh_allAangadiaButton:
+                startActivity(new Intent(AdminHomePage.this, ListOfAangadias.class));
                 break;
 
         }//switch ends

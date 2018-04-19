@@ -24,5 +24,15 @@
     <string name="phoneNumber">Mobile Number</string>
     <string name="phoneNumberOptional">10 Digit Number (Optional)</string>
     <string name="logout">Logout</string>
+    <string name="aangadiaList">List of Aangadias</string>
+    <string name="hintPlaceholderDouble">_______ _______</string>
+    <string name="hintPlaceholderSingle">_______</string>
+    <string name="hintPlaceholderSingleSmall">____</string>
+    <string name="nameSemi">Name:</string>
+    <string name="passwordSemi">Password:</string>
+    <string name="uidSemi">Unique ID(uid):</string>
+    <string name="SecurityQuestionSemi">S.Q:</string>
+    <string name="AnswerSemi">Answer:</string>
+    <string name="totalAangadias">Total Aangadias:</string>
 </resources>
 
