@@ -51,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="52dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -224,6 +225,74 @@
                     />
 
             </RelativeLayout>
+
+
+
+            <!--All users-->
+            <RelativeLayout
+                android:id="@+id/adg_allUsersRelativeLayout"
+                android:layout_below="@+id/adh_addUserRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_2"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                >
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_all_aangadias"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/adh_allUsersButton"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_allUsersTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Users"
+                    android:layout_toEndOf="@+id/adh_allUsersButton"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <!--total aangadias-->
+                <TextView
+                    android:id="@+id/adh_totalUsersTextView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totalUsers"
+                    android:drawableStart="@drawable/ic_pointing_arrow"
+                    android:drawablePadding="@dimen/drawablePadding"
+                    android:gravity="center"
+                    android:layout_toEndOf="@+id/adh_allUsersButton"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/adh_allUsersTextView"
+                    android:layout_marginStart="10dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_totalUsersTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/adh_totalUsersTextView1"
+                    android:layout_toEndOf="@+id/adh_totalUsersTextView1"
+                    android:hint="@string/hintPlaceholderSingleSmall"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:layout_marginStart="4dp"
+                    android:textStyle="bold"
+                    />
+
+            </RelativeLayout>
+
 
 
 

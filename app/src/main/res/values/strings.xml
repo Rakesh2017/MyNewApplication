@@ -30,15 +30,20 @@
     <string name="city">City</string>
     <string name="enterCity">Enter name of City</string>
     <string name="aangadiaList">List of Aangadias</string>
+    <string name="usersList">List of Users</string>
     <string name="hintPlaceholderDouble">_______ _______</string>
     <string name="hintPlaceholderSingle">_______</string>
     <string name="hintPlaceholderSingleSmall">____</string>
     <string name="nameSemi">Name:</string>
+    <string name="phoneSemi">Phone:</string>
     <string name="passwordSemi">Password:</string>
     <string name="uidSemi">Unique ID(uid):</string>
     <string name="SecurityQuestionSemi">S.Q:</string>
     <string name="AnswerSemi">Answer:</string>
     <string name="totalAangadias">Total Aangadias:</string>
+    <string name="totalUsers">Total Users:</string>
+    <string name="stateSemi">State:</string>
+    <string name="citySemi">City:</string>
     <string name="uid">UID</string>
 </resources>
 

@@ -23,14 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton addAangadia_btn, addUser_btn,logout_ib, allAangadias_btn;
+    ImageButton addAangadia_btn, addUser_btn,logout_ib, allAangadias_btn, allUsers_btn;
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
 
-    TextView totalAangadia_tv;
+    TextView totalAangadia_tv, totalUsers_tv;
 
-    int totalAangadia;
+    int totalAangadia, totalUsers;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -44,14 +44,17 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         addAangadia_btn = findViewById(R.id.adh_addAangadiaButton);
         addUser_btn = findViewById(R.id.adh_addUserButton);
         allAangadias_btn = findViewById(R.id.adh_allAangadiaButton);
+        allUsers_btn = findViewById(R.id.adh_allUsersButton);
 
         logout_ib = findViewById(R.id.adh_logoutButton);
 
         totalAangadia_tv = findViewById(R.id.adh_totalAangadiasTextView);
+        totalUsers_tv = findViewById(R.id.adh_totalUsersTextView);
 
         addAangadia_btn.setOnClickListener(this);
         addUser_btn.setOnClickListener(this);
         allAangadias_btn.setOnClickListener(this);
+        allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
 
     }
@@ -59,7 +62,27 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     public void onStart(){
         super.onStart();
         TotalAangadias();
+        TotalUsers();
     }
+
+//    total users
+    private void TotalUsers() {
+        databaseReference.child("userProfile").
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        totalUsers = (int) dataSnapshot.getChildrenCount();
+                        totalUsers_tv.setText(String.valueOf(totalUsers));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                        Toast.makeText(AdminHomePage.this, ""+databaseError.getDetails(), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+//    total users
 
     //    total aangadia
     private void TotalAangadias() {
@@ -68,7 +91,6 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         totalAangadia = (int) dataSnapshot.getChildrenCount();
-                        totalAangadia_tv.setText(String.valueOf(totalAangadia));
                         totalAangadia_tv.setText(String.valueOf(totalAangadia));
                     }
 
@@ -145,6 +167,10 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(AdminHomePage.this, ListOfAangadias.class));
                 break;
 
+            //                list of all users
+            case R.id.adh_allUsersButton:
+                startActivity(new Intent(AdminHomePage.this, ListOfUsersForAdmin.class));
+                break;
         }//switch ends
 
     }//onclick

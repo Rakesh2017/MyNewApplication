@@ -201,6 +201,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                         .backgroundColor(getResources().getColor(R.color.black90))
                         .positiveText(R.string.ok)
                         .show();
+                new GetDateTime().execute();
             }
             else if (TextUtils.isEmpty(question_tx)){
                 new MaterialDialog.Builder(getActivity())
@@ -341,12 +342,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
             return true;
     }
 
-    //    validate email
-  /*  public boolean validateEmail(String email) {
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }*/
-
+//    creating second auth instance
     public void CreatingFirebaseAuthInstance(){
         mAuth1 = FirebaseAuth.getInstance();
         Toast.makeText(getActivity(), ""+mAuth1.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();

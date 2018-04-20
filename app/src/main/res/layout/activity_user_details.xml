@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fading_wheat_red"
-    android:id="@+id/fragment_container_aangadia_details"
-    tools:context=".AangadiaDetails">
+    tools:context=".UserDetails">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,42 +19,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_back"
-            android:id="@+id/ad_backButton"
+            android:id="@+id/ud_backButton"
             />
 
-        <ImageButton
+        <TextView
+            android:id="@+id/ud_userNameTexView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_home"
-            android:id="@+id/ad_homeButton"
+            android:textStyle="bold"
             android:layout_alignParentEnd="true"
+            style="@style/MyCustomTextStyleMedium"
             />
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="12dp"
-            android:id="@+id/ad_balanceRelativeLayout"
-            android:layout_below="@+id/ad_backButton"
-            android:background="@drawable/background_shadow_3"
-            android:padding="8dp"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Avialable Balance + Mini Statements"
-                style="@style/MyCustomTextStyleSmall"
-                />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/ad_uidRelativeLayout"
+            android:id="@+id/ud_relativeLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ad_balanceRelativeLayout"
+            android:layout_below="@+id/ud_userNameTexView"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:background="@drawable/background_shadow_1"
             android:padding="8dp"
@@ -63,7 +44,7 @@
 
             <!-- uid -->
             <TextView
-                android:id="@+id/ad_uid"
+                android:id="@+id/ud_uid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/uidSemi"
@@ -73,22 +54,22 @@
                 />
 
             <TextView
-                android:id="@+id/ad_uidTextView"
-                android:layout_toEndOf="@+id/ad_uid"
+                android:id="@+id/ud_uidTextView"
+                android:layout_toEndOf="@+id/ud_uid"
                 android:layout_marginStart="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/hintPlaceholderSingle"
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
-                android:layout_alignTop="@+id/ad_uid"
+                android:layout_alignTop="@+id/ud_uid"
                 />
 
 
             <!-- password -->
             <TextView
-                android:id="@+id/ad_password"
-                android:layout_below="@+id/ad_uidTextView"
+                android:id="@+id/ud_password"
+                android:layout_below="@+id/ud_uidTextView"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,126 +80,25 @@
                 />
 
             <TextView
-                android:id="@+id/ad_passwordTextView"
-                android:layout_toEndOf="@+id/ad_password"
+                android:id="@+id/ud_passwordTextView"
+                android:layout_toEndOf="@+id/ud_password"
                 android:layout_marginStart="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/hintPlaceholderSingle"
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
-                android:layout_alignTop="@+id/ad_password"
-                />
-
-            <ImageButton
-                android:id="@+id/ad_editPasswordButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_edit"
-                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/ud_password"
                 />
 
         </RelativeLayout>
 
 
-        <!--name-->
-
         <RelativeLayout
-            android:id="@+id/ad_nameRelativeLayout"
+            android:id="@+id/ud_relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ad_uidRelativeLayout"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_2"
-            android:padding="8dp"
-            >
-
-            <TextView
-                android:id="@+id/ad_userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/nameSemi"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:textColor="@color/black90"
-                android:layout_centerVertical="true"
-                />
-
-            <TextView
-                android:id="@+id/ad_userNameTextView"
-                android:layout_toEndOf="@+id/ad_userName"
-                android:layout_marginStart="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/hintPlaceholderDouble"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:layout_alignTop="@+id/ad_userName"
-                />
-
-            <ImageButton
-                android:id="@+id/ad_editNameButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_edit"
-                android:layout_alignParentEnd="true"
-                />
-
-        </RelativeLayout>
-
-
-        <!--phone-->
-
-        <RelativeLayout
-            android:id="@+id/ad_PhoneRelativeLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ad_nameRelativeLayout"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_4"
-            android:padding="8dp"
-            >
-
-            <TextView
-                android:id="@+id/ad_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/phoneSemi"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:textColor="@color/black90"
-                android:layout_centerVertical="true"
-                />
-
-            <TextView
-                android:id="@+id/ad_phoneTextView"
-                android:layout_toEndOf="@+id/ad_phone"
-                android:layout_marginStart="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/hintPlaceholderSingle"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:layout_alignTop="@+id/ad_phone"
-                />
-
-            <ImageButton
-                android:id="@+id/ad_editPhoneButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_edit"
-                android:layout_alignParentEnd="true"
-                />
-
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:id="@+id/ad_relativeLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ad_PhoneRelativeLayout"
+            android:layout_below="@+id/ud_relativeLayout1"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:background="@drawable/background_shadow"
             android:padding="8dp"
@@ -226,7 +106,7 @@
 
             <!-- question -->
             <TextView
-                android:id="@+id/ad_question"
+                android:id="@+id/ud_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/SecurityQuestionSemi"
@@ -236,21 +116,21 @@
                 />
 
             <TextView
-                android:id="@+id/ad_questionTextView"
-                android:layout_toEndOf="@+id/ad_question"
+                android:id="@+id/ud_questionTextView"
+                android:layout_toEndOf="@+id/ud_question"
                 android:layout_marginStart="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/hintPlaceholderSingle"
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
-                android:layout_alignTop="@+id/ad_question"
+                android:layout_alignTop="@+id/ud_question"
                 />
 
             <!-- answer -->
             <TextView
-                android:id="@+id/ad_answer"
-                android:layout_below="@+id/ad_questionTextView"
+                android:id="@+id/ud_answer"
+                android:layout_below="@+id/ud_questionTextView"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -261,15 +141,76 @@
                 />
 
             <TextView
-                android:id="@+id/ad_answerTextView"
-                android:layout_toEndOf="@+id/ad_answer"
+                android:id="@+id/ud_answerTextView"
+                android:layout_toEndOf="@+id/ud_answer"
                 android:layout_marginStart="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/hintPlaceholderSingle"
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
-                android:layout_alignTop="@+id/ad_answer"
+                android:layout_alignTop="@+id/ud_answer"
+                />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ud_relativeLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ud_relativeLayout2"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/background_shadow_2"
+            android:padding="8dp"
+            >
+
+            <!-- state -->
+            <TextView
+                android:id="@+id/ud_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stateSemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ud_stateTextView"
+                android:layout_toEndOf="@+id/ud_state"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ud_state"
+                />
+
+            <!-- city -->
+            <TextView
+                android:id="@+id/ud_city"
+                android:layout_below="@+id/ud_stateTextView"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/citySemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ud_cityTextView"
+                android:layout_toEndOf="@+id/ud_city"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ud_city"
                 />
 
 

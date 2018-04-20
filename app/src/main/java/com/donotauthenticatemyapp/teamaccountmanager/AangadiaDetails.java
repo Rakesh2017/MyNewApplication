@@ -3,9 +3,11 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,30 +22,41 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
     TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv;
     String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx;
 
-    ImageButton back_btn;
+    ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private static final String AANGADIA_UID_PREF = "aangadia_uid_pref";
     private static final String AANGADIA_UID = "aangadia_uid";
-    SharedPreferences sharedPreferences;
+    private static final String CHANGE_PASSWORD_PREF = "change_password_pref";
+    private static final String OLD_PASSWORD = "old_password";
+    private static final String UID = "uid";
+
+    SharedPreferences sharedPreferences, passwordSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aangadia_details);
 
-        name_tv = findViewById(R.id.ad_userNameTexView);
+        name_tv = findViewById(R.id.ad_userNameTextView);
         uid_tv = findViewById(R.id.ad_uidTextView);
         password_tv = findViewById(R.id.ad_passwordTextView);
         question_tv = findViewById(R.id.ad_questionTextView);
         answer_tv = findViewById(R.id.ad_answerTextView);
+        phone_tv = findViewById(R.id.ad_phoneTextView);
+
+        editPassword_btn = findViewById(R.id.ad_editPasswordButton);
+        editName_btn = findViewById(R.id.ad_editNameButton);
+        editPhone_btn = findViewById(R.id.ad_editPhoneButton);
 
         back_btn = findViewById(R.id.ad_backButton);
 
         sharedPreferences = getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);
+        passwordSharedPreferences = getSharedPreferences(CHANGE_PASSWORD_PREF, MODE_PRIVATE);
 
         back_btn.setOnClickListener(this);
+        editPassword_btn.setOnClickListener(this);
     }
 
     public void onStart(){
@@ -70,7 +83,13 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
                 password_tv.setText(password_tx);
                 question_tv.setText(question_tx);
                 answer_tv .setText(answer_tx);
-                //.setText();
+                phone_tv.setText(phone_tx);
+//                saving for password change
+                SharedPreferences.Editor editor = passwordSharedPreferences.edit();
+                editor.putString(OLD_PASSWORD, password_tx);
+                editor.putString(UID, uid_tx);
+                editor.apply();
+
             }
 
             @Override
@@ -90,6 +109,14 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
 //            back button
             case R.id.ad_backButton:
                 onBackPressed();
+                break;
+
+//                change password
+            case R.id.ad_editPasswordButton:
+                if (TextUtils.isEmpty(password_tx) || TextUtils.isEmpty(uid_tx) ){
+                    Toast.makeText(this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+                else getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePassword()).addToBackStack("changepassword").commit();
                 break;
         }
 

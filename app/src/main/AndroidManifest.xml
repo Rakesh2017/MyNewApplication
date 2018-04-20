@@ -33,13 +33,9 @@
             android:name=".AangadiaHomePage"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".ListOfAangadias" />
-        <activity android:name=".AangadiaDetails">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".AangadiaDetails" />
+        <activity android:name=".ListOfUsersForAdmin" />
+        <activity android:name=".UserDetails"></activity>
     </application>
 
 </manifest>
