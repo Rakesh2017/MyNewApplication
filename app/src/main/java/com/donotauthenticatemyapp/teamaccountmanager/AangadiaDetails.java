@@ -30,6 +30,7 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
     private static final String AANGADIA_UID = "aangadia_uid";
     private static final String CHANGE_PASSWORD_PREF = "change_password_pref";
     private static final String OLD_PASSWORD = "old_password";
+    private static final String USER_NAME = "userName";
     private static final String UID = "uid";
 
     SharedPreferences sharedPreferences, passwordSharedPreferences;
@@ -67,8 +68,8 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
 
     //    load data
     private void loadData() {
-        String uid = sharedPreferences.getString(AANGADIA_UID, "");
-        databaseReference.child("AangadiaProfile").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        final String key = sharedPreferences.getString(AANGADIA_UID, "");
+        databaseReference.child("AangadiaProfile").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 name_tx = dataSnapshot.child("userName").getValue(String.class);
@@ -88,6 +89,7 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
                 SharedPreferences.Editor editor = passwordSharedPreferences.edit();
                 editor.putString(OLD_PASSWORD, password_tx);
                 editor.putString(UID, uid_tx);
+                editor.putString(USER_NAME, name_tx);
                 editor.apply();
 
             }
