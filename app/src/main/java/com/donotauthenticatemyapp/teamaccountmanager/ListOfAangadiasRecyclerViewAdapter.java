@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,6 +33,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
     private static final String AANGADIA_UID = "aangadia_uid";
     SharedPreferences sharedPreferences;
 
+    int delay = 100;
 
     ListOfAangadiasRecyclerViewAdapter(Context context, List<RecyclerViewListAangadiaData> TempList) {
 
@@ -72,6 +76,13 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
             }
         });
 
+        YoYo.with(Techniques.ZoomIn)
+                .duration(delay)
+                .repeat(0)
+                .playOn(holder.cardView);
+
+        delay+=100;
+
     }
 
     @Override
@@ -93,12 +104,14 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
 
         TextView name, uid;
         ImageButton button;
+        CardView cardView;
 
         ViewHolder(View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.rla_nameTextView);
             uid = itemView.findViewById(R.id.rla_uidTextView);
+            cardView = itemView.findViewById(R.id.rya_cardview);
 
             button = itemView.findViewById(R.id.rla_forwardImageButton);
 

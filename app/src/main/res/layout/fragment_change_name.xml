@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:background="@color/whiteSmoke"
+    tools:context=".ChangePhone"
+    android:id="@+id/cn_relativeLayout"
+    android:focusable="true"
+    android:clickable="true"
+    tools:targetApi="lollipop">
+
+
+    <!--uid-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hintPlaceholderSingle"
+        style="@style/MyCustomTextStyleMedium"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="32dp"
+        android:id="@+id/cn_uidTextViewHeader"
+        />
+
+    <!--name-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomTextStyleMedium"
+        android:hint="@string/hintPlaceholderSingle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/cn_uidTextViewHeader"
+        android:id="@+id/cn_nameViewHeader"
+        android:layout_marginTop="4dp"
+        />
+
+
+    <TextView
+        android:id="@+id/cn_userName"
+        android:layout_below="@+id/cn_nameViewHeader"
+        android:layout_marginTop="24dp"
+        style="@style/MyCustomTextStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:text="New User Name"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/cn_userNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cn_userName"
+        android:layout_marginTop="@dimen/paddingBetweenET"
+        style="@style/MyCustomEditTextStyle"
+        android:hint="@string/UserNameVisible"
+        android:drawableEnd="@drawable/ic_user_name"
+        android:inputType="textCapWords"
+        android:elevation="@dimen/elevation_5"
+        tools:targetApi="lollipop"
+        tools:ignore="LabelFor" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/cn_submitButton"
+        android:layout_below="@+id/cn_userNameEditText"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_start_margin"
+        android:layout_marginEnd="@dimen/activity_end_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="@color/lightCoral"
+        fancy:fb_focusColor="@color/whiteSmoke"
+        fancy:fb_fontIconResource="&#xf084;"
+        fancy:fb_iconPosition="right"
+        fancy:fb_radius="2dp"
+        fancy:fb_text="change User Name"
+        fancy:fb_textColor="@color/black"
+        android:layout_marginBottom="32dp"
+        android:elevation="@dimen/elevation_5"
+        tools:targetApi="lollipop" />
+
+</RelativeLayout>

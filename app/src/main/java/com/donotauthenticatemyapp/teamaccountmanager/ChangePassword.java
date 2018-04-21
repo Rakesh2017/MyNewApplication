@@ -1,28 +1,30 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -41,6 +43,8 @@ public class ChangePassword extends Fragment {
     String password_tx, oldPassword_tx, uid_tx, name_tx;
     TextView uid_header, userName;
 
+    RelativeLayout relativeLayout;
+
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     FancyButton submit;
@@ -50,10 +54,13 @@ public class ChangePassword extends Fragment {
 
     protected FirebaseApp myApp;
 
-    private static final String CHANGE_PASSWORD_PREF = "change_password_pref";
+    private static final String UPDATE_PREF = "change_password_pref";
     private static final String OLD_PASSWORD = "old_password";
     private static final String UID = "uid";
     private static final String USER_NAME = "userName";
+    private static final String PLAY_EMAIL = "@play.org";
+
+    ProgressDialog progressDialog;
 
     SharedPreferences passwordSharedPreferences;
 
@@ -72,14 +79,19 @@ public class ChangePassword extends Fragment {
 
         uid_header = view.findViewById(R.id.cp_uidTextViewHeader);
         userName = view.findViewById(R.id.cp_nameViewHeader);
+        relativeLayout = view.findViewById(R.id.cp_relativeLayout);
 
-        passwordSharedPreferences = getActivity().getSharedPreferences(CHANGE_PASSWORD_PREF, MODE_PRIVATE);
+        passwordSharedPreferences = getActivity().getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
         oldPassword_tx = passwordSharedPreferences.getString(OLD_PASSWORD, "");
-        uid_tx = passwordSharedPreferences.getString(UID, "").concat("@play.org");
+        uid_tx = passwordSharedPreferences.getString(UID, "");
         name_tx = passwordSharedPreferences.getString(USER_NAME, "");
 
         uid_header.setText(uid_tx);
         userName.setText(name_tx);
+
+        progressDialog = new ProgressDialog(getContext());
+        // Setting up message in Progress dialog.
+        progressDialog.setMessage("updating password...");
 
         password = view.findViewById(R.id.cp_passwordEditText);
 
@@ -95,6 +107,20 @@ public class ChangePassword extends Fragment {
 
         return view;
     }
+
+    public void onStart(){
+        super.onStart();
+
+        LoadAnimation();
+    }
+
+    private void LoadAnimation() {
+        YoYo.with(Techniques.Landing)
+                .duration(1000)
+                .repeat(0)
+                .playOn(relativeLayout);
+    }
+
 
     //    creating second auth instance
     public void CreatingFirebaseAuthInstance(){
@@ -114,13 +140,23 @@ public class ChangePassword extends Fragment {
 //    update password
     public void updatePassword(){
 
+        progressDialog.show();
         Log.w("raky", uid_tx+" "+oldPassword_tx);
+        uid_tx = uid_tx.concat(PLAY_EMAIL);
         mAuth2.signInWithEmailAndPassword(uid_tx, oldPassword_tx)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()){
-                            Toast.makeText(getContext(), "failed!", Toast.LENGTH_SHORT).show();
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("Failed.")
+                                    .titleColor(Color.WHITE)
+                                    .content(task.getException().getLocalizedMessage())
+                                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                    .contentColor(getResources().getColor(R.color.lightCoral))
+                                    .backgroundColor(getResources().getColor(R.color.black90))
+                                    .positiveText(R.string.ok)
+                                    .show();
                         }
                         else {
                           //  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -134,19 +170,45 @@ public class ChangePassword extends Fragment {
                                                 String key = mAuth2.getCurrentUser().getUid();
                                                 databaseReference.child("AangadiaProfile").child(key)
                                                         .child("password").setValue(password_tx);
+                                                PasswordUpdateSuccessful();
                                             }
                                             else {
-                                                Log.d("raky", "User password failed.");
+                                                new MaterialDialog.Builder(getActivity())
+                                                        .title("Failed.")
+                                                        .titleColor(Color.WHITE)
+                                                        .content(task.getException().getLocalizedMessage())
+                                                        .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                                        .contentColor(getResources().getColor(R.color.lightCoral))
+                                                        .backgroundColor(getResources().getColor(R.color.black90))
+                                                        .positiveText(R.string.ok)
+                                                        .show();
+
                                             }
                                         }
                                     });
                         } // else ends
 
                         mAuth2.signOut();
+                        progressDialog.dismiss();
                     }
                 });
     }
 
+//    password updated
+    public void PasswordUpdateSuccessful() {
+        new MaterialDialog.Builder(getActivity())
+                .title("Password Updated")
+                .titleColor(Color.WHITE)
+                .content("New Password: " + password_tx)
+                .icon(getResources().getDrawable(R.drawable.ic_success))
+                .contentColor(getResources().getColor(R.color.lightCoral))
+                .backgroundColor(getResources().getColor(R.color.black90))
+                .positiveText(R.string.ok)
+                .show();
+    }
+
+
+//validations
     public boolean EditTextValidations(){
         if (password_tx.length() < 8){
             new MaterialDialog.Builder(getActivity())

@@ -84,7 +84,7 @@
                 <ImageButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:background="@drawable/ic_add_aangadia"
+                    android:background="@drawable/ic_add"
                     tools:ignore="ContentDescription"
                     android:id="@+id/adh_addAangadiaButton"
                     />
@@ -97,7 +97,7 @@
                     android:layout_toEndOf="@+id/adh_addAangadiaButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     />
 
                 <TextView
@@ -107,7 +107,7 @@
                     android:layout_toEndOf="@+id/adh_addAangadiaButton"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/adh_addAangadiaTextView"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     />
 
@@ -132,7 +132,7 @@
                 <ImageButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:background="@drawable/ic_all_aangadias"
+                    android:background="@drawable/ic_all"
                     tools:ignore="ContentDescription"
                     android:id="@+id/adh_allAangadiaButton"
                     />
@@ -143,9 +143,9 @@
                     android:layout_height="wrap_content"
                     android:text="All Aangadia"
                     android:layout_toEndOf="@+id/adh_allAangadiaButton"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     style="@style/MyCustomTextStyleMedium"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     />
 
                 <!--total aangadias-->
@@ -160,7 +160,7 @@
                     android:layout_toEndOf="@+id/adh_allAangadiaButton"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/adh_allAangadiaTextView"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
                     />
@@ -197,7 +197,7 @@
                 <ImageButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:background="@drawable/ic_add_aangadia"
+                    android:background="@drawable/ic_add"
                     tools:ignore="ContentDescription"
                     android:id="@+id/adh_addUserButton"
                     />
@@ -210,7 +210,7 @@
                     android:layout_toEndOf="@+id/adh_addUserButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     />
 
                 <TextView
@@ -220,7 +220,7 @@
                     android:layout_toEndOf="@+id/adh_addUserButton"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/adh_addUserTextView"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     />
 
@@ -246,7 +246,7 @@
                 <ImageButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:background="@drawable/ic_all_aangadias"
+                    android:background="@drawable/ic_all"
                     tools:ignore="ContentDescription"
                     android:id="@+id/adh_allUsersButton"
                     />
@@ -259,7 +259,7 @@
                     android:layout_toEndOf="@+id/adh_allUsersButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     />
 
                 <!--total aangadias-->
@@ -274,7 +274,7 @@
                     android:layout_toEndOf="@+id/adh_allUsersButton"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/adh_allUsersTextView"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
                     />

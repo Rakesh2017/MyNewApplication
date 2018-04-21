@@ -56,6 +56,7 @@
                     android:padding="8dp"
                     />
 
+
             </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -74,7 +75,7 @@
                 android:id="@+id/loa_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/black50"
+                android:background="@drawable/fading_app_color"
                 />
 
         </RelativeLayout>

@@ -148,7 +148,7 @@
                 android:layout_below="@+id/fau_phoneEditText"
                 />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/fau_stateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                 android:layout_below="@+id/fau_stateEditText"
                 />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/fau_cityEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

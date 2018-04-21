@@ -15,8 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 public class AangadiaDetails extends AppCompatActivity implements View.OnClickListener{
 
     TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv;
@@ -28,10 +26,13 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
 
     private static final String AANGADIA_UID_PREF = "aangadia_uid_pref";
     private static final String AANGADIA_UID = "aangadia_uid";
-    private static final String CHANGE_PASSWORD_PREF = "change_password_pref";
+    private static final String UPDATE_PREF = "change_password_pref";
     private static final String OLD_PASSWORD = "old_password";
     private static final String USER_NAME = "userName";
     private static final String UID = "uid";
+    private static final String KEY = "key";
+    private static final String PATH = "AangadiaProfile";
+
 
     SharedPreferences sharedPreferences, passwordSharedPreferences;
 
@@ -54,10 +55,12 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
         back_btn = findViewById(R.id.ad_backButton);
 
         sharedPreferences = getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);
-        passwordSharedPreferences = getSharedPreferences(CHANGE_PASSWORD_PREF, MODE_PRIVATE);
+        passwordSharedPreferences = getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
 
         back_btn.setOnClickListener(this);
         editPassword_btn.setOnClickListener(this);
+        editName_btn.setOnClickListener(this);
+        editPhone_btn.setOnClickListener(this);
     }
 
     public void onStart(){
@@ -90,6 +93,8 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
                 editor.putString(OLD_PASSWORD, password_tx);
                 editor.putString(UID, uid_tx);
                 editor.putString(USER_NAME, name_tx);
+                editor.putString(KEY, key);
+                editor.putString(PATH, "AangadiaProfile");
                 editor.apply();
 
             }
@@ -118,8 +123,18 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
                 if (TextUtils.isEmpty(password_tx) || TextUtils.isEmpty(uid_tx) ){
                     Toast.makeText(this, "something went wrong!", Toast.LENGTH_SHORT).show();
                 }
-                else getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePassword()).addToBackStack("changepassword").commit();
+                else getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePassword()).addToBackStack("changePassword").commit();
                 break;
+//                changing name
+            case R.id.ad_editNameButton:
+                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangeName()).addToBackStack("changeName").commit();
+                 break;
+
+//                 changing phone
+            case R.id.ad_editPhoneButton:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePhone()).addToBackStack("changePhone").commit();
+                break;
+
         }
 
     }

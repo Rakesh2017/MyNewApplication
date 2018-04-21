@@ -13,7 +13,10 @@
     android:background="@color/whiteSmoke"
     android:layout_centerHorizontal="true"
     android:shape="ring"
-    android:layout_marginTop="5dp"
+    app:cardCornerRadius="7dp"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
     app:cardPreventCornerOverlap="true"
     android:fitsSystemWindows="true">
 
@@ -21,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rya_relativeLayout"
-        android:background="@color/whiteSmoke"
+        android:background="@color/white"
         xmlns:app="http://schemas.android.com/tools"
         android:padding="8dp"
         >
@@ -79,7 +82,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:background="@drawable/ic_forward"
+            android:background="@drawable/ic_next"
             />
 
 
