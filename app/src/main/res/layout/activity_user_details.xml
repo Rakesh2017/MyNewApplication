@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fading_wheat_red"
+    android:background="@color/whiteSmoke"
+    android:id="@+id/fragment_container_user_details"
     tools:context=".UserDetails">
 
     <RelativeLayout
@@ -22,21 +23,40 @@
             android:id="@+id/ud_backButton"
             />
 
-        <TextView
-            android:id="@+id/ud_userNameTexView"
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_alignParentEnd="true"
-            style="@style/MyCustomTextStyleMedium"
+            android:background="@drawable/ic_home"
+            android:id="@+id/ud_homeButton"
+            android:layout_toEndOf="@+id/ud_backButton"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             />
 
 
         <RelativeLayout
-            android:id="@+id/ud_relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="12dp"
+            android:id="@+id/ud_balanceRelativeLayout"
+            android:layout_below="@+id/ud_backButton"
+            android:background="@drawable/background_shadow_3"
+            android:padding="8dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Avialable Balance + Mini Statements"
+                style="@style/MyCustomTextStyleSmall"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ud_uidRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ud_userNameTexView"
+            android:layout_below="@+id/ud_balanceRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:background="@drawable/background_shadow_1"
             android:padding="8dp"
@@ -91,14 +111,117 @@
                 android:layout_alignTop="@+id/ud_password"
                 />
 
+            <ImageButton
+                android:id="@+id/ud_editPasswordButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_edit"
+                android:layout_alignParentEnd="true"
+                />
+
         </RelativeLayout>
+
+
+        <!--name-->
+
+        <RelativeLayout
+            android:id="@+id/ud_nameRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ud_uidRelativeLayout"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/background_shadow_2"
+            android:padding="8dp"
+            >
+
+            <TextView
+                android:id="@+id/ud_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/nameSemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/ud_userNameTextView"
+                android:layout_toEndOf="@+id/ud_userName"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderDouble"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ud_userName"
+                />
+
+            <ImageButton
+                android:id="@+id/ud_editNameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_edit"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+
+
+        <!--phone-->
+
+        <RelativeLayout
+            android:id="@+id/ud_PhoneRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ud_nameRelativeLayout"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/background_shadow_4"
+            android:padding="8dp"
+            >
+
+            <TextView
+                android:id="@+id/ud_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/phoneSemi"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/ud_phoneTextView"
+                android:layout_toEndOf="@+id/ud_phone"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                android:layout_centerVertical="true"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ud_phone"
+                />
+
+            <ImageButton
+                android:id="@+id/ud_editPhoneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_edit"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+
 
 
         <RelativeLayout
             android:id="@+id/ud_relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ud_relativeLayout1"
+            android:layout_below="@+id/ud_PhoneRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:background="@drawable/background_shadow"
             android:padding="8dp"
@@ -150,67 +273,6 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:layout_alignTop="@+id/ud_answer"
-                />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/ud_relativeLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ud_relativeLayout2"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_2"
-            android:padding="8dp"
-            >
-
-            <!-- state -->
-            <TextView
-                android:id="@+id/ud_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/stateSemi"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:textColor="@color/black90"
-                />
-
-            <TextView
-                android:id="@+id/ud_stateTextView"
-                android:layout_toEndOf="@+id/ud_state"
-                android:layout_marginStart="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/hintPlaceholderSingle"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:layout_alignTop="@+id/ud_state"
-                />
-
-            <!-- city -->
-            <TextView
-                android:id="@+id/ud_city"
-                android:layout_below="@+id/ud_stateTextView"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/citySemi"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:textColor="@color/black90"
-                />
-
-            <TextView
-                android:id="@+id/ud_cityTextView"
-                android:layout_toEndOf="@+id/ud_city"
-                android:layout_marginStart="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/hintPlaceholderSingle"
-                style="@style/MyCustomTextStyleSmall"
-                android:textStyle="bold"
-                android:layout_alignTop="@+id/ud_city"
                 />
 
 

@@ -40,8 +40,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_back"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="2dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/loa_resetImageButton"
+                    android:layout_toEndOf="@+id/loa_backImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_reset"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="2dp"
                     />
 
                 <TextView
@@ -56,8 +66,68 @@
                     android:padding="8dp"
                     />
 
+                <LinearLayout
+                    android:id="@+id/loa_linearLayout"
+                    android:layout_below="@+id/loa_backImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:background="@color/appColor"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="7dp"
+                    >
+
+                    <!--user name-->
+                    <EditText
+                        android:id="@+id/loa_userNameEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        style="@style/MyCustomEditTextStyle"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="User Name"
+                        android:inputType="textCapWords"
+                        android:gravity="center"
+                        android:elevation="@dimen/elevation_5"
+                        tools:targetApi="lollipop"
+                        tools:ignore="LabelFor" />
+
+                    <!--uid-->
+                    <EditText
+                        android:id="@+id/loa_uidEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        style="@style/MyCustomEditTextStyle"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="UID"
+                        android:gravity="center"
+                        android:maxLength="7"
+                        android:inputType="number"
+                        android:elevation="@dimen/elevation_5"
+                        tools:targetApi="lollipop"
+                        tools:ignore="LabelFor" />
+
+                    <!--search-->
+                    <ImageButton
+                        android:id="@+id/loa_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_search"
+                        android:layout_gravity="center"
+                        />
+
+
+
+
+                </LinearLayout>
+
+
 
             </RelativeLayout>
+
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

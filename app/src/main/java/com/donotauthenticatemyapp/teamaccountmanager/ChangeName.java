@@ -28,7 +28,6 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -46,7 +45,7 @@ public class ChangeName extends Fragment {
     private static final String KEY = "key";
     private static final String UID = "uid";
     private static final String USER_NAME = "userName";
-    private static final String PATH = "AangadiaProfile";
+    private static final String PATH = "path";
     SharedPreferences passwordSharedPreferences;
 
     RelativeLayout relativeLayout;
@@ -58,7 +57,6 @@ public class ChangeName extends Fragment {
     public ChangeName() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,26 +92,30 @@ public class ChangeName extends Fragment {
             }
         });
 
-
         return view;
     }
 
+//    onStart
     public void onStart(){
         super.onStart();
 
         LoadAnimation();
     }
+//    onStart
 
+//    load animation
     private void LoadAnimation() {
         YoYo.with(Techniques.Landing)
                 .duration(1000)
                 .repeat(0)
                 .playOn(relativeLayout);
     }
+//    load animation
 
+//    update Name
     private void updateName() {
         progressDialog.show();
-        databaseReference.child(PATH).child(key_tx).child("userName").setValue(newName_tx)
+        databaseReference.child(path_tx).child(key_tx).child("userName").setValue(newName_tx)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -143,7 +145,7 @@ public class ChangeName extends Fragment {
                 });
         progressDialog.dismiss();
     }
-
+//    update name
 
     //validations
     public boolean EditTextValidations(){
@@ -161,7 +163,7 @@ public class ChangeName extends Fragment {
         }
         return true;
     }
-
+//    validations
 
 //end
 }

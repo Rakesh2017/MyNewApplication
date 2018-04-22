@@ -40,7 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ChangePassword extends Fragment {
 
     EditText password;
-    String password_tx, oldPassword_tx, uid_tx, name_tx;
+    String password_tx, oldPassword_tx, uid_tx, name_tx, path_tx;
     TextView uid_header, userName;
 
     RelativeLayout relativeLayout;
@@ -59,6 +59,7 @@ public class ChangePassword extends Fragment {
     private static final String UID = "uid";
     private static final String USER_NAME = "userName";
     private static final String PLAY_EMAIL = "@play.org";
+    private static final String PATH = "path";
 
     ProgressDialog progressDialog;
 
@@ -85,6 +86,7 @@ public class ChangePassword extends Fragment {
         oldPassword_tx = passwordSharedPreferences.getString(OLD_PASSWORD, "");
         uid_tx = passwordSharedPreferences.getString(UID, "");
         name_tx = passwordSharedPreferences.getString(USER_NAME, "");
+        path_tx = passwordSharedPreferences.getString(PATH, "");
 
         uid_header.setText(uid_tx);
         userName.setText(name_tx);
@@ -168,7 +170,7 @@ public class ChangePassword extends Fragment {
                                                 //Log.w("raky", user.getDisplayName());
                                                 Log.d("raky", "User password updated.");
                                                 String key = mAuth2.getCurrentUser().getUid();
-                                                databaseReference.child("AangadiaProfile").child(key)
+                                                databaseReference.child(path_tx).child(key)
                                                         .child("password").setValue(password_tx);
                                                 PasswordUpdateSuccessful();
                                             }
@@ -193,6 +195,7 @@ public class ChangePassword extends Fragment {
                     }
                 });
     }
+//    update password
 
 //    password updated
     public void PasswordUpdateSuccessful() {

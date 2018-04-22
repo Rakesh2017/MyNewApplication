@@ -40,8 +40,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_back"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="2dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/lou_resetImageButton"
+                    android:layout_toEndOf="@+id/lou_backImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_reset"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="2dp"
                     />
 
                 <TextView
@@ -56,6 +66,84 @@
                     android:padding="8dp"
                     />
 
+                <LinearLayout
+                    android:id="@+id/loa_linearLayout"
+                    android:layout_below="@+id/lou_backImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:background="@color/appColor"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="7dp"
+                    >
+
+                    <!--state-->
+                    <AutoCompleteTextView
+                        android:id="@+id/lou_state"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/MyCustomEditTextStyle"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="State"
+                        android:inputType="text"
+                        android:gravity="center"
+                        android:elevation="@dimen/elevation_5"
+                        tools:targetApi="lollipop"
+                        tools:ignore="LabelFor" />
+
+                    <!--city-->
+                    <AutoCompleteTextView
+                        android:id="@+id/lou_city"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/MyCustomEditTextStyle"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="City"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:elevation="@dimen/elevation_5"
+                        tools:targetApi="lollipop"
+                        tools:ignore="LabelFor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/loa_linearLayout1"
+                    android:layout_below="@+id/loa_linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:background="@color/appColor"
+                    android:layout_marginBottom="7dp"
+                    >
+
+                    <!--aangdia user name-->
+                    <EditText
+                        android:id="@+id/lou_aangadiaName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        style="@style/MyCustomEditTextStyle"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="Aangadia User Name"
+                        android:inputType="textCapWords"
+                        android:gravity="center"
+                        android:elevation="@dimen/elevation_5"
+                        tools:targetApi="lollipop"
+                        tools:ignore="LabelFor" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_search"
+                        android:layout_gravity="center|end"
+                        />
+                </LinearLayout>
+
             </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -67,31 +155,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/whiteSmoke"
+        android:background="@color/appColor"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/lou_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/black50"
+            android:background="@color/appColor"
             />
 
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

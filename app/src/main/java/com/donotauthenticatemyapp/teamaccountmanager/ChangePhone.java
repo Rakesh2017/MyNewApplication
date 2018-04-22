@@ -46,7 +46,7 @@ public class ChangePhone extends Fragment {
     private static final String KEY = "key";
     private static final String UID = "uid";
     private static final String USER_NAME = "userName";
-    private static final String PATH = "AangadiaProfile";
+    private static final String PATH = "path";
     SharedPreferences passwordSharedPreferences;
 
     RelativeLayout relativeLayout;
@@ -114,7 +114,7 @@ public class ChangePhone extends Fragment {
     //    update phone
     private void updatePhone() {
         progressDialog.show();
-        databaseReference.child(PATH).child(key_tx).child("phone").setValue(newPhone_tx)
+        databaseReference.child(path_tx).child(key_tx).child("phone").setValue(newPhone_tx)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

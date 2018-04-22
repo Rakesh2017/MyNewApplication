@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
     TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv;
     String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx;
 
-    ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn;
+    ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn, home_btn;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -31,8 +32,7 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
     private static final String USER_NAME = "userName";
     private static final String UID = "uid";
     private static final String KEY = "key";
-    private static final String PATH = "AangadiaProfile";
-
+    private static final String PATH = "path";
 
     SharedPreferences sharedPreferences, passwordSharedPreferences;
 
@@ -53,11 +53,13 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
         editPhone_btn = findViewById(R.id.ad_editPhoneButton);
 
         back_btn = findViewById(R.id.ad_backButton);
+        home_btn = findViewById(R.id.ad_homeButton);
 
         sharedPreferences = getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);
         passwordSharedPreferences = getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
 
         back_btn.setOnClickListener(this);
+        home_btn.setOnClickListener(this);
         editPassword_btn.setOnClickListener(this);
         editName_btn.setOnClickListener(this);
         editPhone_btn.setOnClickListener(this);
@@ -133,6 +135,12 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
 //                 changing phone
             case R.id.ad_editPhoneButton:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePhone()).addToBackStack("changePhone").commit();
+                break;
+
+//                home button
+            case R.id.ad_homeButton:
+                startActivity(new Intent(this, AdminHomePage.class));
+                this.finish();
                 break;
 
         }
