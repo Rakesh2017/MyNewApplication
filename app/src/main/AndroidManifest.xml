@@ -35,7 +35,8 @@
         <activity android:name=".ListOfAangadias" />
         <activity android:name=".AangadiaDetails" />
         <activity android:name=".ListOfUsersForAdmin" />
-        <activity android:name=".UserDetails"></activity>
+        <activity android:name=".UserDetails" />
+        <activity android:name=".ListOfUsersForAangadia"></activity>
     </application>
 
 </manifest>

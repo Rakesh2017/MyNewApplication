@@ -11,18 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnClickListener {
+public class ListOfUsersForAangadia extends AppCompatActivity implements View.OnClickListener{
 
     RecyclerView recyclerView;
 
@@ -51,39 +51,37 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_users_for_admin);
+        setContentView(R.layout.activity_list_of_users_for_aangadia);
+        state_et = findViewById(R.id.fa_state);
+        city_et = findViewById(R.id.fa_city);
+        uid_et = findViewById(R.id.fa_uidEditText);
+        name_et = findViewById(R.id.fa_userName);
+        search_btn = findViewById(R.id.fa_search);
+        reset_btn = findViewById(R.id.fa_resetImageButton);
 
-        state_et = findViewById(R.id.lou_state);
-        city_et = findViewById(R.id.lou_city);
-        uid_et = findViewById(R.id.lou_uidEditText);
-        name_et = findViewById(R.id.lou_userName);
-        search_btn = findViewById(R.id.lou_search);
-        reset_btn = findViewById(R.id.lou_resetImageButton);
-        aangdiaName_et = findViewById(R.id.lou_aangadiaName);
-
-        recyclerView = findViewById(R.id.lou_recyclerView);
+        recyclerView = findViewById(R.id.fa_recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        recyclerViewLayoutManager = new LinearLayoutManager(ListOfUsersForAdmin.this);
+        recyclerViewLayoutManager = new LinearLayoutManager(ListOfUsersForAangadia.this);
 
 
-        progressDialog = new ProgressDialog(ListOfUsersForAdmin.this);
+        progressDialog = new ProgressDialog(ListOfUsersForAangadia.this);
         progressDialog.setMessage("Loading Data...");
 
         // Setting RecyclerView layout as LinearLayout.
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
-        back_ib = findViewById(R.id.lou_backImageButton);
+        back_ib = findViewById(R.id.fa_backImageButton);
         back_ib.setOnClickListener(this);
         search_btn.setOnClickListener(this);
         reset_btn.setOnClickListener(this);
 
         final ArrayAdapter<String> adapter_states = new ArrayAdapter<>
-                (ListOfUsersForAdmin.this,android.R.layout.simple_list_item_1,india_states);
+                (ListOfUsersForAangadia.this,android.R.layout.simple_list_item_1,india_states);
         state_et.setAdapter(adapter_states);
 
         final ArrayAdapter<String> adapter_cities = new ArrayAdapter<>
-                (ListOfUsersForAdmin.this,android.R.layout.simple_list_item_1,india_cities);
+                (ListOfUsersForAangadia.this,android.R.layout.simple_list_item_1,india_cities);
         city_et.setAdapter(adapter_cities);
 
         LoadData();
@@ -94,63 +92,28 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         int id = view.getId();
 
-        if (id == R.id.lou_backImageButton){
+        if (id == R.id.fa_backImageButton){
             onBackPressed();
         }
 
-        if (id == R.id.lou_resetImageButton){
+        if (id == R.id.fa_resetImageButton){
             LoadData();
         }
 
 //        search button
-        if (id == R.id.lou_search){
+        if (id == R.id.fa_search){
             state_tx = state_et.getText().toString().trim();
             city_tx = city_et.getText().toString().trim();
             uid_tx = uid_et.getText().toString().trim();
             name_tx = name_et.getText().toString().trim();
-            aangadiaName_tx = aangdiaName_et.getText().toString().trim();
 
             if (!TextUtils.isEmpty(state_tx)) FilterByState();
             else if (!TextUtils.isEmpty(city_tx)) FilterByCity();
-            else if(!TextUtils.isEmpty(aangadiaName_tx)) FilterByAangadiaName();
             else if (!TextUtils.isEmpty(uid_tx)) FilterByUID();
             else if (!TextUtils.isEmpty(name_tx)) FilterByUserName();
 
         }
 
-    }
-
-//    created by aangadia
-    private void FilterByAangadiaName() {
-        progressDialog.show();
-        databaseReference.child("userProfile").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(list!=null) {
-                    list.clear();  // v v v v important (eliminate duplication of data)
-                }
-
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    RecyclerViewListAangadiaData userData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
-                    String str = userData.getAangadia_userName();
-                    String findStr = aangadiaName_tx;
-                    if (str.split(findStr, -1).length-1 > 0) list.add(userData);
-                }
-
-                adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
-
-                recyclerView.setAdapter(adapter);
-
-                progressDialog.dismiss();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Hiding the progress dialog.
-                progressDialog.dismiss();
-            }
-        });
     }
 
     //    filter by state
@@ -170,7 +133,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
-                adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
+                adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
 
@@ -204,7 +167,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
-                adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
+                adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
 
@@ -239,7 +202,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
-                adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
+                adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
 
@@ -273,7 +236,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
-                adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
+                adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
 
@@ -294,8 +257,10 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
     public void LoadData(){
 
         progressDialog.show();
+        DatabaseReference childReference = databaseReference.child("userProfile");
+        Query query = childReference.child("userName").equalTo("Chester");
 
-        databaseReference.child("userProfile").addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(list!=null) {
@@ -307,7 +272,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     list.add(userData);
                 }
 
-                adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
+                adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
 

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:id="@+id/rya_cardview"
+    android:id="@+id/rlo_cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardElevation="5dp"
@@ -23,7 +23,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rya_relativeLayout"
+        android:id="@+id/rlo_relativeLayout"
         android:background="@color/whiteSmoke"
         xmlns:app="http://schemas.android.com/tools"
         android:padding="8dp"
@@ -31,7 +31,7 @@
 
         <!--username-->
         <TextView
-            android:id="@+id/ufa_nameTextView1"
+            android:id="@+id/afu_nameTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Name:  "
@@ -40,22 +40,22 @@
 
         <!--username-->
         <TextView
-            android:id="@+id/ufa_nameTextView"
-            android:layout_toEndOf="@+id/ufa_nameTextView1"
+            android:id="@+id/afu_nameTextView"
+            android:layout_toEndOf="@+id/afu_nameTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderDouble"
             style="@style/MyCustomTextStyleSmall"
             android:textStyle="bold"
-            android:layout_toStartOf="@+id/ufa_forwardImageButton"
+            android:layout_toStartOf="@+id/afu_forwardImageButton"
             android:layout_marginEnd="12dp"
             />
 
 
         <!--unique id-->
         <TextView
-            android:id="@+id/ufa_uidTextView1"
-            android:layout_below="@+id/ufa_nameTextView"
+            android:id="@+id/afu_uidTextView1"
+            android:layout_below="@+id/afu_nameTextView"
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,68 +64,20 @@
             />
 
         <TextView
-            android:id="@+id/ufa_uidTextView"
-            android:layout_toEndOf="@+id/ufa_uidTextView1"
-            android:layout_below="@+id/ufa_nameTextView"
+            android:id="@+id/afu_uidTextView"
+            android:layout_toEndOf="@+id/afu_uidTextView1"
+            android:layout_below="@+id/afu_nameTextView"
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderSingle"
             style="@style/MyCustomTextStyleSmall"
             android:textStyle="bold"
-            />
-
-        <!--created by-->
-        <TextView
-            android:id="@+id/ufa_createdByTextView1"
-            android:layout_below="@+id/ufa_uidTextView"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Created By: "
-            style="@style/MyCustomTextStyleSmall"
-            />
-
-        <TextView
-            android:id="@+id/ufa_createdByTextView"
-            android:layout_toEndOf="@+id/ufa_createdByTextView1"
-            android:layout_below="@+id/ufa_uidTextView"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hintPlaceholderSingle"
-            style="@style/MyCustomTextStyleSmall"
-            android:textStyle="bold"
-            />
-
-        <!--aangadia name-->
-        <TextView
-            android:id="@+id/ufa_aangadiaNameTextView1"
-            android:layout_below="@+id/ufa_createdByTextView"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aangadia User Name: "
-            style="@style/MyCustomTextStyleSmall"
-            android:visibility="gone"
-            />
-
-        <TextView
-            android:id="@+id/ufa_aangadiaNameTextView"
-            android:layout_toEndOf="@+id/ufa_aangadiaNameTextView1"
-            android:layout_below="@+id/ufa_createdByTextView"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hintPlaceholderSingle"
-            style="@style/MyCustomTextStyleSmall"
-            android:textStyle="bold"
-            android:visibility="gone"
             />
 
 
         <ImageButton
-            android:id="@+id/ufa_forwardImageButton"
+            android:id="@+id/afu_forwardImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

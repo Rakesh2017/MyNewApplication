@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton logout_ib, addUser_ib;
+    ImageButton logout_ib, addUser_ib, allUsers_btn;
 
 
     private static final String LANDING_ACTIVITY = "landingActivity";
@@ -36,10 +36,12 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_aangadia_home_page);
         FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
        // Toast.makeText(AangadiaHomePage.this, ""+mAuth.getEmail(), Toast.LENGTH_SHORT).show();
-        logout_ib = findViewById(R.id.adh_addAangadiaButton);
+        logout_ib = findViewById(R.id.ahp_logoutButton);
         addUser_ib = findViewById(R.id.ahp_addUserButton);
+        allUsers_btn = findViewById(R.id.ahp_allUsersButton);
 
         addUser_ib.setOnClickListener(this);
+        allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
 
     }
@@ -52,7 +54,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         switch (id) {
 
             //            logout
-            case R.id.adh_addAangadiaButton:
+            case R.id.ahp_logoutButton:
                 new MaterialDialog.Builder(this)
                         .title("Logout")
                         .content("Are You Sure to Logout?")
@@ -96,6 +98,11 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 //                add user
             case R.id.ahp_addUserButton:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AddUser()).addToBackStack("addUser").commit();
+                break;
+                //                all user
+            case R.id.ahp_allUsersButton:
+                startActivity(new Intent(AangadiaHomePage.this, ListOfUsersForAangadia.class));
+                break;
 
         }
 

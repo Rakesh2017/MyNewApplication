@@ -25,7 +25,7 @@
             />
         <!--logout-->
         <ImageButton
-            android:id="@+id/adh_addAangadiaButton"
+            android:id="@+id/ahp_logoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_logout"
@@ -66,7 +66,7 @@
 
             <!--Add Aangadia-->
             <RelativeLayout
-                android:id="@+id/adh_addAangadiaRelativeLayout"
+                android:id="@+id/ahp_addAangadiaRelativeLayout"
                 android:layout_below="@+id/aap_emptyRelativeLayout"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                 <ImageButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:background="@drawable/ic_add_aangadia"
+                    android:background="@drawable/ic_add"
                     tools:ignore="ContentDescription"
                     android:id="@+id/ahp_addUserButton"
                     />
@@ -107,6 +107,72 @@
                     android:layout_below="@+id/ahp_addUserTextView"
                     android:layout_marginStart="10dp"
                     style="@style/MyCustomTextStyleSmall"
+                    />
+
+            </RelativeLayout>
+
+
+            <!--All users-->
+            <RelativeLayout
+                android:id="@+id/adg_allUsersRelativeLayout"
+                android:layout_below="@+id/ahp_addAangadiaRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_2"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                >
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_all"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/ahp_allUsersButton"
+                    />
+
+                <TextView
+                    android:id="@+id/ahp_allUsersTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Users"
+                    android:layout_toEndOf="@+id/ahp_allUsersButton"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="15dp"
+                    />
+
+                <!--total aangadias-->
+                <TextView
+                    android:id="@+id/ahp_totalUsersTextView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totalUsers"
+                    android:drawableStart="@drawable/ic_pointing_arrow"
+                    android:drawablePadding="@dimen/drawablePadding"
+                    android:gravity="center"
+                    android:layout_toEndOf="@+id/ahp_allUsersButton"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/ahp_allUsersTextView"
+                    android:layout_marginStart="15dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/ahp_totalUsersTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ahp_totalUsersTextView1"
+                    android:layout_toEndOf="@+id/ahp_totalUsersTextView1"
+                    android:hint="@string/hintPlaceholderSingleSmall"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:layout_marginStart="4dp"
+                    android:textStyle="bold"
                     />
 
             </RelativeLayout>

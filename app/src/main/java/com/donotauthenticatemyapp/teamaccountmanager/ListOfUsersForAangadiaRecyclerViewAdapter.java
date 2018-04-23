@@ -18,7 +18,7 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter<ListOfUsersForAdminRecyclerViewAdapter.ViewHolder> {
+public class ListOfUsersForAangadiaRecyclerViewAdapter extends RecyclerView.Adapter<ListOfUsersForAangadiaRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
     private List<RecyclerViewListAangadiaData> MainImageUploadInfoList;
@@ -27,7 +27,7 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
     SharedPreferences sharedPreferences;
 
 
-    ListOfUsersForAdminRecyclerViewAdapter(Context context, List<RecyclerViewListAangadiaData> TempList) {
+    ListOfUsersForAangadiaRecyclerViewAdapter(Context context, List<RecyclerViewListAangadiaData> TempList) {
 
         this.MainImageUploadInfoList = TempList;
 
@@ -38,7 +38,7 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_list_of_users_for_admin, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_list_of_users_for_aangadia, parent, false);
 
         return new ViewHolder(view);
     }
@@ -50,14 +50,6 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
 
         holder.name.setText(UploadInfo.getUserName());
         holder.uid.setText(UploadInfo.getUid());
-
-        if (TextUtils.equals(UploadInfo.getCreated_by(), "admin")) holder.createdBy.setText("Admin");
-        else if (TextUtils.equals(UploadInfo.getCreated_by(), "aangadia")){
-            holder.aangadiaName.setVisibility(View.VISIBLE);
-            holder.aangadiaName1.setVisibility(View.VISIBLE);
-            holder.createdBy.setText("Aangadia");
-            holder.aangadiaName.setText(UploadInfo.getAangadia_userName());
-        }
 
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,13 +92,10 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
         ViewHolder(View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.ufa_nameTextView);
-            uid = itemView.findViewById(R.id.ufa_uidTextView);
-            createdBy = itemView.findViewById(R.id.ufa_createdByTextView);
-            aangadiaName = itemView.findViewById(R.id.ufa_aangadiaNameTextView);
-            aangadiaName1 = itemView.findViewById(R.id.ufa_aangadiaNameTextView1);
+            name = itemView.findViewById(R.id.afu_nameTextView);
+            uid = itemView.findViewById(R.id.afu_uidTextView);
 
-            button = itemView.findViewById(R.id.ufa_forwardImageButton);
+            button = itemView.findViewById(R.id.afu_forwardImageButton);
 
         }
     }

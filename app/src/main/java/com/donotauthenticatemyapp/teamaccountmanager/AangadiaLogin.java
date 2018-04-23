@@ -55,14 +55,17 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     EditText userName_et, password_et;
-    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
     protected static final String PLAY_EMAIL = "@play.org";
     ProgressDialog progressDialog;
 
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, userIdentifierSharedPreferences;
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
     private static final String AANGADIA_HOME_PAGE = "aangadiaHomePage";
+
+    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String USER_IDENTITY = "userIdentity";
+
 
     public AangadiaLogin() {
         // Required empty public constructor
@@ -81,6 +84,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
 
 //        landing page shared pref
         sharedPreferences = getActivity().getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
+        userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
         progressDialog = new ProgressDialog(getContext());
 
@@ -139,8 +143,11 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
 
 
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
                                                 editor.putString(FIRST_SCREEN, AANGADIA_HOME_PAGE);
+                                                editor1.putString(USER_IDENTITY, "aangadia");
                                                 editor.apply();
+                                                editor1.apply();
                                                 getActivity().finish();
                                                 progressDialog.dismiss();
                                             }
@@ -148,7 +155,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                                                 new MaterialDialog.Builder(getActivity())
                                                         .title("Failed")
                                                         .titleColor(Color.WHITE)
-                                                        .content(userName_tx+" is not a Aangadia Account.")
+                                                        .content(userName_tx.substring(0,7)+" is not a Aangadia Account.")
                                                         .icon(getResources().getDrawable(R.drawable.ic_warning))
                                                         .contentColor(getResources().getColor(R.color.lightCoral))
                                                         .backgroundColor(getResources().getColor(R.color.black90))

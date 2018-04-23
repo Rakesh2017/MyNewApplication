@@ -39,7 +39,7 @@
             android:layout_marginTop="12dp"
             android:id="@+id/ud_balanceRelativeLayout"
             android:layout_below="@+id/ud_backButton"
-            android:background="@drawable/background_shadow_3"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_balanceRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_1"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_uidRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_2"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -177,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_nameRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_4"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_PhoneRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -279,6 +279,66 @@
         </RelativeLayout>
 
 
+        <RelativeLayout
+            android:id="@+id/ud_relativeLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ud_relativeLayout2"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/rounded_edit_text"
+            android:padding="8dp"
+            >
+
+            <!-- state -->
+            <TextView
+                android:id="@+id/ud_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="State: "
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ud_stateTextView"
+                android:layout_toEndOf="@+id/ud_state"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ud_state"
+                />
+
+            <!-- city -->
+            <TextView
+                android:id="@+id/ud_city"
+                android:layout_below="@+id/ud_stateTextView"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City: "
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:textColor="@color/black90"
+                />
+
+            <TextView
+                android:id="@+id/ud_cityTextView"
+                android:layout_toEndOf="@+id/ud_city"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                style="@style/MyCustomTextStyleSmall"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/ud_city"
+                />
+
+
+        </RelativeLayout>
 
 
 

@@ -39,7 +39,7 @@
             android:layout_marginTop="12dp"
             android:id="@+id/ad_balanceRelativeLayout"
             android:layout_below="@+id/ad_backButton"
-            android:background="@drawable/background_shadow_3"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_balanceRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_1"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_uidRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_2"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -177,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_nameRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow_4"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_PhoneRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/background_shadow"
+            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
             >
 
@@ -277,9 +277,6 @@
 
 
         </RelativeLayout>
-
-
-
 
 
     </RelativeLayout>

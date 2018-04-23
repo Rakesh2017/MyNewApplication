@@ -55,13 +55,19 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
     EditText userName_et, password_et;
     String userName_tx, password_tx;
     FancyButton submit_btn;
+    ProgressDialog progressDialog;
+
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-    ProgressDialog progressDialog;
+
+    SharedPreferences userIdentifierSharedPreferences;
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
     private static final String ADMIN_HOME_PAGE = "adminHomePage";
+
+    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String USER_IDENTITY = "userIdentity";
 
     public AdminLogin() {
         // Required empty public constructor
@@ -88,6 +94,8 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
 
 //        relative layout ids
         parentRelativeLayout = view.findViewById(R.id.la_parentRelativeLayout);
+
+        userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
         submit_btn.setOnClickListener(this);
 
@@ -209,8 +217,11 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
     public void settingSharedPrefForLandingPageHandling(){
         SharedPreferences sharedpreferences = getActivity().getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
+        SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
         editor.putString(FIRST_SCREEN, ADMIN_HOME_PAGE);
+        editor1.putString(USER_IDENTITY, "admin");
         editor.apply();
+        editor1.apply();
     }
 
 

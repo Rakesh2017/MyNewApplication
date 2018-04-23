@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_container_list_of_users_for_admin"
-    tools:context=".ListOfUsersForAdmin">
+    android:id="@+id/fragment_container_list_of_users_for_aangadia"
+    tools:context=".ListOfUsersForAangadia">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/lou_main.appbar"
+        android:id="@+id/fa_main.appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -18,7 +17,7 @@
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/lou_main.collapsing"
+            android:id="@+id/fa_main.collapsing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
@@ -36,7 +35,7 @@
                 >
 
                 <ImageButton
-                    android:id="@+id/lou_backImageButton"
+                    android:id="@+id/fa_backImageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_back"
@@ -45,8 +44,8 @@
                     />
 
                 <ImageButton
-                    android:id="@+id/lou_resetImageButton"
-                    android:layout_toEndOf="@+id/lou_backImageButton"
+                    android:id="@+id/fa_resetImageButton"
+                    android:layout_toEndOf="@+id/fa_backImageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_reset"
@@ -68,7 +67,7 @@
 
                 <LinearLayout
                     android:id="@+id/loa_linearLayout"
-                    android:layout_below="@+id/lou_backImageButton"
+                    android:layout_below="@+id/fa_backImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -80,7 +79,7 @@
 
                     <!--state-->
                     <AutoCompleteTextView
-                        android:id="@+id/lou_state"
+                        android:id="@+id/fa_state"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -95,7 +94,7 @@
 
                     <!--city-->
                     <AutoCompleteTextView
-                        android:id="@+id/lou_city"
+                        android:id="@+id/fa_city"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -110,7 +109,7 @@
 
                     <!--uid-->
                     <EditText
-                        android:id="@+id/lou_uidEditText"
+                        android:id="@+id/fa_uidEditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -132,17 +131,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="3"
+                    android:weightSum="2"
                     android:background="@color/appColor"
                     android:layout_marginBottom="7dp"
                     >
 
                     <!--user name-->
                     <EditText
-                        android:id="@+id/lou_userName"
+                        android:id="@+id/fa_userName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.4"
+                        android:layout_weight="1.9"
                         style="@style/MyCustomEditTextStyle"
                         android:background="@drawable/rounded_edit_text"
                         android:hint="User Name"
@@ -152,24 +151,8 @@
                         tools:targetApi="lollipop"
                         tools:ignore="LabelFor" />
 
-                    <!--user name-->
-                    <EditText
-                        android:id="@+id/lou_aangadiaName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.4"
-                        style="@style/MyCustomEditTextStyle"
-                        android:background="@drawable/rounded_edit_text"
-                        android:hint="Aangadia Name"
-                        android:inputType="textCapWords"
-                        android:gravity="center"
-                        android:elevation="@dimen/elevation_5"
-                        tools:targetApi="lollipop"
-                        tools:ignore="LabelFor" />
-
-
                     <ImageButton
-                        android:id="@+id/lou_search"
+                        android:id="@+id/fa_search"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_search"
@@ -192,7 +175,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/lou_recyclerView"
+            android:id="@+id/fa_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/appColor"

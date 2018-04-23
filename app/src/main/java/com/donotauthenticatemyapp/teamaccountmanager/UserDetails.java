@@ -18,8 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener {
 
-    TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv;
-    String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx;
+    TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv, state_tv, city_tv;
+    String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx, state_tx, city_tx;
 
     ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn, home_btn;
 
@@ -48,6 +48,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         question_tv = findViewById(R.id.ud_questionTextView);
         answer_tv = findViewById(R.id.ud_answerTextView);
         phone_tv = findViewById(R.id.ud_phoneTextView);
+        state_tv = findViewById(R.id.ud_stateTextView);
+        city_tv = findViewById(R.id.ud_cityTextView);
 
         editPassword_btn = findViewById(R.id.ud_editPasswordButton);
         editName_btn = findViewById(R.id.ud_editNameButton);
@@ -85,6 +87,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 question_tx = dataSnapshot.child("security_question").getValue(String.class);
                 answer_tx = dataSnapshot.child("security_answer").getValue(String.class);
                 phone_tx = dataSnapshot.child("phone").getValue(String.class);
+                state_tx = dataSnapshot.child("state").getValue(String.class);
+                city_tx = dataSnapshot.child("city").getValue(String.class);
 
                 name_tv.setText(name_tx);
                 uid_tv.setText(uid_tx);
@@ -92,6 +96,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 question_tv.setText(question_tx);
                 answer_tv .setText(answer_tx);
                 phone_tv.setText(phone_tx);
+                state_tv.setText(state_tx);
+                city_tv.setText(city_tx);
 
                 SharedPreferences.Editor editor = passwordSharedPreferences.edit();
                 editor.putString(OLD_PASSWORD, password_tx);

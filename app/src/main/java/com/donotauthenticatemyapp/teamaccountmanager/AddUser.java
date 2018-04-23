@@ -2,6 +2,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,8 +32,11 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
@@ -44,6 +48,8 @@ import java.util.Random;
 import java.util.UUID;
 
 import mehdi.sakout.fancybuttons.FancyButton;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -64,9 +70,15 @@ public class AddUser extends Fragment implements View.OnClickListener {
 
     protected FirebaseApp myApp;
 
+    SharedPreferences userIdentifierSharedPreferences;
+
+    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String USER_IDENTITY = "userIdentity";
+
     protected static final String TIME_SERVER = "time-a.nist.gov";
     private static final String USER_PROFILE = "userProfile";
 
+    String sub_id;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     protected Spinner spinner;
@@ -127,6 +139,8 @@ public class AddUser extends Fragment implements View.OnClickListener {
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Creating User Account...");
+
+        userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
 
 //        spinner on touch
@@ -242,11 +256,11 @@ public class AddUser extends Fragment implements View.OnClickListener {
         Log.w("ray", "pain "+year);
 
         Random r = new Random();
-        int Low = 10000;
+        final int Low = 10000;
         int High = 100000;
         int Result = r.nextInt(High-Low) + Low;
 
-        final String sub_id =  year + String.valueOf(Result);
+        sub_id =  year + String.valueOf(Result);
         final String unique_id = sub_id + PLAY_EMAIL;
 
         mAuth2.createUserWithEmailAndPassword(unique_id, password_tx)
@@ -268,40 +282,103 @@ public class AddUser extends Fragment implements View.OnClickListener {
                         }
                         else
                         {
-                            String aangadiaUid = mAuth2.getCurrentUser().getUid();
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("userName").setValue(userName_tx);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("uid").setValue(sub_id);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("password").setValue(password_tx);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("phone").setValue(phone_tx);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("security_answer").setValue(answer_tx);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("security_question").setValue(question_tx);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("key").setValue(aangadiaUid);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("state").setValue(state_tx);
-                            databaseReference.child(USER_PROFILE).child(aangadiaUid).child("city").setValue(city_tx);
+                            String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                            Log.w("raky", "uid: "+mAuth1.getCurrentUser().getUid());
+                            Log.w("raky", "identity: "+identity);
 
-                            new MaterialDialog.Builder(getActivity())
-                                    .title("Account Successfully Created")
-                                    .titleColor(Color.WHITE)
-                                    .content("Unique Id: "+ sub_id
-                                            +"\nPassword: "+password_tx
-                                            +"\nuserName: "+userName_tx
-                                            +"\nPhone: "+phone_tx
-                                            +"\n"+question_tx+": "+answer_tx)
-                                    .icon(getResources().getDrawable(R.drawable.ic_success))
-                                    .contentColor(getResources().getColor(R.color.lightCoral))
-                                    .backgroundColor(getResources().getColor(R.color.black90))
-                                    .positiveText(R.string.ok)
-                                    .show();
+                            if (TextUtils.equals(identity, "aangadia")) UserCreatedByAangadia();
+                            else if (TextUtils.equals(identity, "admin")) UserCreatedByAdmin();
 
-                            mAuth2.signOut();
-                            progressDialog.dismiss();
+
                         }
 
                     }
                 });
 
     }
-//        create aangadia
+
+//    user created by aangadia
+    private void UserCreatedByAangadia() {
+        final String aangadia_key = mAuth1.getCurrentUser().getUid();
+        databaseReference.child("AangadiaProfile").child(aangadia_key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String aangadia_name = dataSnapshot.child("userName").getValue(String.class);
+                        String userUID = mAuth2.getCurrentUser().getUid();
+                        databaseReference.child(USER_PROFILE).child(userUID).child("userName").setValue(userName_tx);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("uid").setValue(sub_id);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("password").setValue(password_tx);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("phone").setValue(phone_tx);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("security_answer").setValue(answer_tx);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("security_question").setValue(question_tx);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("key").setValue(userUID);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("state").setValue(state_tx);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("city").setValue(city_tx);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("created_by").setValue("aangadia");
+                        databaseReference.child(USER_PROFILE).child(userUID).child("aangadia_userName").setValue(aangadia_name);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("aangadia_key").setValue(aangadia_key);
+
+                        new MaterialDialog.Builder(getActivity())
+                                .title("Account Successfully Created")
+                                .titleColor(Color.WHITE)
+                                .content("Unique Id: "+ sub_id
+                                        +"\nPassword: "+password_tx
+                                        +"\nuserName: "+userName_tx
+                                        +"\nPhone: "+phone_tx
+                                        +"\n"+question_tx+": "+answer_tx)
+                                .icon(getResources().getDrawable(R.drawable.ic_success))
+                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .backgroundColor(getResources().getColor(R.color.black90))
+                                .positiveText(R.string.ok)
+                                .show();
+
+                        mAuth2.signOut();
+                        progressDialog.dismiss();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+
+//    user created by admin
+    public void UserCreatedByAdmin(){
+        String userUID = mAuth2.getCurrentUser().getUid();
+        databaseReference.child(USER_PROFILE).child(userUID).child("userName").setValue(userName_tx);
+        databaseReference.child(USER_PROFILE).child(userUID).child("uid").setValue(sub_id);
+        databaseReference.child(USER_PROFILE).child(userUID).child("password").setValue(password_tx);
+        databaseReference.child(USER_PROFILE).child(userUID).child("phone").setValue(phone_tx);
+        databaseReference.child(USER_PROFILE).child(userUID).child("security_answer").setValue(answer_tx);
+        databaseReference.child(USER_PROFILE).child(userUID).child("security_question").setValue(question_tx);
+        databaseReference.child(USER_PROFILE).child(userUID).child("key").setValue(userUID);
+        databaseReference.child(USER_PROFILE).child(userUID).child("state").setValue(state_tx);
+        databaseReference.child(USER_PROFILE).child(userUID).child("city").setValue(city_tx);
+        databaseReference.child(USER_PROFILE).child(userUID).child("created_by").setValue("admin");
+
+        new MaterialDialog.Builder(getActivity())
+                .title("Account Successfully Created")
+                .titleColor(Color.WHITE)
+                .content("Unique Id: "+ sub_id
+                        +"\nPassword: "+password_tx
+                        +"\nuserName: "+userName_tx
+                        +"\nPhone: "+phone_tx
+                        +"\n"+question_tx+": "+answer_tx)
+                .icon(getResources().getDrawable(R.drawable.ic_success))
+                .contentColor(getResources().getColor(R.color.lightCoral))
+                .backgroundColor(getResources().getColor(R.color.black90))
+                .positiveText(R.string.ok)
+                .show();
+
+        mAuth2.signOut();
+        progressDialog.dismiss();
+
+    }
 
 
 //    validations
