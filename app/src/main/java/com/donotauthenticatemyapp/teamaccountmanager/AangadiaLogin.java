@@ -65,6 +65,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
 
     private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
     private static final String USER_IDENTITY = "userIdentity";
+    private static final String AANGADIA_UID = "aangadia_uid";
 
 
     public AangadiaLogin() {
@@ -146,6 +147,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                                                 SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
                                                 editor.putString(FIRST_SCREEN, AANGADIA_HOME_PAGE);
                                                 editor1.putString(USER_IDENTITY, "aangadia");
+                                                editor1.putString(AANGADIA_UID, userName_tx.substring(0,7));
                                                 editor.apply();
                                                 editor1.apply();
                                                 getActivity().finish();

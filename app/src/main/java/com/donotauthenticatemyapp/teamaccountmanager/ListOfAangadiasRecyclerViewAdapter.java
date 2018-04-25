@@ -33,7 +33,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
     private static final String AANGADIA_UID = "aangadia_uid";
     SharedPreferences sharedPreferences;
 
-    int delay = 100;
+    private int delay = 100;
 
     ListOfAangadiasRecyclerViewAdapter(Context context, List<RecyclerViewListAangadiaData> TempList) {
 

@@ -75,7 +75,7 @@ public class ChangeName extends Fragment {
         oldName_tx = passwordSharedPreferences.getString(USER_NAME, "");
         key_tx = passwordSharedPreferences.getString(KEY, "");
         path_tx = passwordSharedPreferences.getString(PATH, "");
-        Toast.makeText(getContext(), ""+key_tx, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getContext(), ""+key_tx, Toast.LENGTH_SHORT).show();
 
         progressDialog = new ProgressDialog(getContext());
         // Setting up message in Progress dialog.

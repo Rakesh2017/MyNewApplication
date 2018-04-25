@@ -127,7 +127,7 @@ public class ChangePassword extends Fragment {
     //    creating second auth instance
     public void CreatingFirebaseAuthInstance(){
         mAuth1 = FirebaseAuth.getInstance();
-        Toast.makeText(getActivity(), ""+mAuth1.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getActivity(), ""+mAuth1.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
         FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
                 .setDatabaseUrl("https://aangadiaaccountmanager.firebaseio.com/")
                 .setApiKey("AIzaSyBa1bKRr6jall0WSAu0ZCkBbWkOnEXIiFQ")

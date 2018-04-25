@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.List;
 
@@ -26,6 +30,7 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
     private static final String USER_UID = "user_uid";
     SharedPreferences sharedPreferences;
 
+    private int delay = 100;
 
     ListOfUsersForAdminRecyclerViewAdapter(Context context, List<RecyclerViewListAangadiaData> TempList) {
 
@@ -75,6 +80,13 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
             }
         });
 
+        YoYo.with(Techniques.ZoomIn)
+                .duration(delay)
+                .repeat(0)
+                .playOn(holder.cardView);
+
+        delay+=100;
+
     }
 
     @Override
@@ -97,6 +109,8 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
         TextView name, uid, createdBy, aangadiaName, aangadiaName1 ;
         ImageButton button;
 
+        CardView cardView;
+
         ViewHolder(View itemView) {
             super(itemView);
 
@@ -105,6 +119,7 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
             createdBy = itemView.findViewById(R.id.ufa_createdByTextView);
             aangadiaName = itemView.findViewById(R.id.ufa_aangadiaNameTextView);
             aangadiaName1 = itemView.findViewById(R.id.ufa_aangadiaNameTextView1);
+            cardView = itemView.findViewById(R.id.rya_cardview);
 
             button = itemView.findViewById(R.id.ufa_forwardImageButton);
 

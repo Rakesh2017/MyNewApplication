@@ -134,7 +134,14 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     RecyclerViewListAangadiaData userData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
                     String str = userData.getAangadia_userName();
                     String findStr = aangadiaName_tx;
-                    if (str.split(findStr, -1).length-1 > 0) list.add(userData);
+                    try{
+                        if (str.split(findStr, -1).length-1 > 0) list.add(userData);
+                    }
+                    catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
 
                 adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);

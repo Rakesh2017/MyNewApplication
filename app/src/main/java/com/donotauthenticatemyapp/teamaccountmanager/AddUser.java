@@ -209,7 +209,7 @@ public class AddUser extends Fragment implements View.OnClickListener {
             phone_tx = phone_et.getText().toString().trim();
             state_tx = state_et.getText().toString().trim();
             city_tx = city_et.getText().toString().trim();
-            Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
             CheckingValidations();
 
         }//if ends
@@ -305,6 +305,7 @@ public class AddUser extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String aangadia_name = dataSnapshot.child("userName").getValue(String.class);
+                        String aangadia_UID = dataSnapshot.child("uid").getValue(String.class);
                         String userUID = mAuth2.getCurrentUser().getUid();
                         databaseReference.child(USER_PROFILE).child(userUID).child("userName").setValue(userName_tx);
                         databaseReference.child(USER_PROFILE).child(userUID).child("uid").setValue(sub_id);
@@ -318,6 +319,7 @@ public class AddUser extends Fragment implements View.OnClickListener {
                         databaseReference.child(USER_PROFILE).child(userUID).child("created_by").setValue("aangadia");
                         databaseReference.child(USER_PROFILE).child(userUID).child("aangadia_userName").setValue(aangadia_name);
                         databaseReference.child(USER_PROFILE).child(userUID).child("aangadia_key").setValue(aangadia_key);
+                        databaseReference.child(USER_PROFILE).child(userUID).child("aangadia_uid").setValue(aangadia_UID);
 
                         new MaterialDialog.Builder(getActivity())
                                 .title("Account Successfully Created")
@@ -468,7 +470,7 @@ public boolean EditTextValidations(){
 //    creating second auth
 public void CreatingFirebaseAuthInstance(){
     mAuth1 = FirebaseAuth.getInstance();
-    Toast.makeText(getActivity(), ""+mAuth1.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+  //  Toast.makeText(getActivity(), ""+mAuth1.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
     FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
             .setDatabaseUrl("https://aangadiaaccountmanager.firebaseio.com/")
             .setApiKey("AIzaSyBa1bKRr6jall0WSAu0ZCkBbWkOnEXIiFQ")

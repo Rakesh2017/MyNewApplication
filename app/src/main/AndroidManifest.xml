@@ -31,12 +31,18 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".AangadiaHomePage"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".ListOfAangadias" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".ListOfAangadias"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
         <activity android:name=".AangadiaDetails" />
-        <activity android:name=".ListOfUsersForAdmin" />
+        <activity android:name=".ListOfUsersForAdmin"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
         <activity android:name=".UserDetails" />
-        <activity android:name=".ListOfUsersForAangadia"></activity>
+        <activity android:name=".ListOfUsersForAangadia"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
     </application>
 
 </manifest>

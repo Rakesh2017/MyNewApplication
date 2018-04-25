@@ -18,15 +18,25 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton logout_ib, addUser_ib, allUsers_btn;
+    TextView allUsersCount_tv;
 
+    SharedPreferences userIdentifierSharedPreferences;
+
+    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String AANGADIA_UID = "aangadia_uid";
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
+
+    String aangadiaUID_tx;
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     FirebaseAuth mAuth;
 
@@ -39,11 +49,40 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         logout_ib = findViewById(R.id.ahp_logoutButton);
         addUser_ib = findViewById(R.id.ahp_addUserButton);
         allUsers_btn = findViewById(R.id.ahp_allUsersButton);
+        allUsersCount_tv = findViewById(R.id.ahp_totalUsersTextView);
 
         addUser_ib.setOnClickListener(this);
         allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
 
+    }
+
+    public void onStart(){
+        super.onStart();
+
+        userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
+        aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
+        AllUsersCount();
+    }
+
+//    getting users count
+    private void AllUsersCount() {
+        DatabaseReference childReference = databaseReference.child("userProfile");
+      //  Toast.makeText(this, ""+aangadiaUID_tx, Toast.LENGTH_SHORT).show();
+        Query query = childReference.orderByChild("aangadia_uid").equalTo(aangadiaUID_tx);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String user_count = String.valueOf((int) snapshot.getChildrenCount());
+                allUsersCount_tv.setText(user_count);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Hiding the progress dialog.
+            }
+        });
     }
 
     //    onclick

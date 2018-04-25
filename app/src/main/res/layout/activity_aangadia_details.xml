@@ -58,9 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_balanceRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_text_1"
             android:padding="8dp"
-            >
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop">
 
             <!-- uid -->
             <TextView
@@ -70,6 +71,8 @@
                 android:text="@string/uidSemi"
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
+                android:drawableStart="@drawable/ic_id"
+                android:drawablePadding="5dp"
                 android:textColor="@color/black90"
                 />
 
@@ -95,6 +98,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/passwordSemi"
                 style="@style/MyCustomTextStyleSmall"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
                 />
@@ -130,8 +135,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_uidRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_text_1"
             android:padding="8dp"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             >
 
             <TextView
@@ -142,6 +149,8 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
+                android:drawableStart="@drawable/ic_user_name"
+                android:drawablePadding="5dp"
                 android:layout_centerVertical="true"
                 />
 
@@ -177,8 +186,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_nameRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_text_1"
             android:padding="8dp"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             >
 
             <TextView
@@ -188,6 +199,8 @@
                 android:hint="@string/phoneSemi"
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="5dp"
                 android:textColor="@color/black90"
                 android:layout_centerVertical="true"
                 />
@@ -223,8 +236,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ad_PhoneRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
+            android:background="@drawable/rounded_edit_text_1"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             >
 
             <!-- question -->
@@ -235,6 +250,8 @@
                 android:text="@string/SecurityQuestionSemi"
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
+                android:drawableStart="@drawable/ic_question"
+                android:drawablePadding="5dp"
                 android:textColor="@color/black90"
                 />
 
@@ -259,6 +276,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/AnswerSemi"
                 style="@style/MyCustomTextStyleSmall"
+                android:drawableStart="@drawable/ic_answer"
+                android:drawablePadding="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
                 />

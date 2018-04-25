@@ -58,8 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_balanceRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
             android:padding="8dp"
+            android:background="@drawable/rounded_edit_text_1"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             >
 
             <!-- uid -->
@@ -71,6 +73,8 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
+                android:drawableStart="@drawable/ic_id"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
@@ -97,6 +101,8 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
@@ -130,7 +136,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_uidRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_text_1"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             android:padding="8dp"
             >
 
@@ -143,6 +151,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/black90"
                 android:layout_centerVertical="true"
+                android:drawableStart="@drawable/ic_user_name"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
@@ -177,7 +187,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_nameRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_text_1"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             android:padding="8dp"
             >
 
@@ -190,6 +202,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/black90"
                 android:layout_centerVertical="true"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
@@ -223,7 +237,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_PhoneRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_text_1"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             android:padding="8dp"
             >
 
@@ -236,6 +252,8 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
+                android:drawableStart="@drawable/ic_question"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
@@ -261,6 +279,8 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
+                android:drawableStart="@drawable/ic_answer"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
@@ -285,7 +305,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ud_relativeLayout2"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_text_1"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
             android:padding="8dp"
             >
 
@@ -298,6 +320,8 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
+                android:drawableStart="@drawable/ic_state"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
@@ -323,6 +347,8 @@
                 style="@style/MyCustomTextStyleSmall"
                 android:textStyle="bold"
                 android:textColor="@color/black90"
+                android:drawableStart="@drawable/ic_city"
+                android:drawablePadding="5dp"
                 />
 
             <TextView
