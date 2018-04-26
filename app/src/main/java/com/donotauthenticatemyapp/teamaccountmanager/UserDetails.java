@@ -31,6 +31,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private static final String UPDATE_PREF = "change_password_pref";
     private static final String OLD_PASSWORD = "old_password";
     private static final String USER_NAME = "userName";
+    private static final String PHONE_NUMBER = "phoneNumber";
     private static final String UID = "uid";
     private static final String KEY = "key";
     private static final String PATH = "path";
@@ -105,6 +106,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 editor.putString(USER_NAME, name_tx);
                 editor.putString(KEY, key);
                 editor.putString(PATH, "userProfile");
+                editor.putString(PHONE_NUMBER, phone_tx);
                 editor.apply();
             }
 

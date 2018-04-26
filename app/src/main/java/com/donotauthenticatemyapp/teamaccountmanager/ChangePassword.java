@@ -40,8 +40,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class ChangePassword extends Fragment {
 
     EditText password;
-    String password_tx, oldPassword_tx, uid_tx, name_tx, path_tx;
-    TextView uid_header, userName;
+    String password_tx, oldPassword_tx, uid_tx, name_tx, path_tx, currentPassword_tx;
+    TextView uid_header, userName, currentPassword_tv;
 
     RelativeLayout relativeLayout;
 
@@ -82,14 +82,18 @@ public class ChangePassword extends Fragment {
         userName = view.findViewById(R.id.cp_nameViewHeader);
         relativeLayout = view.findViewById(R.id.cp_relativeLayout);
 
+        currentPassword_tv = view.findViewById(R.id.cp_currentPasswordTextView);
+
         passwordSharedPreferences = getActivity().getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
         oldPassword_tx = passwordSharedPreferences.getString(OLD_PASSWORD, "");
         uid_tx = passwordSharedPreferences.getString(UID, "");
         name_tx = passwordSharedPreferences.getString(USER_NAME, "");
         path_tx = passwordSharedPreferences.getString(PATH, "");
+        currentPassword_tx = passwordSharedPreferences.getString(OLD_PASSWORD, "");
 
         uid_header.setText(uid_tx);
         userName.setText(name_tx);
+        currentPassword_tv.setText(currentPassword_tx);
 
         progressDialog = new ProgressDialog(getContext());
         // Setting up message in Progress dialog.

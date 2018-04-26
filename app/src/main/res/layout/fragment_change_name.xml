@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    android:background="@color/whiteSmoke"
+    android:background="@drawable/fading_app_color"
     tools:context=".ChangePhone"
     android:id="@+id/cn_relativeLayout"
     android:focusable="true"
@@ -87,5 +87,53 @@
         android:layout_marginBottom="32dp"
         android:elevation="@dimen/elevation_5"
         tools:targetApi="lollipop" />
+
+
+    <!--horizontal line-->
+    <TextView
+        android:id="@+id/cn_line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black90"
+        android:layout_below="@+id/cn_submitButton"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        />
+
+    <TextView
+        android:id="@+id/cn_currentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomTextStyleSmall"
+        android:text="Current Name: "
+        android:layout_below="@+id/cn_line1"
+        android:textColor="@color/black90"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        />
+
+    <TextView
+        android:id="@+id/cn_currentNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomTextStyleSmall"
+        android:layout_toEndOf="@+id/cn_currentName"
+        android:layout_below="@+id/cn_line1"
+        android:hint="@string/hintPlaceholderSingle"
+        android:textStyle="bold"
+        android:layout_marginStart="4dp"
+        android:layout_alignTop="@+id/cn_currentName"
+        />
+
+    <TextView
+        android:id="@+id/cn_line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black90"
+        android:layout_below="@+id/cn_currentName"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        />
 
 </RelativeLayout>

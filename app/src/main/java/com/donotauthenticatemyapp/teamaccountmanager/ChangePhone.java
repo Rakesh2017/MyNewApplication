@@ -34,9 +34,9 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class ChangePhone extends Fragment {
 
-    String  newPhone_tx;
+    String  newPhone_tx, currentPhone_tx;
     EditText newPhone_et;
-    TextView uid_header, userName;
+    TextView uid_header, userName, currentPhone_tv;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -47,6 +47,7 @@ public class ChangePhone extends Fragment {
     private static final String UID = "uid";
     private static final String USER_NAME = "userName";
     private static final String PATH = "path";
+    private static final String PHONE_NUMBER = "phoneNumber";
     SharedPreferences passwordSharedPreferences;
 
     RelativeLayout relativeLayout;
@@ -72,12 +73,17 @@ public class ChangePhone extends Fragment {
         newPhone_et = view.findViewById(R.id.cm_phoneEditText);
         submit = view.findViewById(R.id.cm_submitButton);
         relativeLayout = view.findViewById(R.id.cm_relativeLayout);
+        currentPhone_tv = view.findViewById(R.id.cm_currentPhoneTextView);
 
         passwordSharedPreferences = getActivity().getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
         uid_tx = passwordSharedPreferences.getString(UID, "");
         oldName_tx = passwordSharedPreferences.getString(USER_NAME, "");
         key_tx = passwordSharedPreferences.getString(KEY, "");
         path_tx = passwordSharedPreferences.getString(PATH, "");
+        currentPhone_tx = passwordSharedPreferences.getString(PHONE_NUMBER, "");
+
+        currentPhone_tv.setText(currentPhone_tx);
+
        // Toast.makeText(getContext(), ""+key_tx, Toast.LENGTH_SHORT).show();
 
         progressDialog = new ProgressDialog(getContext());

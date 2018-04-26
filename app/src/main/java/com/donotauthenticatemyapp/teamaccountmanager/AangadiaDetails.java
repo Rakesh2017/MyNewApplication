@@ -30,6 +30,7 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
     private static final String UPDATE_PREF = "change_password_pref";
     private static final String OLD_PASSWORD = "old_password";
     private static final String USER_NAME = "userName";
+    private static final String PHONE_NUMBER = "phoneNumber";
     private static final String UID = "uid";
     private static final String KEY = "key";
     private static final String PATH = "path";
@@ -90,13 +91,15 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
                 question_tv.setText(question_tx);
                 answer_tv .setText(answer_tx);
                 phone_tv.setText(phone_tx);
-//                saving for password change
+
+//              saving for password change
                 SharedPreferences.Editor editor = passwordSharedPreferences.edit();
                 editor.putString(OLD_PASSWORD, password_tx);
                 editor.putString(UID, uid_tx);
                 editor.putString(USER_NAME, name_tx);
                 editor.putString(KEY, key);
                 editor.putString(PATH, "AangadiaProfile");
+                editor.putString(PHONE_NUMBER, phone_tx);
                 editor.apply();
 
             }

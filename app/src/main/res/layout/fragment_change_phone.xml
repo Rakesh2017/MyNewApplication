@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    android:background="@color/whiteSmoke"
+    android:background="@drawable/fading_app_color"
     tools:context=".ChangePhone"
     android:id="@+id/cm_relativeLayout"
     android:focusable="true"
@@ -88,6 +88,52 @@
         android:layout_marginBottom="32dp"
         android:elevation="@dimen/elevation_5"
         tools:targetApi="lollipop" />
+
+    <TextView
+        android:id="@+id/cm_line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black90"
+        android:layout_below="@+id/cm_submitButton"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        />
+
+    <TextView
+        android:id="@+id/cm_currentPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomTextStyleSmall"
+        android:text="Current Phone: "
+        android:layout_below="@+id/cm_line1"
+        android:textColor="@color/black90"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        />
+
+    <TextView
+        android:id="@+id/cm_currentPhoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomTextStyleSmall"
+        android:layout_toEndOf="@+id/cm_currentPhone"
+        android:layout_below="@+id/cm_line1"
+        android:hint="@string/hintPlaceholderSingle"
+        android:textStyle="bold"
+        android:layout_marginStart="4dp"
+        android:layout_alignTop="@+id/cm_currentPhone"
+        />
+
+    <TextView
+        android:id="@+id/cm_line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black90"
+        android:layout_below="@+id/cm_currentPhone"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        />
 
 
 </RelativeLayout>

@@ -33,9 +33,9 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class ChangeName extends Fragment {
 
-    String  newName_tx;
+    String  newName_tx, currentName_tx;
     EditText newName_et;
-    TextView uid_header, userName;
+    TextView uid_header, userName, currentName_tv;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -69,12 +69,14 @@ public class ChangeName extends Fragment {
         newName_et = view.findViewById(R.id.cn_userNameEditText);
         submit = view.findViewById(R.id.cn_submitButton);
         relativeLayout = view.findViewById(R.id.cn_relativeLayout);
+        currentName_tv = view.findViewById(R.id.cn_currentNameTextView);
 
         passwordSharedPreferences = getActivity().getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
         uid_tx = passwordSharedPreferences.getString(UID, "");
         oldName_tx = passwordSharedPreferences.getString(USER_NAME, "");
         key_tx = passwordSharedPreferences.getString(KEY, "");
         path_tx = passwordSharedPreferences.getString(PATH, "");
+        currentName_tx = passwordSharedPreferences.getString(USER_NAME, "");
       //  Toast.makeText(getContext(), ""+key_tx, Toast.LENGTH_SHORT).show();
 
         progressDialog = new ProgressDialog(getContext());
@@ -83,6 +85,7 @@ public class ChangeName extends Fragment {
 
         uid_header.setText(uid_tx);
         userName.setText(oldName_tx);
+        currentName_tv.setText(currentName_tx);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
