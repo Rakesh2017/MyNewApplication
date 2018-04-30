@@ -12,10 +12,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.flags.impl.DataUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +32,9 @@ import java.util.List;
 public class ListOfAangadias extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView recyclerView;
+    RelativeLayout emptyRelativeLayout;
+
+    TextView emptyTextView;
 
     // Creating RecyclerView.Adapter.
     RecyclerView.Adapter adapter ;
@@ -49,6 +55,8 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_list_of_aangadias);
 
         recyclerView = findViewById(R.id.loa_recyclerView);
+        emptyRelativeLayout = findViewById(R.id.loa_emptyRelativeLayout);
+        emptyTextView = findViewById(R.id.loa_emptyTextView);
         recyclerView.setHasFixedSize(true);
 
         recyclerViewLayoutManager = new LinearLayoutManager(ListOfAangadias.this);
@@ -72,9 +80,9 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
 
         LoadData();
 
-        String str = "1133596";
-        String findStr = "33";
-        Log.w("raky", String.valueOf(str.split(findStr, -1).length-1));
+      //  String str = "1133596";
+       /// String findStr = "33";
+       // Log.w("raky", String.valueOf(str.split(findStr, -1).length-1));
     }
 
     @Override
@@ -107,6 +115,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot snapshot) {
                 if(list!=null) {
                     list.clear();  // v v v v important (eliminate duplication of data)
+
                 }
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -120,10 +129,11 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                 }
 
                 adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
-
                 recyclerView.setAdapter(adapter);
 
                 progressDialog.dismiss();
+
+                Toast.makeText(ListOfAangadias.this, "name and uid", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -156,10 +166,18 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                     if (str.split(findStr, -1).length-1 > 0) list.add(aangadiaData);
                 }
 
-                adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
+                if (list.isEmpty()){
+                    Toast.makeText(ListOfAangadias.this, "empty filter by uid list", Toast.LENGTH_SHORT).show();
+                    emptyRelativeLayout.setVisibility(View.VISIBLE);
+                    showEmptyPage();
+                }
 
+                adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
                 recyclerView.setAdapter(adapter);
 
+                //  check if list is empty
+
+                Toast.makeText(ListOfAangadias.this, "uid", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
             }
@@ -194,11 +212,10 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                 }
 
                 adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
-
                 recyclerView.setAdapter(adapter);
 
                 progressDialog.dismiss();
-
+                Toast.makeText(ListOfAangadias.this, "name", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -230,7 +247,6 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                 }
 
                 adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
-
                 recyclerView.setAdapter(adapter);
 
                 progressDialog.dismiss();
@@ -256,6 +272,18 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                 .backgroundColor(getResources().getColor(R.color.black90))
                 .positiveText(R.string.ok)
                 .show();
+    }
+
+    public void showEmptyPage(){
+        emptyRelativeLayout.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.FadeIn)
+                .duration(700)
+                .repeat(0)
+                .playOn(emptyTextView);
+    }
+
+    public void hideEmptyPage(){
+        emptyRelativeLayout.setVisibility(View.GONE);
     }
 
     //end

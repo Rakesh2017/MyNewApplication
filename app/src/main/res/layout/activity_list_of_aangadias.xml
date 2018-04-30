@@ -132,7 +132,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-
         <!-- TODO: Update blank fragment layout -->
 
         <RelativeLayout
@@ -149,5 +148,28 @@
                 />
 
         </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loa_emptyRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/appColor"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/loa_emptyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oops! No result"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleLarge"
+            android:layout_centerInParent="true"
+            android:drawableTop="@drawable/ic_empty"
+            android:drawablePadding="@dimen/activity_horizontal_margin"
+            />
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

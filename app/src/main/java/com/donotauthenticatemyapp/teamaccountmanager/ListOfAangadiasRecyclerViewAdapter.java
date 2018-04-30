@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +14,6 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -28,7 +22,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<ListOfAangadiasRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
-    private List<RecyclerViewListAangadiaData> MainImageUploadInfoList;
+    private List<RecyclerViewListAangadiaData> UploadInfoList;
     private static final String AANGADIA_UID_PREF = "aangadia_uid_pref";
     private static final String AANGADIA_UID = "aangadia_uid";
     SharedPreferences sharedPreferences;
@@ -37,7 +31,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
 
     ListOfAangadiasRecyclerViewAdapter(Context context, List<RecyclerViewListAangadiaData> TempList) {
 
-        this.MainImageUploadInfoList = TempList;
+        this.UploadInfoList = TempList;
 
         this.context = context;
     }
@@ -54,7 +48,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        final RecyclerViewListAangadiaData UploadInfo = MainImageUploadInfoList.get(position);
+        final RecyclerViewListAangadiaData UploadInfo = UploadInfoList.get(position);
 
         holder.name.setText(UploadInfo.getUserName());
         holder.uid.setText(UploadInfo.getUid());
@@ -97,7 +91,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
 
     @Override
     public int getItemCount() {
-        return MainImageUploadInfoList.size();
+        return UploadInfoList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

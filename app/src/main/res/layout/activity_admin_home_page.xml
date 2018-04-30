@@ -227,7 +227,6 @@
             </RelativeLayout>
 
 
-
             <!--All users-->
             <RelativeLayout
                 android:id="@+id/adg_allUsersRelativeLayout"
@@ -235,7 +234,7 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_shadow_2"
+                android:background="@drawable/background_shadow_4"
                 android:padding="@dimen/activity_horizontal_margin"
                 android:elevation="@dimen/elevation_5"
                 tools:targetApi="lollipop"
@@ -293,17 +292,8 @@
 
             </RelativeLayout>
 
-
-
-
-
-
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-
 </FrameLayout>
-
-
-
