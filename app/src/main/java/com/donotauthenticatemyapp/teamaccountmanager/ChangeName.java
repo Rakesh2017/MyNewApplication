@@ -108,8 +108,8 @@ public class ChangeName extends Fragment {
 
 //    load animation
     private void LoadAnimation() {
-        YoYo.with(Techniques.Landing)
-                .duration(1000)
+        YoYo.with(Techniques.SlideInRight)
+                .duration(300)
                 .repeat(0)
                 .playOn(relativeLayout);
     }
@@ -122,6 +122,7 @@ public class ChangeName extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        ChangeValuesOnUpdation();
                         if (task.isSuccessful()){
                             new MaterialDialog.Builder(getActivity())
                                     .title("User Name Updated")
@@ -167,6 +168,12 @@ public class ChangeName extends Fragment {
         return true;
     }
 //    validations
+
+//    changing values on updation
+    public void ChangeValuesOnUpdation(){
+        userName.setText(newName_tx);
+        currentName_tv.setText(newName_tx);
+    }
 
 //end
 }

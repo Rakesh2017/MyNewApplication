@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_container_add_money"
+    tools:context=".AddMoney">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/main.appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/whiteSmoke"
+        android:fitsSystemWindows="true"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/main.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/white"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
+            android:background="@color/whiteSmoke"
+            tools:targetApi="lollipop">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/appColor"
+                >
+
+            <TextView
+                android:id="@+id/am_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balance"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                style="@style/MyCustomTextStyleMedium"
+                android:textColor="@color/whiteSmoke"
+                />
+
+            <TextView
+                android:id="@+id/am_totalBalanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintPlaceholderSingle"
+                android:drawableStart="@drawable/ic_rupee"
+                android:drawablePadding="4dp"
+                android:layout_below="@+id/am_balance"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                style="@style/MyCustomTextStyleLarge"
+                android:textSize="32sp"
+                android:textColor="@color/whiteSmoke"
+                />
+
+
+            </RelativeLayout>
+
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteSmoke"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <!--user uid-->
+        <TextView
+            android:id="@+id/am_userUidTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/uid"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/uid"
+            style="@style/MyCustomTextStyleMedium"
+            android:textColor="@color/googleRed"
+            />
+
+        <!--user name-->
+        <TextView
+            android:id="@+id/am_userNameTextView"
+            android:layout_below="@+id/am_userUidTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/uid"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            style="@style/MyCustomTextStyleMedium"
+            android:textColor="@color/googleRed"
+            />
+
+        <TextView
+            android:id="@+id/am_amountInWordsTextView"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_below="@+id/am_userNameTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            />
+
+
+        <!--add money edit text-->
+        <EditText
+            android:id="@+id/am_addMoneyEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/am_amountInWordsTextView"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            style="@style/MyCustomEditTextStyle"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:hint="@string/amount"
+            android:maxLength="9"
+            android:drawableStart="@drawable/ic_rupee"
+            android:inputType="number"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor" />
+
+        <!--add money button-->
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/am_submitButton"
+            android:layout_below="@+id/am_addMoneyEditText"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/lightCoral"
+            fancy:fb_focusColor="@color/whiteSmoke"
+            fancy:fb_fontIconResource="&#xf156;"
+            fancy:fb_iconPosition="right"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="Add Money"
+            fancy:fb_textColor="@color/black"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

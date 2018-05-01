@@ -35,20 +35,92 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:id="@+id/ud_balanceRelativeLayout"
             android:layout_below="@+id/ud_backButton"
             android:background="@drawable/rounded_edit_text"
-            android:padding="8dp"
+            android:padding="@dimen/activity_horizontal_margin"
             >
 
+            <LinearLayout
+                android:id="@+id/ud_linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <RelativeLayout
+                    android:layout_weight="1.9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/ud_totalMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Balance"
+                        style="@style/MyCustomTextStyleMedium"
+                        android:textColor="@color/black90"
+                        />
+
+                    <TextView
+                        android:id="@+id/ud_totalMoneyTextView"
+                        android:layout_below="@+id/ud_totalMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/hintPlaceholderSingle"
+                        style="@style/MyCustomTextStyleLarge"
+                        android:textSize="24sp"
+                        android:drawableStart="@drawable/ic_rupee"
+                        android:drawablePadding="8dp"
+                        android:textColor="@color/green"
+                        />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/ud_addMoneyTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Money"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:textStyle="bold"
+                    android:layout_weight="0.1"
+                    android:layout_gravity="center|end"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/ic_add_money"
+                    />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black90"
+                android:layout_below="@+id/ud_linearLayout1"
+                android:layout_marginTop="12dp"
+                />
+
+
             <TextView
+                android:layout_below="@+id/ud_linearLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Avialable Balance + Mini Statements"
-                style="@style/MyCustomTextStyleSmall"
+                android:text="Transactions"
+                style="@style/MyCustomTextStyleMedium"
+                android:textColor="@color/black90"
+                android:layout_marginTop="24dp"
+                android:drawableEnd="@drawable/ic_transactions"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
                 />
+
+
 
         </RelativeLayout>
 

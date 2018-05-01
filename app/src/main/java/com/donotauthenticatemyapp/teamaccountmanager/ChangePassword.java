@@ -121,8 +121,8 @@ public class ChangePassword extends Fragment {
     }
 
     private void LoadAnimation() {
-        YoYo.with(Techniques.Landing)
-                .duration(1000)
+        YoYo.with(Techniques.SlideInRight)
+                .duration(300)
                 .repeat(0)
                 .playOn(relativeLayout);
     }
@@ -176,6 +176,7 @@ public class ChangePassword extends Fragment {
                                                 String key = mAuth2.getCurrentUser().getUid();
                                                 databaseReference.child(path_tx).child(key)
                                                         .child("password").setValue(password_tx);
+                                                ChangeValuesOnUpdation();
                                                 PasswordUpdateSuccessful();
                                             }
                                             else {
@@ -230,6 +231,11 @@ public class ChangePassword extends Fragment {
             return false;
         }
         return true;
+    }
+
+    //    changing values on updation
+    public void ChangeValuesOnUpdation(){
+        currentPassword_tv.setText(password_tx);
     }
 
 

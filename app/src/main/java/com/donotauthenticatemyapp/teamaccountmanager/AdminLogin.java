@@ -66,7 +66,7 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
     private static final String FIRST_SCREEN = "firstScreen";
     private static final String ADMIN_HOME_PAGE = "adminHomePage";
 
-    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String USER_IDENTITY = "userIdentity";
 
     public AdminLogin() {

@@ -75,7 +75,7 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
     //    load data
     private void loadData() {
         final String key = sharedPreferences.getString(AANGADIA_UID, "");
-        databaseReference.child("AangadiaProfile").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("AangadiaProfile").child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 name_tx = dataSnapshot.child("userName").getValue(String.class);

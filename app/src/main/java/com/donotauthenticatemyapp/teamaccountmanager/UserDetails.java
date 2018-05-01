@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,9 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class UserDetails extends AppCompatActivity implements View.OnClickListener {
 
-    TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv, state_tv, city_tv;
+    TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv, state_tv, city_tv, addMoney_tv
+            , totalBalance_tv;
     String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx, state_tx, city_tx;
 
     ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn, home_btn;
@@ -35,6 +41,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private static final String UID = "uid";
     private static final String KEY = "key";
     private static final String PATH = "path";
+    private static final String USER_BALANCE = "userBalance";
+    private static final String TOTAL_BALANCE = "total_balance";
+
 
     SharedPreferences sharedPreferences, passwordSharedPreferences;
 
@@ -51,6 +60,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         phone_tv = findViewById(R.id.ud_phoneTextView);
         state_tv = findViewById(R.id.ud_stateTextView);
         city_tv = findViewById(R.id.ud_cityTextView);
+        addMoney_tv = findViewById(R.id.ud_addMoneyTextView);
+        totalBalance_tv = findViewById(R.id.ud_totalMoneyTextView);
 
         editPassword_btn = findViewById(R.id.ud_editPasswordButton);
         editName_btn = findViewById(R.id.ud_editNameButton);
@@ -68,18 +79,21 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         editPassword_btn.setOnClickListener(this);
         editName_btn.setOnClickListener(this);
         editPhone_btn.setOnClickListener(this);
+        addMoney_tv.setOnClickListener(this);
     }
 
+//    onStart
     public void onStart(){
         super.onStart();
-
         loadData();
+        setTotalBalance();
     }
+
 
     //    load data
     private void loadData() {
         final String key = sharedPreferences.getString(USER_UID, "");
-        databaseReference.child("userProfile").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("userProfile").child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 name_tx = dataSnapshot.child("userName").getValue(String.class);
@@ -117,6 +131,35 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         });
     }
 
+
+
+    //    setting total balance
+    private void setTotalBalance() {
+        final String key = sharedPreferences.getString(USER_UID, "");
+        databaseReference.child(USER_BALANCE).child(key)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                            final String total_balance = dataSnapshot.child(TOTAL_BALANCE).getValue(String.class);
+                            if (!TextUtils.isEmpty(total_balance)){
+                                NumberFormat formatter = new DecimalFormat("#,###");
+                                String formatted_balance = formatter.format(Long.parseLong(total_balance));
+                                totalBalance_tv.setText(formatted_balance);
+                            }
+                            else {
+                                totalBalance_tv.setText("0.00");
+                            }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+    //    setting total balance
+
+
     //    onClick
     @Override
     public void onClick(View view) {
@@ -149,6 +192,11 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             case R.id.ud_homeButton:
                 startActivity(new Intent(this, AdminHomePage.class));
                 this.finish();
+                break;
+
+            //                add money
+            case R.id.ud_addMoneyTextView:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new AddMoney()).addToBackStack("addMoney").commit();
                 break;
 
         }

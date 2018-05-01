@@ -111,8 +111,8 @@ public class ChangePhone extends Fragment {
     }
 
     private void LoadAnimation() {
-        YoYo.with(Techniques.Landing)
-                .duration(1000)
+        YoYo.with(Techniques.SlideInRight)
+                .duration(300)
                 .repeat(0)
                 .playOn(relativeLayout);
     }
@@ -125,6 +125,7 @@ public class ChangePhone extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
+                            ChangeValuesOnUpdation();
                             new MaterialDialog.Builder(getActivity())
                                     .title("Phone Number updated.")
                                     .titleColor(Color.WHITE)
@@ -168,4 +169,10 @@ public class ChangePhone extends Fragment {
         return true;
     }
 
+    //    changing values on updation
+    public void ChangeValuesOnUpdation(){
+        currentPhone_tv.setText(newPhone_tx);
+    }
+
+//    ends
 }

@@ -33,100 +33,12 @@
             />
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:id="@+id/ad_balanceRelativeLayout"
-            android:layout_below="@+id/ad_backButton"
-            android:background="@drawable/rounded_edit_text"
-            android:padding="@dimen/activity_horizontal_margin"
-            >
-
-            <LinearLayout
-                android:id="@+id/ad_linearLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                >
-
-                <RelativeLayout
-                    android:layout_weight="1.9"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        android:id="@+id/ad_totalMoney"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Money"
-                        style="@style/MyCustomTextStyleLarge"
-                        android:textColor="@color/black90"
-                        />
-
-                    <TextView
-                        android:id="@+id/ad_totalMoneyTextView"
-                        android:layout_below="@+id/ad_totalMoney"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="1,00,0000"
-                        style="@style/MyCustomTextStyleLarge"
-                        android:drawableStart="@drawable/ic_rupee"
-                        android:drawablePadding="8dp"
-                        android:textColor="@color/paleGreen"
-                        />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add Money"
-                    style="@style/MyCustomTextStyleSmall"
-                    android:textStyle="bold"
-                    android:layout_weight="0.1"
-                    android:layout_gravity="center|end"
-                    android:gravity="center"
-                    android:drawableTop="@drawable/ic_add_money"
-                    />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/black90"
-                android:layout_below="@+id/ad_linearLayout1"
-                android:layout_marginTop="12dp"
-                />
-
-
-            <TextView
-                android:layout_below="@+id/ad_linearLayout1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All Transactions"
-                style="@style/MyCustomTextStyleLarge"
-                android:textColor="@color/black90"
-                android:layout_marginTop="24dp"
-                android:drawableEnd="@drawable/ic_transactions"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                />
-
-
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/ad_uidRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ad_balanceRelativeLayout"
+            android:layout_below="@+id/ad_homeButton"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:background="@drawable/rounded_edit_text_1"
             android:padding="8dp"
@@ -154,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hintPlaceholderSingle"
                 style="@style/MyCustomTextStyleSmall"
+                android:textColor="@color/googleRed"
                 android:textStyle="bold"
                 android:layout_alignTop="@+id/ad_uid"
                 />
@@ -182,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hintPlaceholderSingle"
                 style="@style/MyCustomTextStyleSmall"
+                android:textColor="@color/googleRed"
                 android:textStyle="bold"
                 android:layout_alignTop="@+id/ad_password"
                 />

@@ -72,7 +72,7 @@ public class AddUser extends Fragment implements View.OnClickListener {
 
     SharedPreferences userIdentifierSharedPreferences;
 
-    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String USER_IDENTITY = "userIdentity";
 
     protected static final String TIME_SERVER = "time-a.nist.gov";
