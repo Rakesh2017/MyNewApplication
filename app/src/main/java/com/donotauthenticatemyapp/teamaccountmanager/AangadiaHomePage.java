@@ -24,11 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton logout_ib, addUser_ib, allUsers_btn;
-    TextView allUsersCount_tv;
+    TextView allUsersCount_tv, uid_tv;
 
     SharedPreferences userIdentifierSharedPreferences;
 
-    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String AANGADIA_UID = "aangadia_uid";
 
     private static final String LANDING_ACTIVITY = "landingActivity";
@@ -45,11 +45,13 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aangadia_home_page);
         FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
-       // Toast.makeText(AangadiaHomePage.this, ""+mAuth.getEmail(), Toast.LENGTH_SHORT).show();
+
         logout_ib = findViewById(R.id.ahp_logoutButton);
         addUser_ib = findViewById(R.id.ahp_addUserButton);
         allUsers_btn = findViewById(R.id.ahp_allUsersButton);
         allUsersCount_tv = findViewById(R.id.ahp_totalUsersTextView);
+
+        uid_tv = findViewById(R.id.ahp_userUIDTextView);
 
         addUser_ib.setOnClickListener(this);
         allUsers_btn.setOnClickListener(this);
@@ -62,13 +64,13 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
         userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
         aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
+        uid_tv.setText("UID: "+aangadiaUID_tx);
         AllUsersCount();
     }
 
 //    getting users count
     private void AllUsersCount() {
         DatabaseReference childReference = databaseReference.child("userProfile");
-      //  Toast.makeText(this, ""+aangadiaUID_tx, Toast.LENGTH_SHORT).show();
         Query query = childReference.orderByChild("aangadia_uid").equalTo(aangadiaUID_tx);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {

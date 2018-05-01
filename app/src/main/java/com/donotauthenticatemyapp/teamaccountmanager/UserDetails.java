@@ -33,6 +33,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
     private static final String USER_UID_PREF = "user_uid_pref";
     private static final String USER_UID = "user_uid";
+    private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
+    private static final String USER_IDENTITY = "userIdentity";
 
     private static final String UPDATE_PREF = "change_password_pref";
     private static final String OLD_PASSWORD = "old_password";
@@ -45,7 +47,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private static final String TOTAL_BALANCE = "total_balance";
 
 
-    SharedPreferences sharedPreferences, passwordSharedPreferences;
+    SharedPreferences sharedPreferences, passwordSharedPreferences, userIdentifierSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
         sharedPreferences = getSharedPreferences(USER_UID_PREF, MODE_PRIVATE);
         passwordSharedPreferences = getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
+        userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
 
         back_btn.setOnClickListener(this);
@@ -190,7 +193,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
 //                home button
             case R.id.ud_homeButton:
-                startActivity(new Intent(this, AdminHomePage.class));
+                String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                if (TextUtils.equals(identity, "admin")) startActivity(new Intent(this, AdminHomePage.class));
+                else if (TextUtils.equals(identity, "aangadia")) startActivity(new Intent(this, AangadiaHomePage.class));
                 this.finish();
                 break;
 

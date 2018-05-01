@@ -1,13 +1,18 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Trace;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,13 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,14 +39,10 @@ import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.InetAddress;
-import java.sql.DataTruncation;
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.text.NumberFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -65,19 +67,24 @@ public class AddMoney extends Fragment implements View.OnClickListener {
     private static final String MONEY_ADDED = "money_added";
     private static final String MODE = "mode";
     private static final String CURRENT_BALANCE = "current_balance";
-    SharedPreferences sharedPreferences, userIdentifierSharedPreferences;
+    private static final String DATE_TIME = "dateTime";
+    private static final String AANGADIA_KEY = "aangadia_key";
+    private SharedPreferences sharedPreferences, userIdentifierSharedPreferences;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    FirebaseAuth mAuth1;
 
     FancyButton submit_btn;
 
-    String uid_tx, userName_tx, money_tx;
+    String uid_tx, userName_tx, today_dateTime;
+    String money_tx;
     TextView uid_tv, userName_tv, amountInWords_tv, totalBalance_tv;
 
-    EditText money_et;
+    protected EditText money_et;
+    ProgressDialog progressDialog;
 
-    private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
-    private static final String USER_IDENTITY = "userIdentity";
+    protected static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
+    protected static final String USER_IDENTITY = "userIdentity";
 
     CoordinatorLayout coordinatorLayout;
 
@@ -104,6 +111,9 @@ public class AddMoney extends Fragment implements View.OnClickListener {
         userName_tx = sharedPreferences.getString(USER_NAME, "");
 
         submit_btn = view.findViewById(R.id.am_submitButton);
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Adding Balance...");
 
         coordinatorLayout = view.findViewById(R.id.fragment_container_add_money);
 
@@ -147,7 +157,6 @@ public class AddMoney extends Fragment implements View.OnClickListener {
         LoadAnimation();
         SetUIDAndUserName();
         setTotalBalance();
-        new AddMoneyByAdmin().execute();
     }
 
 //    load animation
@@ -195,92 +204,200 @@ public class AddMoney extends Fragment implements View.OnClickListener {
         int id = view.getId();
 
         if (id == R.id.am_submitButton){
-            final String key = sharedPreferences.getString(KEY, "");
             money_tx = money_et.getText().toString();
-            //getting amount from database
-            databaseReference.child(USER_BALANCE).child(key)
-                    .addListenerForSingleValueEvent(new ValueEventListener() { //add value event listener will run in loop(avoid using it)
+            new MaterialDialog.Builder(getActivity())
+                    .title("Are you sure to add Money!")
+                    .content("Rs "+money_tx+" will be added to Account with \nUID:"+uid_tx
+                    +"\nUser Name: "+userName_tx)
+                    .contentColorRes(R.color.appColor)
+                    .titleColor(getResources().getColor(R.color.white))
+                    .positiveText("Confirm")
+                    .positiveColorRes(R.color.googleGreen)
+                    .negativeText("Cancel")
+                    .negativeColorRes(R.color.googleRed)
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .icon(getResources().getDrawable(R.drawable.ic_money_transfer))
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String balance_to_be_added_at_database = null;
-                            final String previous_total_balance = dataSnapshot.child(TOTAL_BALANCE).getValue(String.class);
-                            if (!TextUtils.isEmpty(previous_total_balance)) {
-                                final int temp_balance = Integer.parseInt(previous_total_balance) + Integer.parseInt(money_tx);
-                                balance_to_be_added_at_database = String.valueOf(temp_balance);
-                            }
-                            else balance_to_be_added_at_database = money_tx;
-
-                            //now setting new total money to database
-                            databaseReference.child(USER_BALANCE).child(key)
-                                    .child(TOTAL_BALANCE).setValue(balance_to_be_added_at_database).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            progressDialog.show();
+                            Thread thread = new Thread(new Runnable() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                public void run() {
+                                    Date dateTime = null;
+                                    try {
+                                        NTPUDPClient timeClient = new NTPUDPClient();
+                                        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+                                        TimeInfo timeInfo = timeClient.getTime(inetAddress);
+                                        long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
+                                        dateTime = new Date(returnTime);
+                                    }
+                                    catch (IOException e){
+                                        Log.w("raky", e.getCause());
+                                    }
+                                    Log.w("raky", String.valueOf(dateTime));
+                                    String myDate = String.valueOf(dateTime);
+                                    String date, time, year, month;
+                                    date = myDate.substring(8, 10);
+                                    month = myDate.substring(4, 7);
+                                    time = myDate.substring(11, 16);
+                                    year = myDate.substring(myDate.length()-4, myDate.length());
+                                    today_dateTime = time+", "+date+" "+month+" "+year;
+
+                                    String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                                    if (TextUtils.equals(identity, "admin")) AddMoneyByAdmin();
+                                    else if (TextUtils.equals(identity, "aangadia")) AddMoneyByAangadia();
                                 }
-                            });//setting new total ends
-
-                            String timestamp_unique_key = databaseReference.push().getKey();
-
-                            String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-//                           if money is added bt admin
-                            if (TextUtils.equals(identity, "admin")){ //if starts
-                                DatabaseReference databaseReferenceMoneyAddedByADMIN = databaseReference.child(TRANSACTIONS).child(key)
-                                        .child(timestamp_unique_key);
-                                databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED_BY).setValue("admin");
-                                databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED).setValue(money_tx);
-                                databaseReferenceMoneyAddedByADMIN.child(CURRENT_BALANCE).setValue(balance_to_be_added_at_database);
-                                databaseReferenceMoneyAddedByADMIN.child(PREVIOUS_BALANCE).setValue(previous_total_balance);
-                                databaseReferenceMoneyAddedByADMIN.child(MODE).setValue("moneyAdd");
-                            }//if ends
-
-
+                            });
+                            thread.start();
                         }
-
+                    })
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            dialog.dismiss();
                         }
-                    });//getting amount from database ends
+                    })
+                    .show();
 
         } //id if ends
 
     }//onclick ends
 
+//    money added by aangadia
+    private void AddMoneyByAangadia() {
+        mAuth1 = FirebaseAuth.getInstance();
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        final String aangadia_key = mAuth1.getCurrentUser().getUid();
+        final String key = sharedPreferences.getString(KEY, "");
+        money_tx = money_et.getText().toString();
+        //getting amount from database
+        databaseReference.child(USER_BALANCE).child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() { //add value event listener will run in loop(avoid using it)
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String balance_to_be_added_at_database = null;
+                        final String previous_total_balance = dataSnapshot.child(TOTAL_BALANCE).getValue(String.class);
+                        if (!TextUtils.isEmpty(previous_total_balance)) {
+                            final int temp_balance = Integer.parseInt(previous_total_balance) + Integer.parseInt(money_tx);
+                            balance_to_be_added_at_database = String.valueOf(temp_balance);
+                        } else balance_to_be_added_at_database = money_tx;
 
-    //
-    private static class AddMoneyByAdmin extends AsyncTask<Void, Void, String> {
+                        //now setting new total money to database
+                        databaseReference.child(USER_BALANCE).child(key)
+                                .child(TOTAL_BALANCE).setValue(balance_to_be_added_at_database).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                            }
+                        });//setting new total ends
 
-        Date dateTime;
-        @Override
-        protected String doInBackground(Void... voids) {
-            Log.w("raky", "hello1");
-            try {
-                NTPUDPClient timeClient = new NTPUDPClient();
-                InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-                TimeInfo timeInfo = timeClient.getTime(inetAddress);
-                long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
-                dateTime = new Date(returnTime);
-            }
-            catch (IOException e){
-                Log.w("raky", e.getCause());
-            }
-            Log.w("raky", "hello");
-            return String.valueOf(dateTime);
-        }
+                        String timestamp_unique_key = databaseReference.push().getKey();
 
-        @Override
-        protected void onPostExecute(String myDate){
-            String date, time, year;
-            date = myDate.substring(0, 8);
-            time = myDate.substring(11, 16);
-            year = myDate.substring(myDate.length()-4, myDate.length());
+                        DatabaseReference databaseReferenceMoneyAddedByADMIN = databaseReference.child(TRANSACTIONS).child(key)
+                                .child(timestamp_unique_key);
+                        databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED_BY).setValue("aangadia");
+                        databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED).setValue(money_tx);
+                        databaseReferenceMoneyAddedByADMIN.child(CURRENT_BALANCE).setValue(balance_to_be_added_at_database);
+                        databaseReferenceMoneyAddedByADMIN.child(PREVIOUS_BALANCE).setValue(previous_total_balance);
+                        databaseReferenceMoneyAddedByADMIN.child(MODE).setValue("moneyAdd");
+                        databaseReferenceMoneyAddedByADMIN.child(DATE_TIME).setValue(today_dateTime);
+                        databaseReferenceMoneyAddedByADMIN.child(AANGADIA_KEY).setValue(aangadia_key);
+                        progressDialog.dismiss();
+                        new MaterialDialog.Builder(getActivity())
+                                .title("Success")
+                                .titleColor(Color.BLACK)
+                                .content("Rs "+money_tx +" is credited to Account with " +
+                                        "\nUID: "+uid_tx)
+                                .icon(getResources().getDrawable(R.drawable.ic_success))
+                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .backgroundColor(getResources().getColor(R.color.white))
+                                .positiveText(R.string.ok)
+                                .show();
+                    }
 
-            Log.w("raky", " date:"+date +" time:"+ time+" year:" + year);
-            Log.w("raky", myDate);
-        }
-
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        progressDialog.dismiss();
+                        new MaterialDialog.Builder(getActivity())
+                                .title("Failed")
+                                .titleColor(Color.BLACK)
+                                .content(databaseError.toString())
+                                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .backgroundColor(getResources().getColor(R.color.white))
+                                .positiveText(R.string.ok)
+                                .show();
+                    }
+                });
     }
-//    getting date and time
+//    money by aangadia
 
+
+//    money added by admin
+
+    private void AddMoneyByAdmin() {
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        final String key = sharedPreferences.getString(KEY, "");
+        money_tx = money_et.getText().toString();
+        //getting amount from database
+        databaseReference.child(USER_BALANCE).child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() { //add value event listener will run in loop(avoid using it)
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String balance_to_be_added_at_database = null;
+                        final String previous_total_balance = dataSnapshot.child(TOTAL_BALANCE).getValue(String.class);
+                        if (!TextUtils.isEmpty(previous_total_balance)) {
+                            final int temp_balance = Integer.parseInt(previous_total_balance) + Integer.parseInt(money_tx);
+                            balance_to_be_added_at_database = String.valueOf(temp_balance);
+                        } else balance_to_be_added_at_database = money_tx;
+
+                        //now setting new total money to database
+                        databaseReference.child(USER_BALANCE).child(key)
+                                .child(TOTAL_BALANCE).setValue(balance_to_be_added_at_database).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                            }
+                        });//setting new total ends
+
+                        String timestamp_unique_key = databaseReference.push().getKey();
+
+                        DatabaseReference databaseReferenceMoneyAddedByADMIN = databaseReference.child(TRANSACTIONS).child(key)
+                                .child(timestamp_unique_key);
+                        databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED_BY).setValue("admin");
+                        databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED).setValue(money_tx);
+                        databaseReferenceMoneyAddedByADMIN.child(CURRENT_BALANCE).setValue(balance_to_be_added_at_database);
+                        databaseReferenceMoneyAddedByADMIN.child(PREVIOUS_BALANCE).setValue(previous_total_balance);
+                        databaseReferenceMoneyAddedByADMIN.child(MODE).setValue("moneyAdd");
+                        databaseReferenceMoneyAddedByADMIN.child(DATE_TIME).setValue(today_dateTime);
+                        progressDialog.dismiss();
+                        new MaterialDialog.Builder(getActivity())
+                                .title("Success")
+                                .titleColor(Color.BLACK)
+                                .content("Rs "+money_tx +" is credited to Account with " +
+                                        "\nUID: "+uid_tx)
+                                .icon(getResources().getDrawable(R.drawable.ic_success))
+                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .backgroundColor(getResources().getColor(R.color.white))
+                                .positiveText(R.string.ok)
+                                .show();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        progressDialog.dismiss();
+                        new MaterialDialog.Builder(getActivity())
+                                .title("Failed")
+                                .titleColor(Color.BLACK)
+                                .content(databaseError.toString())
+                                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .backgroundColor(getResources().getColor(R.color.white))
+                                .positiveText(R.string.ok)
+                                .show();
+                    }
+                });
+    }
+    //    money added by admin
 
     //ends
 }

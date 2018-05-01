@@ -38,7 +38,7 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
 
     SharedPreferences userIdentifierSharedPreferences;
 
-    private static final String USER_IDENTIFIER_PREF = "aangadiaHomePage";
+    private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String AANGADIA_UID = "aangadia_uid";
 
     AutoCompleteTextView state_et, city_et;
