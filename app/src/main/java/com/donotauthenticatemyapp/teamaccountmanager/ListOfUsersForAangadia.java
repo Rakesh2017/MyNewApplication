@@ -2,6 +2,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -147,6 +149,9 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
@@ -185,6 +190,9 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
@@ -192,7 +200,6 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                 progressDialog.dismiss();
 
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Hiding the progress dialog.
@@ -224,6 +231,8 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
                 adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
@@ -261,6 +270,9 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                     String findStr = name_tx;
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
+
+                if (list.isEmpty())
+                    showEmptyPage();
 
                 adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
@@ -314,6 +326,19 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    //    show empty page
+    public void showEmptyPage(){
+        new MaterialDialog.Builder(ListOfUsersForAangadia.this)
+                .title("Empty!")
+                .titleColor(Color.BLACK)
+                .content("No Such Data, Please make sure you have entered correct search key.")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.black))
+                .backgroundColor(getResources().getColor(R.color.white))
+                .positiveText(R.string.ok)
+                .show();
     }
 
     //end

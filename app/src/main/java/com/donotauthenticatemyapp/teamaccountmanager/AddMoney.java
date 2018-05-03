@@ -206,17 +206,17 @@ public class AddMoney extends Fragment implements View.OnClickListener {
         if (id == R.id.am_submitButton){
             money_tx = money_et.getText().toString();
             new MaterialDialog.Builder(getActivity())
-                    .title("Are you sure to add Money!")
-                    .content("Rs "+money_tx+" will be added to Account with \nUID:"+uid_tx
+                    .title("Are you sure to Add Money!")
+                    .content("Rs "+money_tx+"/- will be added to Account with \nUID:"+uid_tx
                     +"\nUser Name: "+userName_tx)
-                    .contentColorRes(R.color.appColor)
-                    .titleColor(getResources().getColor(R.color.white))
+                    .contentColorRes(R.color.white)
+                    .titleColor(getResources().getColor(R.color.whiteSmoke))
                     .positiveText("Confirm")
                     .positiveColorRes(R.color.googleGreen)
                     .negativeText("Cancel")
                     .negativeColorRes(R.color.googleRed)
                     .backgroundColor(getResources().getColor(R.color.black90))
-                    .icon(getResources().getDrawable(R.drawable.ic_money_transfer))
+                    .icon(getResources().getDrawable(R.drawable.ic_transfer_money))
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(MaterialDialog dialog, DialogAction which) {
@@ -304,12 +304,12 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                         databaseReferenceMoneyAddedByADMIN.child(AANGADIA_KEY).setValue(aangadia_key);
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(getActivity())
-                                .title("Success")
+                                .title("Transaction Successful")
                                 .titleColor(Color.BLACK)
                                 .content("Rs "+money_tx +" is credited to Account with " +
                                         "\nUID: "+uid_tx)
                                 .icon(getResources().getDrawable(R.drawable.ic_success))
-                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .contentColor(getResources().getColor(R.color.black))
                                 .backgroundColor(getResources().getColor(R.color.white))
                                 .positiveText(R.string.ok)
                                 .show();
@@ -371,12 +371,12 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                         databaseReferenceMoneyAddedByADMIN.child(DATE_TIME).setValue(today_dateTime);
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(getActivity())
-                                .title("Success")
+                                .title("Transaction Successful")
                                 .titleColor(Color.BLACK)
                                 .content("Rs "+money_tx +" is credited to Account with " +
                                         "\nUID: "+uid_tx)
                                 .icon(getResources().getDrawable(R.drawable.ic_success))
-                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .contentColor(getResources().getColor(R.color.black))
                                 .backgroundColor(getResources().getColor(R.color.white))
                                 .positiveText(R.string.ok)
                                 .show();

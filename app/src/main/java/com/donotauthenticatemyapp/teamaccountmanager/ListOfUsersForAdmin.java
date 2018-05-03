@@ -1,6 +1,7 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -140,9 +142,10 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     catch (NullPointerException e) {
                         e.printStackTrace();
                     }
-
-
                 }
+
+                if (list.isEmpty())
+                    showEmptyPage();
 
                 adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
 
@@ -177,10 +180,11 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
-
                 recyclerView.setAdapter(adapter);
-
                 progressDialog.dismiss();
 
             }
@@ -211,10 +215,11 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
-
                 recyclerView.setAdapter(adapter);
-
                 progressDialog.dismiss();
 
             }
@@ -246,10 +251,10 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
                 adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
-
                 recyclerView.setAdapter(adapter);
-
                 progressDialog.dismiss();
 
             }
@@ -280,10 +285,10 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     if (str.split(findStr, -1).length-1 > 0) list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
                 adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
-
                 recyclerView.setAdapter(adapter);
-
                 progressDialog.dismiss();
 
             }
@@ -329,6 +334,19 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
             }
         });
 
+    }
+
+    //    show empty page
+    public void showEmptyPage(){
+        new MaterialDialog.Builder(ListOfUsersForAdmin.this)
+                .title("Empty!")
+                .titleColor(Color.BLACK)
+                .content("No Such Data, Please make sure you have entered correct search key.")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.black))
+                .backgroundColor(getResources().getColor(R.color.white))
+                .positiveText(R.string.ok)
+                .show();
     }
 
     //end

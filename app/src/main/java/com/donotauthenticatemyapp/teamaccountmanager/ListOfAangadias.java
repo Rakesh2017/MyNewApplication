@@ -32,7 +32,7 @@ import java.util.List;
 public class ListOfAangadias extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView recyclerView;
-    RelativeLayout emptyRelativeLayout;
+    RelativeLayout emptyRelativeLayout, recyclerViewRelativeLayout;
 
     TextView emptyTextView;
 
@@ -55,10 +55,8 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_list_of_aangadias);
 
         recyclerView = findViewById(R.id.loa_recyclerView);
-        emptyRelativeLayout = findViewById(R.id.loa_emptyRelativeLayout);
-        emptyTextView = findViewById(R.id.loa_emptyTextView);
+        recyclerViewRelativeLayout = findViewById(R.id.loa_recyclerViewRelativeLayout);
         recyclerView.setHasFixedSize(true);
-
         recyclerViewLayoutManager = new LinearLayoutManager(ListOfAangadias.this);
 
 
@@ -128,6 +126,9 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                     if (str.split(findStr, -1).length-1 > 0 && str1.split(findStr1, -1).length-1 > 0) list.add(aangadiaData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
                 recyclerView.setAdapter(adapter);
 
@@ -166,18 +167,11 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                     if (str.split(findStr, -1).length-1 > 0) list.add(aangadiaData);
                 }
 
-                if (list.isEmpty()){
-                    Toast.makeText(ListOfAangadias.this, "empty filter by uid list", Toast.LENGTH_SHORT).show();
-                    emptyRelativeLayout.setVisibility(View.VISIBLE);
+                if (list.isEmpty())
                     showEmptyPage();
-                }
 
                 adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
                 recyclerView.setAdapter(adapter);
-
-                //  check if list is empty
-
-                Toast.makeText(ListOfAangadias.this, "uid", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
             }
@@ -211,11 +205,13 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                     if (str.split(findStr, -1).length-1 > 0) list.add(aangadiaData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
                 recyclerView.setAdapter(adapter);
 
                 progressDialog.dismiss();
-                Toast.makeText(ListOfAangadias.this, "name", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -274,17 +270,17 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                 .show();
     }
 
+//    show empty page
     public void showEmptyPage(){
-        emptyRelativeLayout.setVisibility(View.VISIBLE);
-        YoYo.with(Techniques.FadeIn)
-                .duration(700)
-                .repeat(0)
-                .playOn(emptyTextView);
+        new MaterialDialog.Builder(ListOfAangadias.this)
+                .title("Empty!")
+                .titleColor(Color.BLACK)
+                .content("No Such Data, Please make sure you have entered correct search key.")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.black))
+                .backgroundColor(getResources().getColor(R.color.white))
+                .positiveText(R.string.ok)
+                .show();
     }
-
-    public void hideEmptyPage(){
-        emptyRelativeLayout.setVisibility(View.GONE);
-    }
-
     //end
 }

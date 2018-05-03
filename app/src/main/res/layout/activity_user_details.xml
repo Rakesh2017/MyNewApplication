@@ -108,6 +108,7 @@
 
 
             <TextView
+                android:id="@+id/ud_transaction"
                 android:layout_below="@+id/ud_linearLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -78,7 +78,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
-                        Toast.makeText(AdminHomePage.this, ""+databaseError.getDetails(), Toast.LENGTH_LONG).show();
+                       // Toast.makeText(AdminHomePage.this, ""+databaseError.getDetails(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -97,7 +97,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
-                        Toast.makeText(AdminHomePage.this, ""+databaseError.getDetails(), Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(AdminHomePage.this, ""+databaseError.getDetails(), Toast.LENGTH_LONG).show();
                     }
                 });
     }

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -77,6 +78,18 @@ public class ListOfUsersForAangadiaRecyclerViewAdapter extends RecyclerView.Adap
                 .playOn(holder.cardView);
 
         delay+=100;
+
+        //adding padding to last cardview
+        if( position == getItemCount() -1){
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins((int) context.getResources().getDimension(R.dimen.activity_horizontal_margin)
+                    ,(int) context.getResources().getDimension(R.dimen.activity_horizontal_margin),
+                    (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin),
+                    (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin));
+            holder.cardView.setLayoutParams(params);
+        }
 
     }
 

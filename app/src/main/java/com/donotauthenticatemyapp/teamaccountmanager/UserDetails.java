@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,12 +18,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Locale;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener {
 
     TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv, state_tv, city_tv, addMoney_tv
-            , totalBalance_tv;
+            , totalBalance_tv, transaction_tv;
     String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx, state_tx, city_tx;
 
     ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn, home_btn;
@@ -64,6 +62,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         city_tv = findViewById(R.id.ud_cityTextView);
         addMoney_tv = findViewById(R.id.ud_addMoneyTextView);
         totalBalance_tv = findViewById(R.id.ud_totalMoneyTextView);
+        transaction_tv = findViewById(R.id.ud_transaction);
 
         editPassword_btn = findViewById(R.id.ud_editPasswordButton);
         editName_btn = findViewById(R.id.ud_editNameButton);
@@ -83,6 +82,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         editName_btn.setOnClickListener(this);
         editPhone_btn.setOnClickListener(this);
         addMoney_tv.setOnClickListener(this);
+        transaction_tv.setOnClickListener(this);
     }
 
 //    onStart
@@ -202,6 +202,10 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             //                add money
             case R.id.ud_addMoneyTextView:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new AddMoney()).addToBackStack("addMoney").commit();
+                break;
+
+            case R.id.ud_transaction:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new UserTransactions()).addToBackStack("transactions").commit();
                 break;
 
         }

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -77,6 +78,18 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
 
         delay+=100;
 
+        //adding padding to last cardview
+        if( position == getItemCount() -1){
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins((int) context.getResources().getDimension(R.dimen.activity_horizontal_margin)
+                    ,(int) context.getResources().getDimension(R.dimen.activity_horizontal_margin),
+                    (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin),
+                    (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin));
+            holder.cardView.setLayoutParams(params);
+        }
+
     }
 
     @Override
@@ -105,7 +118,7 @@ public class ListOfAangadiasRecyclerViewAdapter extends RecyclerView.Adapter<Lis
 
             name = itemView.findViewById(R.id.rla_nameTextView);
             uid = itemView.findViewById(R.id.rla_uidTextView);
-            cardView = itemView.findViewById(R.id.rya_cardview);
+            cardView = itemView.findViewById(R.id.rla_cardview);
 
             button = itemView.findViewById(R.id.rla_forwardImageButton);
 

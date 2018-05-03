@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/lut_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="5dp"
+    card_view:cardMaxElevation="5dp"
+    android:alwaysDrawnWithCache="true"
+    app:cardBackgroundColor="@color/whiteSmoke"
+    android:background="@color/whiteSmoke"
+    android:layout_centerHorizontal="true"
+
+    app:cardPreventCornerOverlap="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lut_relativeLayout"
+        android:background="@color/whiteSmoke"
+        xmlns:app="http://schemas.android.com/tools"
+        android:padding="8dp"
+        >
+
+        <!--date-->
+        <TextView
+            android:id="@+id/lut_dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="date"
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold"
+            />
+
+        <ImageButton
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_next"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/lut_dateTextView"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            />
+
+        <!--credited by-->
+        <TextView
+            android:id="@+id/lut_balanceCredited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lut_dateTextView"
+            android:text="Balance  Credited:  "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/lut_balanceCreditedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/lut_balanceCredited"
+            android:layout_below="@+id/lut_dateTextView"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <!--mode of transaction-->
+        <TextView
+            android:id="@+id/lut_modeOfTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lut_balanceCreditedTextView"
+            android:text="Mode of Transaction:  "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginTop="2dp"
+            />
+
+        <TextView
+            android:id="@+id/lut_modeOfTransactionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/lut_modeOfTransaction"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_below="@+id/lut_balanceCreditedTextView"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            android:layout_below="@+id/lut_modeOfTransactionTextView"
+            android:layout_marginTop="8dp"
+            />
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

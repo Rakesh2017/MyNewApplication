@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:id="@+id/rya_cardview"
+    android:id="@+id/ufa_cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardElevation="5dp"
@@ -133,6 +133,7 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:background="@drawable/ic_next"
             />
+
 
 
 

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -87,6 +88,18 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
 
         delay+=100;
 
+        //adding padding to last cardview
+        if( position == getItemCount() -1){
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins((int) context.getResources().getDimension(R.dimen.activity_horizontal_margin)
+                    ,(int) context.getResources().getDimension(R.dimen.activity_horizontal_margin),
+                    (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin),
+                    (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin));
+            holder.cardView.setLayoutParams(params);
+        }
+
     }
 
     @Override
@@ -119,7 +132,7 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
             createdBy = itemView.findViewById(R.id.ufa_createdByTextView);
             aangadiaName = itemView.findViewById(R.id.ufa_aangadiaNameTextView);
             aangadiaName1 = itemView.findViewById(R.id.ufa_aangadiaNameTextView1);
-            cardView = itemView.findViewById(R.id.rya_cardview);
+            cardView = itemView.findViewById(R.id.ufa_cardview);
 
             button = itemView.findViewById(R.id.ufa_forwardImageButton);
 
