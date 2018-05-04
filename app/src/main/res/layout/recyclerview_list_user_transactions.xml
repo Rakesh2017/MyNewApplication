@@ -37,6 +37,7 @@
             />
 
         <ImageButton
+            android:id="@+id/lut_nextButton"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/ic_next"

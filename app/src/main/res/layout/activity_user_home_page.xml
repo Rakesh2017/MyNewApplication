@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_container_user_home_page"
+    tools:context=".UserHomePage">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteSmoke"
+        >
+
+
+    <!--balance relative layout-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appColor"
+        >
+
+        <TextView
+            android:id="@+id/auh_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Balance"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            style="@style/MyCustomTextStyleMedium"
+            android:textColor="@color/whiteSmoke"
+            />
+
+        <TextView
+            android:id="@+id/auh_totalBalanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            android:textColorHint="@color/white"
+            android:drawableStart="@drawable/ic_rupee"
+            android:drawablePadding="4dp"
+            android:layout_below="@+id/auh_balance"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            style="@style/MyCustomTextStyleLarge"
+            android:textSize="32sp"
+            android:textColor="@color/whiteSmoke"
+            />
+
+        <TextView
+            android:id="@+id/auh_transaction"
+            android:layout_below="@+id/auh_totalBalanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transactions"
+            style="@style/MyCustomTextStyleMedium"
+            android:textColor="@color/white"
+            android:layout_marginTop="24dp"
+            android:drawableEnd="@drawable/ic_transactions_white"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            />
+
+
+    </RelativeLayout>
+
+    <!--admin-->
+    <util.android.textviews.FontTextView
+        android:id="@+id/auh_userUIDTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomTextStyleSmall"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textColor="@color/black90"
+        />
+    <!--logout-->
+    <ImageButton
+        android:id="@+id/auh_logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_logout"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        tools:ignore="ContentDescription,RelativeOverlap" />
+
+    </RelativeLayout>
+
+</FrameLayout>

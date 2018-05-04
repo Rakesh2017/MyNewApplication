@@ -119,6 +119,7 @@
                 android:drawableEnd="@drawable/ic_transactions"
                 android:drawablePadding="8dp"
                 android:gravity="center_vertical"
+                android:textStyle="bold"
                 />
 
 

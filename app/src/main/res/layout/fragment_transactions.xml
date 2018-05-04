@@ -90,7 +90,6 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             style="@style/MyCustomTextStyleMedium"
-                            android:hint="@string/uid"
                             />
 
                         <!--user name-->
@@ -103,7 +102,6 @@
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             android:layout_marginTop="8dp"
                             style="@style/MyCustomTextStyleMedium"
-                            android:hint="@string/uid"
                             />
 
                     </RelativeLayout>

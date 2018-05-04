@@ -2,7 +2,8 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 public class RecyclerViewListAangadiaData {
 
-    String userName, uid, key, state, city, aangadia_userName, created_by, mode, dateTime, money_added;
+    String userName, uid, key, state, city, aangadia_userName, created_by, mode, dateTime, money_added
+            ,aangadia_key, money_added_by, previous_balance;
 
     public RecyclerViewListAangadiaData(){
 
@@ -27,6 +28,12 @@ public class RecyclerViewListAangadiaData {
     public String getDateTime(){ return dateTime; }
 
     public String getMoney_added(){ return money_added; }
+
+    public String getAangadia_key(){ return aangadia_key; }
+
+    public String getMoney_added_by(){ return money_added_by; }
+
+    public String getPrevious_balance(){ return previous_balance; }
 
 
 }

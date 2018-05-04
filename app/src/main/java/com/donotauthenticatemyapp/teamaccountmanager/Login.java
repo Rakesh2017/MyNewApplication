@@ -27,6 +27,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private static final String FIRST_SCREEN = "firstScreen";
     private static final String AANGADIA_HOME_PAGE = "aangadiaHomePage";
     private static final String ADMIN_HOME_PAGE = "adminHomePage";
+    private static final String USER_HOME_PAGE = "userHomePage";
 
 
     @Override
@@ -148,8 +149,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             startActivity(new Intent(Login.this, AdminHomePage.class));
             Login.this.finish();
         }
-        if (TextUtils.equals(decider, AANGADIA_HOME_PAGE)) {
+        else if (TextUtils.equals(decider, AANGADIA_HOME_PAGE)) {
             startActivity(new Intent(Login.this, AangadiaHomePage.class));
+            Login.this.finish();
+        }
+        else if (TextUtils.equals(decider, USER_HOME_PAGE)) {
+            startActivity(new Intent(Login.this, UserHomePage.class));
             Login.this.finish();
         }
 

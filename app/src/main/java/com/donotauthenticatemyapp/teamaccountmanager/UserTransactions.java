@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +34,7 @@ public class UserTransactions extends Fragment {
 
     TextView balance_tv, uid_tv, userName_tv;
     String balance_tx;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, userIdentifierSharedPreferences;
 
     private static final String UPDATE_PREF = "change_password_pref";
     private static final String USER_NAME = "userName";
@@ -44,12 +43,13 @@ public class UserTransactions extends Fragment {
     private static final String USER_BALANCE = "userBalance";
     private static final String TRANSACTIONS = "transactions";
     private static final String TOTAL_BALANCE = "total_balance";
-    private static final String MONEY_ADDED_BY = "money_added_by";
-    private static final String PREVIOUS_BALANCE = "previous_balance";
-    private static final String MONEY_ADDED = "money_added";
-    private static final String MODE = "mode";
-    private static final String CURRENT_BALANCE = "current_balance";
-    private static final String DATE_TIME = "dateTime";
+
+    private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
+    private static final String USER_IDENTITY = "userIdentity";
+    private static final String USER_KEY = "user_key";
+    private static final String USER_UID = "user_uid";
+
+
 
     RecyclerView recyclerView;
 
@@ -96,20 +96,99 @@ public class UserTransactions extends Fragment {
 
 
         sharedPreferences = getContext().getSharedPreferences(UPDATE_PREF, MODE_PRIVATE);
+        userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
 
         return view;
     }
 
+//    onStart
     public void onStart(){
         super.onStart();
-        setUIDAndUserName();
-        setBalance();
-        LoadTransactions();
+
+        String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+        if (TextUtils.equals(identity, "aangadia") || TextUtils.equals(identity, "admin")){
+            setUIDAndUserNameForAangaisaAndAdmin();
+            setBalanceForAangadiaAndAdmin();
+            LoadTransactionsForAangadiaAndAdmin();
+        }
+        else if (TextUtils.equals(identity, "user")){
+            setUIDAndUserNameForUser();
+            setBalanceForUser();
+            LoadTransactionForUser();
+            userName_tv.setVisibility(View.GONE);
+        }
+
+    }
+    //    onStart
+
+
+    private void setUIDAndUserNameForUser() {
+        String user_uid = userIdentifierSharedPreferences.getString(USER_UID, "");
+        uid_tv.setText(user_uid);
     }
 
-//    set balance
-    private void setBalance() {
+
+//    set balance for user
+    private void setBalanceForUser() {
+        final String key = userIdentifierSharedPreferences.getString(USER_KEY, "");
+        databaseReference.child(USER_BALANCE).child(key)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final String total_balance = dataSnapshot.child(TOTAL_BALANCE).getValue(String.class);
+                        if (!TextUtils.isEmpty(total_balance)){
+                            NumberFormat formatter = new DecimalFormat("#,###");
+                            String formatted_balance = formatter.format(Long.parseLong(total_balance));
+                            balance_tv.setText(formatted_balance);
+                        }
+                        else {
+                            balance_tv.setText("0.00");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    //    transaction for user
+    private void LoadTransactionForUser() {
+
+        progressDialog.show();
+        final String key = userIdentifierSharedPreferences.getString(USER_KEY, "");
+        databaseReference.child(TRANSACTIONS).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(list!=null) {
+                    list.clear();  // v v v v important (eliminate duplication of data)
+                }
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    RecyclerViewListAangadiaData userData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
+                    list.add(userData);
+                }
+
+                adapter = new ListOfUserTransactionsRecyclerViewAdapter(getContext(), list);
+
+                recyclerView.setAdapter(adapter);
+
+                progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Hiding the progress dialog.
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    //    set balance
+    private void setBalanceForAangadiaAndAdmin() {
         final String key = sharedPreferences.getString(KEY, "");
         databaseReference.child(USER_BALANCE).child(key)
                 .addValueEventListener(new ValueEventListener() {
@@ -135,14 +214,16 @@ public class UserTransactions extends Fragment {
 //    set balance
 
     //    setting username and uid
-    private void setUIDAndUserName() {
+    private void setUIDAndUserNameForAangaisaAndAdmin() {
         String uid = sharedPreferences.getString(UID, "");
         String user_name = sharedPreferences.getString(USER_NAME, "");
         uid_tv.setText(uid);
         userName_tv.setText(user_name);
     }
+//    setting username and uid
 
-    public void LoadTransactions(){
+    //    load transaction for LoadTransactionsForAangadiaAndAdmin
+    public void LoadTransactionsForAangadiaAndAdmin(){
 
         progressDialog.show();
         final String key = sharedPreferences.getString(KEY, "");

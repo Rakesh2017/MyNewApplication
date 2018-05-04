@@ -36,7 +36,7 @@
 
         <!--email-->
         <util.android.textviews.FontTextView
-            android:id="@+id/lu_emailTextView"
+            android:id="@+id/lu_uidTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/uid"
@@ -47,10 +47,10 @@
             />
 
         <EditText
-            android:id="@+id/lu_emailEditText"
+            android:id="@+id/lu_uidEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lu_emailTextView"
+            android:layout_below="@+id/lu_uidTextView"
             android:layout_marginTop="@dimen/paddingBetweenET"
             style="@style/MyCustomEditTextStyle"
             android:background="@color/whiteSmoke"
@@ -65,7 +65,7 @@
         <!--password-->
         <util.android.textviews.FontTextView
             android:id="@+id/lu_passwordTextView"
-            android:layout_below="@+id/lu_emailEditText"
+            android:layout_below="@+id/lu_uidEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/password"
@@ -93,7 +93,7 @@
         <!--login button-->
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_spotify"
+            android:id="@+id/lu_submitBtn"
             android:layout_below="@+id/lu_passwordEditText"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_start_margin"

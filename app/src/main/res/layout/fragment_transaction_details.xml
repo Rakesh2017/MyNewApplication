@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".TransactionDetails">
+
+    <RelativeLayout
+        android:id="@+id/td_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_edit_text_1"
+        android:padding="12dp"
+        android:layout_alignParentBottom="true"
+        >
+
+        <!--date time-->
+        <TextView
+            android:id="@+id/td_dateTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:hint="date time"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+             />
+
+        <!--balance added-->
+        <TextView
+            android:id="@+id/td_balanceAdded"
+            android:layout_below="@+id/td_dateTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Balance Credited: "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginTop="24dp"
+            />
+        <TextView
+            android:id="@+id/td_balanceAddedTextView"
+            android:layout_toEndOf="@+id/td_balanceAdded"
+            android:layout_below="@+id/td_dateTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            />
+
+        <!--mode-->
+        <TextView
+            android:id="@+id/td_modeAdded"
+            android:layout_below="@+id/td_balanceAddedTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Mode: "
+            style="@style/MyCustomTextStyleSmall"
+            />
+        <TextView
+            android:id="@+id/td_modeTextView"
+            android:layout_toEndOf="@+id/td_modeAdded"
+            android:layout_below="@+id/td_balanceAddedTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+        <!--credited/debited by-->
+        <TextView
+            android:id="@+id/td_moneyAddedBy"
+            android:layout_below="@+id/td_modeTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Transaction By: "
+            style="@style/MyCustomTextStyleSmall"
+            />
+        <TextView
+            android:id="@+id/td_moneyAddedByTextView"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/td_moneyAddedBy"
+            android:layout_below="@+id/td_modeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+        <!--previous balance-->
+        <TextView
+            android:id="@+id/td_previousBalance"
+            android:layout_below="@+id/td_moneyAddedByTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Previous Balance: "
+            style="@style/MyCustomTextStyleSmall"
+            />
+        <TextView
+            android:id="@+id/td_previousBalanceTextView"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/td_previousBalance"
+            android:layout_below="@+id/td_moneyAddedByTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
