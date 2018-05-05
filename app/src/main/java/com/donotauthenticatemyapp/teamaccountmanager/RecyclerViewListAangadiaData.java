@@ -3,7 +3,8 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 public class RecyclerViewListAangadiaData {
 
     String userName, uid, key, state, city, aangadia_userName, created_by, mode, dateTime, money_added
-            ,aangadia_key, money_added_by, previous_balance;
+            ,aangadia_key, money_added_by, previous_balance, balance_debited, balance_credited, sender_key, receiver_key
+            ,balance_after_debit, balance_after_credit;
 
     public RecyclerViewListAangadiaData(){
 
@@ -34,6 +35,18 @@ public class RecyclerViewListAangadiaData {
     public String getMoney_added_by(){ return money_added_by; }
 
     public String getPrevious_balance(){ return previous_balance; }
+
+    public String getBalance_debited(){ return balance_debited; }
+
+    public String getBalance_credited(){ return balance_credited; }
+
+    public String getSender_key(){ return sender_key; }
+
+    public String getReceiver_key(){ return receiver_key; }
+
+    public String getBalance_after_debit(){ return balance_after_debit; }
+
+    public String getBalance_after_credit(){ return balance_after_credit; }
 
 
 }

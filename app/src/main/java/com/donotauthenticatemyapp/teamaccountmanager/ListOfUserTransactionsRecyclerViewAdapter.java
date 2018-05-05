@@ -40,6 +40,12 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
     private final String MODE = "mode";
     private final String MONEY_ADDED = "money_added";
     private final String MONEY_ADDED_BY = "money_added_by";
+    private final String BALANCE_AFTER_DEBIT = "balance_after_debit";
+    private final String BALANCE_AFTER_CREDIT = "balance_after_credit";
+    private final String BALANCE_DEBITED = "balance_debited";
+    private final String BALANCE_CREDITED = "balance_credited";
+    private final String RECEIVER_KEY = "receiver_key";
+    private final String SENDER_KEY = "sender_key";
 
     SharedPreferences userIdentifierSharedPreferences;
 
@@ -69,16 +75,40 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final RecyclerViewListAangadiaData UploadInfo = MainImageUploadInfoList.get(position);
 
+        String money_added_to_account = null;
+
         holder.date_tv.setText(UploadInfo.getDateTime());
+
+
+        //if money add
         if (TextUtils.equals(UploadInfo.getMode(),"moneyAdd")){
             String BALANCE_ADD = "Balance Add";
             holder.modeOFTransaction_tv.setText(BALANCE_ADD);
             holder.balanceCredited_tv.setTextColor(context.getResources().getColor(R.color.green));
+            money_added_to_account = UploadInfo.getMoney_added();
         }
-        final String total_balance = UploadInfo.getMoney_added();
-        if (!TextUtils.isEmpty(total_balance)){
+
+//        if debited
+        else if (TextUtils.equals(UploadInfo.getMode(),"debit")){
+            String DEBIT = "Debit";
+            holder.modeOFTransaction_tv.setText(DEBIT);
+            holder.balanceCredited_tv.setTextColor(context.getResources().getColor(R.color.red));
+            money_added_to_account = UploadInfo.getBalance_debited();
+        }
+
+        //        if credited
+        else if (TextUtils.equals(UploadInfo.getMode(),"credit")){
+            String CREDIT = "Credit";
+            holder.modeOFTransaction_tv.setText(CREDIT);
+            holder.balanceCredited_tv.setTextColor(context.getResources().getColor(R.color.green));
+            money_added_to_account = UploadInfo.getBalance_credited();
+        }
+
+
+
+        if (!TextUtils.isEmpty(money_added_to_account)){
             NumberFormat formatter = new DecimalFormat("#,###");
-            String formatted_balance = formatter.format(Long.parseLong(total_balance));
+            String formatted_balance = formatter.format(Long.parseLong(money_added_to_account));
             holder.balanceCredited_tv.setText("Rs "+formatted_balance);
         }
 
@@ -90,12 +120,32 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                 SharedPreferences.Editor editor = transactionSharedPreferences.edit();
 
                 try{
+
+//                    if balance add
+                    if (TextUtils.equals(UploadInfo.getMode(), "moneyAdd")){
+                        editor.putString(MONEY_ADDED, UploadInfo.getMoney_added());
+                        editor.putString(AANGADIA_KEY, UploadInfo.getAangadia_key());
+                        editor.putString(MONEY_ADDED_BY, UploadInfo.getMoney_added_by());
+                        editor.putString(PREVIOUS_BALANCE, UploadInfo.getPrevious_balance());
+                    }
+//credit
+                    else if (TextUtils.equals(UploadInfo.getMode(), "credit")){
+                        editor.putString(BALANCE_CREDITED, UploadInfo.getBalance_credited());
+                        editor.putString(BALANCE_AFTER_CREDIT, UploadInfo.getBalance_after_credit());
+                        editor.putString(SENDER_KEY, UploadInfo.getSender_key());
+                    }
+
+                    //debit
+                    else if (TextUtils.equals(UploadInfo.getMode(), "credit")){
+                        editor.putString(BALANCE_DEBITED, UploadInfo.getBalance_debited());
+                        editor.putString(BALANCE_AFTER_DEBIT, UploadInfo.getBalance_after_debit());
+                        editor.putString(RECEIVER_KEY, UploadInfo.getReceiver_key());
+                    }
+
+
                     editor.putString(MODE, UploadInfo.getMode());
-                    editor.putString(MONEY_ADDED, UploadInfo.getMoney_added());
-                    editor.putString(AANGADIA_KEY, UploadInfo.getAangadia_key());
-                    editor.putString(MONEY_ADDED_BY, UploadInfo.getMoney_added_by());
-                    editor.putString(PREVIOUS_BALANCE, UploadInfo.getPrevious_balance());
                     editor.putString(DATE_TIME, UploadInfo.getDateTime());
+
                     editor.apply();
                 }
                 catch (Exception e){
@@ -147,7 +197,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date_tv, balanceCredited_tv, modeOFTransaction_tv;
+        TextView date_tv, balanceCredited_tv, modeOFTransaction_tv, balanceCredited;
         CardView cardView;
         RelativeLayout relativeLayout;
         ImageButton button;
@@ -157,6 +207,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
             date_tv = itemView.findViewById(R.id.lut_dateTextView);
             balanceCredited_tv = itemView.findViewById(R.id.lut_balanceCreditedTextView);
+            balanceCredited = itemView.findViewById(R.id.lut_balanceCredited);
             modeOFTransaction_tv = itemView.findViewById(R.id.lut_modeOfTransactionTextView);
 
             cardView = itemView.findViewById(R.id.lut_cardview);
