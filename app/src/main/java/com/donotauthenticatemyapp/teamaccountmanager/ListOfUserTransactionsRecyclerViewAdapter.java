@@ -126,7 +126,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
         delay+=100;
 
-        if (delay == 1000) delay = 100;
+        if (delay == 500) delay = 100;
 
     }
 

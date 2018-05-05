@@ -205,64 +205,87 @@ public class AddMoney extends Fragment implements View.OnClickListener {
 
         if (id == R.id.am_submitButton){
             money_tx = money_et.getText().toString();
-            new MaterialDialog.Builder(getActivity())
-                    .title("Are you sure to Add Money!")
-                    .content("Rs "+money_tx+"/- will be added to Account with \nUID:"+uid_tx
-                    +"\nUser Name: "+userName_tx)
-                    .contentColorRes(R.color.white)
-                    .titleColor(getResources().getColor(R.color.whiteSmoke))
-                    .positiveText("Confirm")
-                    .positiveColorRes(R.color.googleGreen)
-                    .negativeText("Cancel")
-                    .negativeColorRes(R.color.googleRed)
-                    .backgroundColor(getResources().getColor(R.color.black90))
-                    .icon(getResources().getDrawable(R.drawable.ic_transfer_money))
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
-                            progressDialog.show();
-                            Thread thread = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Date dateTime = null;
-                                    try {
-                                        NTPUDPClient timeClient = new NTPUDPClient();
-                                        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-                                        TimeInfo timeInfo = timeClient.getTime(inetAddress);
-                                        long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
-                                        dateTime = new Date(returnTime);
-                                    }
-                                    catch (IOException e){
-                                        Log.w("raky", e.getCause());
-                                    }
-                                    Log.w("raky", String.valueOf(dateTime));
-                                    String myDate = String.valueOf(dateTime);
-                                    String date, time, year, month;
-                                    date = myDate.substring(8, 10);
-                                    month = myDate.substring(4, 7);
-                                    time = myDate.substring(11, 16);
-                                    year = myDate.substring(myDate.length()-4, myDate.length());
-                                    today_dateTime = time+", "+date+" "+month+" "+year;
-
-                                    String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-                                    if (TextUtils.equals(identity, "admin")) AddMoneyByAdmin();
-                                    else if (TextUtils.equals(identity, "aangadia")) AddMoneyByAangadia();
-                                }
-                            });
-                            thread.start();
-                        }
-                    })
-                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
-
+            if (MoneyValidation()) AddMoneyFunction();
         } //id if ends
 
     }//onclick ends
+
+    public boolean MoneyValidation(){
+        if (TextUtils.isEmpty(money_tx)){
+            new MaterialDialog.Builder(getActivity())
+                    .title("Failed")
+                    .titleColor(Color.WHITE)
+                    .content("Please Enter Amount")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+            return false;
+        }
+        return true;
+    }
+
+//    add money function
+    public void AddMoneyFunction(){
+
+        new MaterialDialog.Builder(getActivity())
+                .title("Are you sure to Add Money!")
+                .content("Rs "+money_tx+"/- will be added to Account with \nUID:"+uid_tx
+                        +"\nUser Name: "+userName_tx)
+                .contentColorRes(R.color.white)
+                .titleColor(getResources().getColor(R.color.whiteSmoke))
+                .positiveText("Confirm")
+                .positiveColorRes(R.color.googleGreen)
+                .negativeText("Cancel")
+                .negativeColorRes(R.color.googleRed)
+                .backgroundColor(getResources().getColor(R.color.black90))
+                .icon(getResources().getDrawable(R.drawable.ic_transfer_money))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        progressDialog.show();
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Date dateTime = null;
+                                try {
+                                    NTPUDPClient timeClient = new NTPUDPClient();
+                                    InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+                                    TimeInfo timeInfo = timeClient.getTime(inetAddress);
+                                    long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
+                                    dateTime = new Date(returnTime);
+                                }
+                                catch (IOException e){
+                                    Log.w("raky", e.getCause());
+                                }
+                                Log.w("raky", String.valueOf(dateTime));
+                                String myDate = String.valueOf(dateTime);
+                                String date, time, year, month;
+                                date = myDate.substring(8, 10);
+                                month = myDate.substring(4, 7);
+                                time = myDate.substring(11, 16);
+                                year = myDate.substring(myDate.length()-4, myDate.length());
+                                today_dateTime = time+", "+date+" "+month+" "+year;
+
+                                String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                                if (TextUtils.equals(identity, "admin")) AddMoneyByAdmin();
+                                else if (TextUtils.equals(identity, "aangadia")) AddMoneyByAangadia();
+                            }
+                        });
+                        thread.start();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+
+    }
+//    add money function
 
 //    money added by aangadia
     private void AddMoneyByAangadia() {

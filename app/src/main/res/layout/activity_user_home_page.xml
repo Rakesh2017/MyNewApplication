@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_container_user_home_page"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     tools:context=".UserHomePage">
 
 
@@ -17,6 +18,7 @@
 
     <!--balance relative layout-->
     <RelativeLayout
+        android:id="@+id/auh_relativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/appColor"
@@ -70,6 +72,15 @@
 
     </RelativeLayout>
 
+        <!--Relative layout 2-->
+
+    <RelativeLayout
+        android:id="@+id/auh_relativeLayout2"
+        android:layout_below="@+id/auh_relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
     <!--admin-->
     <util.android.textviews.FontTextView
         android:id="@+id/auh_userUIDTextView"
@@ -80,7 +91,7 @@
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:textColor="@color/black90"
-        />
+        tools:ignore="RelativeOverlap" />
     <!--logout-->
     <ImageButton
         android:id="@+id/auh_logoutButton"
@@ -92,6 +103,92 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         tools:ignore="ContentDescription,RelativeOverlap" />
+
+
+        <TextView
+            android:id="@+id/auh_numberToEnglishTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="32dp"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/auh_linearLayout1"
+            android:layout_below="@+id/auh_numberToEnglishTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginTop="12dp"
+            >
+
+            <!--user uid-->
+        <EditText
+            android:id="@+id/auh_userUIDEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            style="@style/MyCustomEditTextStyle"
+            android:background="@color/wheat"
+            android:drawableStart="@drawable/ic_id"
+            android:hint="User Uid"
+            android:inputType="number"
+            android:maxLength="7"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor" />
+
+            <!--amount-->
+            <EditText
+                android:id="@+id/auh_amountEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:background="@color/wheat"
+                android:drawableStart="@drawable/ic_rupee"
+                android:hint="Amount"
+                android:inputType="number"
+                android:maxLength="9"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                tools:ignore="LabelFor" />
+
+        </LinearLayout>
+
+        <!--send money-->
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/auh_sendMoneyButton"
+            android:layout_below="@+id/auh_linearLayout1"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_start_margin"
+            android:layout_marginEnd="@dimen/activity_end_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/green"
+            fancy:fb_focusColor="@color/whiteSmoke"
+            fancy:fb_fontIconResource="&#xf1d8;"
+            fancy:fb_iconPosition="right"
+            fancy:fb_radius="2dp"
+            fancy:fb_text="Send Money"
+            fancy:fb_textColor="@color/white"
+            style="@style/MyCustomTextStyleMedium"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop" />
+
+
+    </RelativeLayout>
 
     </RelativeLayout>
 

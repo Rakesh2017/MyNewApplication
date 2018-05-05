@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:hint="date time"
-            style="@style/MyCustomTextStyleSmall"
+            style="@style/MyCustomTextStyleMedium"
             android:textStyle="bold"
              />
 

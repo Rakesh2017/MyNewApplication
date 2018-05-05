@@ -79,9 +79,10 @@ public class TransactionDetails extends Fragment {
 
     }
 
+
     private void LoadAnimation() {
         YoYo.with(Techniques.SlideInUp)
-                .duration(500)
+                .duration(300)
                 .repeat(0)
                 .playOn(relativeLayout);
     }

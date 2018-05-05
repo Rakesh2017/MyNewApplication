@@ -78,7 +78,7 @@ public class ListOfUsersForAangadiaRecyclerViewAdapter extends RecyclerView.Adap
                 .playOn(holder.cardView);
 
         delay+=100;
-        if (delay == 1000) delay = 100;
+        if (delay == 500) delay = 100;
 
         //adding padding to last cardview
         if( position == getItemCount() -1){
