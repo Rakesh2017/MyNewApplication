@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/whiteSmoke"
     android:id="@+id/adh_fragment_container"
     tools:context="com.donotauthenticatemyapp.teamaccountmanager.AdminHomePage">
@@ -289,6 +290,123 @@
                     android:layout_marginStart="4dp"
                     android:textStyle="bold"
                     />
+
+            </RelativeLayout>
+
+            <!--commission-->
+            <RelativeLayout
+                android:id="@+id/adg_commissionRelativeLayout"
+                android:layout_below="@+id/adg_allUsersRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_5"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                >
+
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/ic_commission"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/adh_commissionButton"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_commissionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Commission"
+                    android:layout_toEndOf="@+id/adh_commissionButton"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_currentCommission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Commission: "
+                    android:layout_alignStart="@+id/adh_commissionTextView"
+                    android:layout_below="@+id/adh_commissionTextView"
+                    android:layout_marginTop="12dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:textStyle="bold"
+                    android:drawableStart="@drawable/ic_pointing_arrow"
+                    android:drawablePadding="@dimen/drawablePadding"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_currentCommissionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hintPlaceholderSingleSmall"
+                    android:layout_toEndOf="@+id/adh_currentCommission"
+                    android:layout_below="@+id/adh_commissionTextView"
+                    android:layout_marginTop="12dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:textStyle="bold"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/adh_commissionLinearLyout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_below="@+id/adh_currentCommissionTextView"
+                    android:layout_alignStart="@+id/adh_commissionTextView"
+                    android:layout_marginTop="12dp"
+                    >
+
+                    <!--commission edit text-->
+                    <EditText
+                        android:id="@+id/adh_commissionEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/MyCustomEditTextStyle"
+                        android:background="@color/gray90"
+                        android:drawableEnd="@drawable/ic_commission"
+                        android:inputType="numberDecimal"
+                        android:maxLength="4"
+                        android:gravity="end"
+                        android:elevation="@dimen/elevation_5"
+                        tools:targetApi="lollipop"
+                        tools:ignore="LabelFor" />
+
+                    <!--submit-->
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@+id/adh_submitCommissionBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        fancy:fb_borderWidth="1dp"
+                        fancy:fb_defaultColor="@color/green"
+                        fancy:fb_focusColor="@color/whiteSmoke"
+                        fancy:fb_fontIconResource="&#xf1d8;"
+                        fancy:fb_iconPosition="right"
+                        fancy:fb_radius="2dp"
+                        fancy:fb_text="Submit"
+                        fancy:fb_textColor="@color/black"
+                        android:elevation="@dimen/elevation_5"
+                        tools:targetApi="lollipop" />
+
+                </LinearLayout>
+
+
+
 
             </RelativeLayout>
 

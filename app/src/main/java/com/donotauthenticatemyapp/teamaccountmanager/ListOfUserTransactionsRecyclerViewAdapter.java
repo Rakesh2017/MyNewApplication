@@ -128,7 +128,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                         editor.putString(MONEY_ADDED_BY, UploadInfo.getMoney_added_by());
                         editor.putString(PREVIOUS_BALANCE, UploadInfo.getPrevious_balance());
                     }
-//credit
+//                  credit
                     else if (TextUtils.equals(UploadInfo.getMode(), "credit")){
                         editor.putString(BALANCE_CREDITED, UploadInfo.getBalance_credited());
                         editor.putString(BALANCE_AFTER_CREDIT, UploadInfo.getBalance_after_credit());
@@ -136,7 +136,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                     }
 
                     //debit
-                    else if (TextUtils.equals(UploadInfo.getMode(), "credit")){
+                    else if (TextUtils.equals(UploadInfo.getMode(), "debit")){
                         editor.putString(BALANCE_DEBITED, UploadInfo.getBalance_debited());
                         editor.putString(BALANCE_AFTER_DEBIT, UploadInfo.getBalance_after_debit());
                         editor.putString(RECEIVER_KEY, UploadInfo.getReceiver_key());
@@ -145,6 +145,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
                     editor.putString(MODE, UploadInfo.getMode());
                     editor.putString(DATE_TIME, UploadInfo.getDateTime());
+                    editor.putString(CURRENT_BALANCE, UploadInfo.getCurrent_balance());
 
                     editor.apply();
                 }

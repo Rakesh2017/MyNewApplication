@@ -119,6 +119,30 @@
             android:textStyle="bold"
             />
 
+        <!--balance after transaction-->
+        <TextView
+            android:id="@+id/td_balanceAfterTransaction"
+            android:layout_below="@+id/td_previousBalanceTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Balance After Transaction: "
+            style="@style/MyCustomTextStyleSmall"
+            />
+        <TextView
+            android:id="@+id/td_balanceAfterTransactionTextView"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/td_balanceAfterTransaction"
+            android:layout_below="@+id/td_previousBalanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+
 
     </RelativeLayout>
 

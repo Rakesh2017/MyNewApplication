@@ -1,25 +1,30 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
 
@@ -28,13 +33,16 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
 
-    TextView totalAangadia_tv, totalUsers_tv;
+    TextView totalAangadia_tv, totalUsers_tv, commission_tv, currentCommission_tv;
+    String commission_tx;
 
     int totalAangadia, totalUsers;
+    FancyButton submitCommission_btn;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     FirebaseAuth mAuth;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +53,24 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         addUser_btn = findViewById(R.id.adh_addUserButton);
         allAangadias_btn = findViewById(R.id.adh_allAangadiaButton);
         allUsers_btn = findViewById(R.id.adh_allUsersButton);
+        submitCommission_btn = findViewById(R.id.adh_submitCommissionBtn);
 
         logout_ib = findViewById(R.id.adh_logoutButton);
 
         totalAangadia_tv = findViewById(R.id.adh_totalAangadiasTextView);
         totalUsers_tv = findViewById(R.id.adh_totalUsersTextView);
+        commission_tv = findViewById(R.id.adh_commissionEditText);
+        currentCommission_tv = findViewById(R.id.adh_currentCommissionTextView);
+
+        progressDialog = new ProgressDialog(AdminHomePage.this);
+        progressDialog.setMessage("Please wait...");
 
         addAangadia_btn.setOnClickListener(this);
         addUser_btn.setOnClickListener(this);
         allAangadias_btn.setOnClickListener(this);
         allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
+        submitCommission_btn.setOnClickListener(this);
 
     }
 
@@ -63,9 +78,28 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         super.onStart();
         TotalAangadias();
         TotalUsers();
+        SetCommission();
     }
 
-//    total users
+//    setting commission
+    private void SetCommission() {
+        databaseReference.child("adminCommission")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String commission = dataSnapshot.child("commission").getValue(String.class);
+                        currentCommission_tv.setText(commission+"%");
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+//    setting commission
+
+    //    total users
     private void TotalUsers() {
         databaseReference.child("userProfile").
                 addValueEventListener(new ValueEventListener() {
@@ -171,11 +205,89 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
             case R.id.adh_allUsersButton:
                 startActivity(new Intent(AdminHomePage.this, ListOfUsersForAdmin.class));
                 break;
+//                commission
+            case R.id.adh_submitCommissionBtn:
+                SubmitCommission();
+                break;
         }//switch ends
 
     }//onclick
 
-//    onBackPressed
+//    submitting commission
+    private void SubmitCommission() {
+        commission_tx = commission_tv.getText().toString().trim();
+        if (CommissionValidation()){ //if
+            progressDialog.show();
+            databaseReference.child("adminCommission").child("commission").setValue(commission_tx)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            new MaterialDialog.Builder(AdminHomePage.this)
+                                    .title("Success")
+                                    .titleColor(Color.BLACK)
+                                    .content("Commission set to "+commission_tx +"%")
+                                    .icon(getResources().getDrawable(R.drawable.ic_success))
+                                    .contentColor(getResources().getColor(R.color.black))
+                                    .backgroundColor(getResources().getColor(R.color.white))
+                                    .positiveText(R.string.ok)
+                                    .show();
+                            currentCommission_tv.setText(commission_tx+"%");
+                            progressDialog.dismiss();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    new MaterialDialog.Builder(AdminHomePage.this)
+                            .title("Failed")
+                            .titleColor(Color.BLACK)
+                            .content(e.getLocalizedMessage())
+                            .icon(getResources().getDrawable(R.drawable.ic_success))
+                            .contentColor(getResources().getColor(R.color.green))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveText(R.string.ok)
+                            .show();
+                    progressDialog.dismiss();
+                }
+            });
+        }//if
+    }
+    //    submitting commission
+
+    public Boolean CommissionValidation(){
+        if (TextUtils.isEmpty(commission_tx)){
+            new MaterialDialog.Builder(AdminHomePage.this)
+                    .title("Empty!")
+                    .titleColor(Color.WHITE)
+                    .content("Please enter commission")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+            return false;
+        }
+        try {
+              if (Integer.parseInt(commission_tx) > 100){
+                new MaterialDialog.Builder(AdminHomePage.this)
+                        .title("InValid Commission!")
+                        .titleColor(Color.WHITE)
+                        .content("Commission can never be more than 100%")
+                        .icon(getResources().getDrawable(R.drawable.ic_warning))
+                        .contentColor(getResources().getColor(R.color.lightCoral))
+                        .backgroundColor(getResources().getColor(R.color.black90))
+                        .positiveText(R.string.ok)
+                        .show();
+                return false;
+            }
+        }
+        catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    //    onBackPressed
     public void onBackPressed(){
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         int s =fragmentManager.getBackStackEntryCount() - 1;

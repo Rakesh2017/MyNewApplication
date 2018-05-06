@@ -86,6 +86,7 @@
             style="@style/MyCustomTextStyleSmall"
             android:textStyle="bold"
             android:layout_below="@+id/lut_balanceCreditedTextView"
+            android:layout_marginTop="2dp"
             />
 
         <View

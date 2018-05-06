@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,13 +58,14 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     private static final String USER_BALANCE = "userBalance";
     private static final String TOTAL_BALANCE = "total_balance";
 
-    String userUID_tx, amountToBeSent_tx, userUIDToSendMoney_tx, userKeyToSendMoney_tx, today_dateTime;
+    String userUID_tx, amountToBeSent_tx, userUIDToSendMoney_tx, userKeyToSendMoney_tx, today_dateTime
+            , commissionDeducted_tx, transactionAmount_tx;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     FirebaseAuth mAuth;
     Boolean checkUser;
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog, progressDialogWait;
 
 
     @Override
@@ -83,10 +85,13 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         amountInWords_tv = findViewById(R.id.auh_numberToEnglishTextView);
 
         progressDialog = new ProgressDialog(UserHomePage.this);
-        progressDialog.setMessage("Please Wait|Making Transaction...");
+        progressDialogWait = new ProgressDialog(UserHomePage.this);
+        progressDialog.setMessage("Please Wait | Making Transaction...");
+        progressDialogWait.setMessage("Loading, Please wait...");
 
 //        text watcher on amount
         amountToBeSent_et.addTextChangedListener(new TextWatcher() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
@@ -143,6 +148,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     }
 
 //    onStart
+    @SuppressLint("SetTextI18n")
     public void onStart(){
         super.onStart();
 
@@ -176,32 +182,9 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         userUIDToSendMoney_tx = userUIDToSendMoney_et.getText().toString().trim();
         amountToBeSent_tx = amountToBeSent_et.getText().toString().trim();
         if (Validations()) { //if 1
+            progressDialogWait.show();
             if (CheckIfSendingToItSelf()){//if 2
-                new MaterialDialog.Builder(UserHomePage.this)
-                        .title("Are you sure to Make this Transaction!")
-                        .content("Rs "+amountToBeSent_tx+"/- will be credited to the Account with UID:"+userUIDToSendMoney_tx)
-                        .contentColorRes(R.color.white)
-                        .titleColor(getResources().getColor(R.color.whiteSmoke))
-                        .positiveText("Confirm")
-                        .positiveColorRes(R.color.googleGreen)
-                        .negativeText("Cancel")
-                        .negativeColorRes(R.color.googleRed)
-                        .backgroundColor(getResources().getColor(R.color.black90))
-                        .icon(getResources().getDrawable(R.drawable.ic_transfer_money))
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(MaterialDialog dialog, DialogAction which) {
-                                progressDialog.show();
-                                CheckIfUserExist();
-                            }
-                        })
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(MaterialDialog dialog, DialogAction which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                CheckIfUserExist();
             }//if 2
         }//if 1
 
@@ -221,6 +204,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         .backgroundColor(getResources().getColor(R.color.black90))
                         .positiveText(R.string.ok)
                         .show();
+                progressDialogWait.dismiss();
                 return false;
         }
         return true;
@@ -238,9 +222,39 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                             final String uid = snapshot.child("uid").getValue(String.class);
                             if (TextUtils.equals(uid, userUIDToSendMoney_tx)) {  // if user exist
                                 userKeyToSendMoney_tx = snapshot.child("key").getValue(String.class);
+                                final String receiver_user_name = snapshot.child("userName").getValue(String.class);
                                 checkUser = true;
+                                progressDialogWait.dismiss();
 //                                making transaction
-                                CheckIfSufficientBalanceIsAvailable();
+                                new MaterialDialog.Builder(UserHomePage.this)
+                                        .title("Are you sure to Make this Transaction!")
+                                        .content("Rs "+amountToBeSent_tx+"/- will be credited to the Account with " +
+                                                "UID:"+userUIDToSendMoney_tx+
+                                                ", User Name: "+ receiver_user_name)
+                                        .contentColorRes(R.color.white)
+                                        .titleColor(getResources().getColor(R.color.whiteSmoke))
+                                        .positiveText("Confirm")
+                                        .positiveColorRes(R.color.googleGreen)
+                                        .negativeText("Cancel")
+                                        .negativeColorRes(R.color.googleRed)
+                                        .backgroundColor(getResources().getColor(R.color.black90))
+                                        .icon(getResources().getDrawable(R.drawable.ic_transfer_money))
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                                progressDialog.show();
+//                                                if having sufficient balance
+                                                CheckIfSufficientBalanceIsAvailable();
+                                            }
+                                        })
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .show();
+
                                 return;
                             }
                         }//for
@@ -258,21 +272,22 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                                     .backgroundColor(getResources().getColor(R.color.black90))
                                     .positiveText(R.string.ok)
                                     .show();
-                            progressDialog.dismiss();
+                            progressDialogWait.dismiss();
                         }
-                        progressDialog.dismiss();
+                        progressDialogWait.dismiss();
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         new MaterialDialog.Builder(UserHomePage.this)
-                                .title(databaseError.toString())
+                                .title("Transaction Failed")
+                                .content(databaseError.toString())
                                 .titleColor(Color.WHITE)
                                 .icon(getResources().getDrawable(R.drawable.ic_warning))
                                 .contentColor(getResources().getColor(R.color.lightCoral))
                                 .backgroundColor(getResources().getColor(R.color.black90))
                                 .positiveText(R.string.ok)
                                 .show();
-                        progressDialog.dismiss();
+                        progressDialogWait.dismiss();
                     }
                 });//database refer
     }
@@ -303,33 +318,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         }
 //                        make transaction
                         else { //else
-                            Thread thread = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Date dateTime = null;
-                                    try {
-                                        NTPUDPClient timeClient = new NTPUDPClient();
-                                        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-                                        TimeInfo timeInfo = timeClient.getTime(inetAddress);
-                                        long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
-                                        dateTime = new Date(returnTime);
-                                    }
-                                    catch (IOException e){
-                                        Log.w("raky", e.getCause());
-                                    }
-                                    Log.w("raky", String.valueOf(dateTime));
-                                    String myDate = String.valueOf(dateTime);
-                                    String date, time, year, month;
-                                    date = myDate.substring(8, 10);
-                                    month = myDate.substring(4, 7);
-                                    time = myDate.substring(11, 16);
-                                    year = myDate.substring(myDate.length()-4, myDate.length());
-                                    today_dateTime = time+", "+date+" "+month+" "+year;
-                                    MakeTransaction();
-
-                                }
-                            });
-                            thread.start();
+                            adjustTransactBalanceAccordingToCommission();
 
                         }//else
                     }
@@ -350,6 +339,115 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     }
 //no sufficient balance
 
+//    getting commission
+    public void adjustTransactBalanceAccordingToCommission(){
+        databaseReference.child("adminCommission")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String commission = dataSnapshot.child("commission").getValue(String.class);
+                        double double_commission = Double.parseDouble(commission);
+                        final String temp = transactionAmount_tx = amountToBeSent_tx;
+                        final int transact_balance_after_commission = (int)(Double.parseDouble(amountToBeSent_tx)
+                                - (double_commission * Double.parseDouble(amountToBeSent_tx))/100);
+                        commissionDeducted_tx = String.valueOf(Integer.parseInt(temp) - transact_balance_after_commission);
+                        amountToBeSent_tx = String.valueOf(transact_balance_after_commission);
+
+                        new MaterialDialog.Builder(UserHomePage.this)
+                                .title("Commission Deduction.")
+                                .content(commission+"% commission will be deducted from your transaction" +
+                                        ". After commission Rs "+ commissionDeducted_tx +"/- will be" +
+                                        "deducted. Transaction balance of Rs "+temp+"/-"
+                                         +" will be reduced to Rs "+ amountToBeSent_tx+"/-")
+                                .contentColorRes(R.color.white)
+                                .titleColor(getResources().getColor(R.color.whiteSmoke))
+                                .positiveText("Confirm")
+                                .positiveColorRes(R.color.googleGreen)
+                                .negativeText("Cancel")
+                                .negativeColorRes(R.color.googleRed)
+                                .backgroundColor(getResources().getColor(R.color.black90))
+                                .icon(getResources().getDrawable(R.drawable.ic_transfer_money))
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                                        progressDialog.show();
+//                                                if having sufficient balance
+                                        getTimeAndMakeTransaction();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        progressDialog.dismiss();
+                    }
+                });
+
+    }
+//    getting commission
+
+//    getting time and making transaction
+    public void getTimeAndMakeTransaction(){
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int count = 0;
+                Date dateTime = null;
+                NTPUDPClient timeClient = new NTPUDPClient();
+                timeClient.setDefaultTimeout(1000);
+                for (int retries = 7; retries >= 0; retries--) { // for
+                    try {
+                        count++;
+                        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+                        TimeInfo timeInfo = timeClient.getTime(inetAddress);
+                        long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
+                        dateTime = new Date(returnTime);
+
+                        String myDate = String.valueOf(dateTime);
+                        String date, time, year, month;
+                        date = myDate.substring(8, 10);
+                        month = myDate.substring(4, 7);
+                        time = myDate.substring(11, 16);
+                        year = myDate.substring(myDate.length() - 4, myDate.length());
+                        today_dateTime = time + ", " + date + " " + month + " " + year;
+//                                    finally make transaction
+                        if (!TextUtils.isEmpty(today_dateTime)){
+                            MakeTransaction();
+                            count = 0;
+                            break;
+                        }
+
+                        if (count == 6){
+                            progressDialog.dismiss();
+                            new MaterialDialog.Builder(UserHomePage.this)
+                                    .title("Something went wrong!")
+                                    .titleColor(Color.BLACK)
+                                    .content("Unable to make connection with time server, please try again...")
+                                    .icon(getResources().getDrawable(R.drawable.ic_success))
+                                    .contentColor(getResources().getColor(R.color.green))
+                                    .backgroundColor(getResources().getColor(R.color.white))
+                                    .positiveText(R.string.ok)
+                                    .show();
+                        }
+
+                        //MakeTransaction();
+                    } catch (IOException e) {
+                        Log.w("raky", e.getCause());
+                        progressDialog.dismiss();
+                    }
+                }//for
+            }
+        });
+        thread.start();
+    }
 
 //    finally Making Transaction
     private void MakeTransaction() {
@@ -382,7 +480,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceSender.child("balance_debited").setValue(amountToBeSent_tx);
                         databaseReferenceSender.child("current_balance").setValue(sender_balance);
                         databaseReferenceSender.child("receiver_key").setValue(userKeyToSendMoney_tx);
-                        databaseReferenceSender.child("balance_after_debit").setValue(my_deducted_balance);
+                        databaseReferenceSender.child("balance_after_debit").setValue(Integer.toString(my_deducted_balance));
                         databaseReferenceSender.child("dateTime").setValue(today_dateTime);
 
 //                        setting receiver transaction
@@ -391,16 +489,43 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceReceiver.child("balance_credited").setValue(amountToBeSent_tx);
                         databaseReferenceReceiver.child("current_balance").setValue(receiver_balance);
                         databaseReferenceReceiver.child("sender_key").setValue(myKey);
-                        databaseReferenceReceiver.child("balance_after_credit").setValue(updated_balance_of_receiving_user);
+                        databaseReferenceReceiver.child("balance_after_credit").setValue(Integer.toString(updated_balance_of_receiving_user));
                         databaseReferenceReceiver.child("dateTime").setValue(today_dateTime);
 
+//                        setting transaction record in admin account
+                        DatabaseReference databaseReferenceAdminAccount = databaseReference.child("adminAccount").child(push_key);
+                        databaseReferenceAdminAccount.child("dateTime").setValue(today_dateTime);
+                        databaseReferenceAdminAccount.child("commission").setValue(commissionDeducted_tx);
+                        databaseReferenceAdminAccount.child("transaction_amount").setValue(transactionAmount_tx);
+                        databaseReferenceAdminAccount.child("sender_key").setValue(myKey);
+                        databaseReferenceAdminAccount.child("receiver_key").setValue(userKeyToSendMoney_tx);
+
                         progressDialog.dismiss();
+                        new MaterialDialog.Builder(UserHomePage.this)
+                                .title("Transaction Successful")
+                                .titleColor(Color.BLACK)
+                                .content("Rs "+amountToBeSent_tx+"/- successfully credited to the Account with " +
+                                        "UID:"+userUIDToSendMoney_tx)
+                                .icon(getResources().getDrawable(R.drawable.ic_success))
+                                .contentColor(getResources().getColor(R.color.green))
+                                .backgroundColor(getResources().getColor(R.color.white))
+                                .positiveText(R.string.ok)
+                                .show();
 
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        new MaterialDialog.Builder(UserHomePage.this)
+                                .title("Transaction Failed")
+                                .content(databaseError.toString())
+                                .titleColor(Color.WHITE)
+                                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                .backgroundColor(getResources().getColor(R.color.black90))
+                                .positiveText(R.string.ok)
+                                .show();
+                        progressDialog.dismiss();
                     }
                 });
     }
@@ -452,6 +577,7 @@ private void setTotalBalance() {
     final String key = userIdentifierSharedPreferences.getString(USER_KEY, "");
     databaseReference.child(USER_BALANCE).child(key)
             .addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     final String total_balance = dataSnapshot.child(TOTAL_BALANCE).getValue(String.class);

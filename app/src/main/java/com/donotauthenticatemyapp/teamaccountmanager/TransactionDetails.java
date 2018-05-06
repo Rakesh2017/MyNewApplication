@@ -1,6 +1,7 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -30,8 +30,8 @@ import java.text.NumberFormat;
  */
 public class TransactionDetails extends Fragment {
 
-    TextView dateTime_tv, balanceCredited_tv, mode_tv, transactionBy_tv, previousBalance_tv;
-    String dateTime_tx, balanceCredited_tx, mode_tx, transactionBy_tx, previousBalance_tx, aangadiaKey_tx;
+    TextView dateTime_tv, balanceCredited_tv, mode_tv, transactionBy_tv, transactionBy_tv0, previousBalance_tv, balanceAfterTransaction_tv;
+    String dateTime_tx, balanceCredited_tx, mode_tx, transactionBy_tx, previousBalance_tx, aangadiaKey_tx, balanceAfterTransaction_tx;
 
     SharedPreferences transactionSharedPreferences;
     private final String transactionPref = "transactionPref";
@@ -42,6 +42,14 @@ public class TransactionDetails extends Fragment {
     private final String MODE = "mode";
     private final String MONEY_ADDED = "money_added";
     private final String MONEY_ADDED_BY = "money_added_by";
+
+    private final String BALANCE_AFTER_DEBIT = "balance_after_debit";
+    private final String BALANCE_AFTER_CREDIT = "balance_after_credit";
+    private final String BALANCE_DEBITED = "balance_debited";
+    private final String BALANCE_CREDITED = "balance_credited";
+    private final String RECEIVER_KEY = "receiver_key";
+    private final String SENDER_KEY = "sender_key";
+
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     RelativeLayout relativeLayout;
@@ -61,7 +69,9 @@ public class TransactionDetails extends Fragment {
         balanceCredited_tv = view.findViewById(R.id.td_balanceAddedTextView);
         mode_tv = view.findViewById(R.id.td_modeTextView);
         transactionBy_tv = view.findViewById(R.id.td_moneyAddedByTextView);
+        transactionBy_tv0 = view.findViewById(R.id.td_moneyAddedBy);
         previousBalance_tv = view.findViewById(R.id.td_previousBalanceTextView);
+        balanceAfterTransaction_tv = view.findViewById(R.id.td_balanceAfterTransactionTextView);
         relativeLayout = view.findViewById(R.id.td_relativeLayout);
 
 
@@ -88,46 +98,159 @@ public class TransactionDetails extends Fragment {
     }
 
     //    setting values
+    @SuppressLint("SetTextI18n")
     private void setData() {
         dateTime_tx = transactionSharedPreferences.getString(DATE_TIME, "");
-        balanceCredited_tx = transactionSharedPreferences.getString(MONEY_ADDED, "");
         mode_tx = transactionSharedPreferences.getString(MODE, "");
-        transactionBy_tx = transactionSharedPreferences.getString(MONEY_ADDED_BY, "");
-        previousBalance_tx = transactionSharedPreferences.getString(PREVIOUS_BALANCE, "");
-        aangadiaKey_tx = transactionSharedPreferences.getString(AANGADIA_KEY, "");
 
         dateTime_tv.setText(dateTime_tx);
-        if (!TextUtils.isEmpty(balanceCredited_tx)){
-            NumberFormat formatter = new DecimalFormat("#,###");
-            String formatted_balance = formatter.format(Long.parseLong(balanceCredited_tx));
-            balanceCredited_tv.setText("Rs "+formatted_balance);
-        }
-        else {
-            balanceCredited_tv.setText("Rs 0.00");
-        }
 
-        if (TextUtils.equals(mode_tx,"moneyAdd")){
-            String BALANCE_ADD = "Balance Add";
-            mode_tv.setText(BALANCE_ADD);
+//        if mode is money Add
+        if(TextUtils.equals(mode_tx, "moneyAdd")) {
+            balanceCredited_tx = transactionSharedPreferences.getString(MONEY_ADDED, "");
+            transactionBy_tx = transactionSharedPreferences.getString(MONEY_ADDED_BY, "");
+            previousBalance_tx = transactionSharedPreferences.getString(PREVIOUS_BALANCE, "");
+            aangadiaKey_tx = transactionSharedPreferences.getString(AANGADIA_KEY, "");
+            balanceAfterTransaction_tx = transactionSharedPreferences.getString(CURRENT_BALANCE, "");
+
+
+
+            if (!TextUtils.isEmpty(balanceCredited_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(balanceCredited_tx));
+                balanceCredited_tv.setText("Rs " + formatted_balance);
+            } else {
+                balanceCredited_tv.setText("Rs 0.00");
+            }
+
+            if (!TextUtils.isEmpty(balanceAfterTransaction_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(balanceAfterTransaction_tx));
+                balanceAfterTransaction_tv.setText("Rs " + formatted_balance);
+            } else {
+                balanceAfterTransaction_tv.setText("Rs 0.00");
+            }
+
+                String BALANCE_ADD = "Balance Add";
+                mode_tv.setText(BALANCE_ADD);
+                balanceCredited_tv.setTextColor(getActivity().getResources().getColor(R.color.green));
+
+            if (!TextUtils.isEmpty(previousBalance_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(previousBalance_tx));
+                previousBalance_tv.setText("Rs " + formatted_balance);
+            } else {
+                previousBalance_tv.setText("Rs 0.00");
+            }
+
+            if (TextUtils.equals(transactionBy_tx, "aangadia") && !TextUtils.isEmpty(transactionBy_tx))
+                setAangadiaDetails();
+            else if ((TextUtils.equals(transactionBy_tx, "admin") && !TextUtils.isEmpty(transactionBy_tx)))
+                transactionBy_tv.setText("Admin");
+        }// if mode is money add
+
+//        if mode is credit
+        else if (TextUtils.equals(mode_tx, "credit")){
+              transactionBy_tv0.setHint("Credited By: ");
+
+              transactionBy_tx = transactionSharedPreferences.getString(SENDER_KEY, "");
+              balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_CREDITED, "");
+              previousBalance_tx = transactionSharedPreferences.getString(CURRENT_BALANCE, "");
+              balanceAfterTransaction_tx = transactionSharedPreferences.getString(BALANCE_AFTER_CREDIT, "");
+
+            String credit = "Credit";
+            mode_tv.setText(credit);
             balanceCredited_tv.setTextColor(getActivity().getResources().getColor(R.color.green));
+
+            if (!TextUtils.isEmpty(balanceCredited_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(balanceCredited_tx));
+                balanceCredited_tv.setText("Rs " + formatted_balance);
+            } else {
+                balanceCredited_tv.setText("Rs 0.00");
+            }
+
+            if (!TextUtils.isEmpty(balanceAfterTransaction_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(balanceAfterTransaction_tx));
+                balanceAfterTransaction_tv.setText("Rs " + formatted_balance);
+            } else {
+                balanceAfterTransaction_tv.setText("Rs 0.00");
+            }
+
+            if (!TextUtils.isEmpty(previousBalance_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(previousBalance_tx));
+                previousBalance_tv.setText("Rs " + formatted_balance);
+            } else {
+                previousBalance_tv.setText("Rs 0.00");
+            }
+              CreditAndDebitTransactionBy();
         }
 
-        if (!TextUtils.isEmpty(previousBalance_tx)){
-            NumberFormat formatter = new DecimalFormat("#,###");
-            String formatted_balance = formatter.format(Long.parseLong(previousBalance_tx));
-            previousBalance_tv.setText("Rs "+formatted_balance);
-        }
-        else {
-            previousBalance_tv.setText("Rs 0.00");
-        }
 
-        if (TextUtils.equals(transactionBy_tx, "aangadia") && !TextUtils.isEmpty(transactionBy_tx)) setAangadiaDetails();
-        else if ((TextUtils.equals(transactionBy_tx, "admin") && !TextUtils.isEmpty(transactionBy_tx))) transactionBy_tv.setText("Admin");
+        //        if mode is debit
+        else if (TextUtils.equals(mode_tx, "debit")){
+            transactionBy_tv0.setHint("Debited To: ");
 
+            transactionBy_tx = transactionSharedPreferences.getString(RECEIVER_KEY, "");
+            balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_DEBITED, "");
+            previousBalance_tx = transactionSharedPreferences.getString(CURRENT_BALANCE, "");
+            balanceAfterTransaction_tx = transactionSharedPreferences.getString(BALANCE_AFTER_DEBIT, "");
+
+            String debit = "Debit";
+            mode_tv.setText(debit);
+            balanceCredited_tv.setTextColor(getActivity().getResources().getColor(R.color.red));
+
+            if (!TextUtils.isEmpty(balanceCredited_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(balanceCredited_tx));
+                balanceCredited_tv.setText("Rs " + formatted_balance);
+            } else {
+                balanceCredited_tv.setText("Rs 0.00");
+            }
+
+            if (!TextUtils.isEmpty(balanceAfterTransaction_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(balanceAfterTransaction_tx));
+                balanceAfterTransaction_tv.setText("Rs " + formatted_balance);
+            } else {
+                balanceAfterTransaction_tv.setText("Rs 0.00");
+            }
+
+            if (!TextUtils.isEmpty(previousBalance_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(previousBalance_tx));
+                previousBalance_tv.setText("Rs " + formatted_balance);
+            } else {
+                previousBalance_tv.setText("Rs 0.00");
+            }
+            CreditAndDebitTransactionBy();
+        }
 
     }
 
-//    set aangadia details
+
+//    getting sender/receiver uid and name
+    private void CreditAndDebitTransactionBy() {
+        databaseReference.child("userProfile")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String uid = dataSnapshot.child(transactionBy_tx).child("uid").getValue(String.class);
+                        String name = dataSnapshot.child(transactionBy_tx).child("userName").getValue(String.class);
+                        transactionBy_tv.setText(uid+", "+name);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+    //    getting sender/receiver uid and name
+
+    //    set aangadia details
     private void setAangadiaDetails() {
         databaseReference.child("AangadiaProfile").child(aangadiaKey_tx)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
