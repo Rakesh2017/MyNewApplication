@@ -28,12 +28,12 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton addAangadia_btn, addUser_btn,logout_ib, allAangadias_btn, allUsers_btn;
+    ImageButton addAangadia_btn, addUser_btn,logout_ib, allAangadias_btn, allUsers_btn, adminBalance_btn;
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
 
-    TextView totalAangadia_tv, totalUsers_tv, commission_tv, currentCommission_tv;
+    TextView totalAangadia_tv, totalUsers_tv, commission_tv, currentCommission_tv, adminBalance_tv;
     String commission_tx;
 
     int totalAangadia, totalUsers;
@@ -54,6 +54,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         allAangadias_btn = findViewById(R.id.adh_allAangadiaButton);
         allUsers_btn = findViewById(R.id.adh_allUsersButton);
         submitCommission_btn = findViewById(R.id.adh_submitCommissionBtn);
+        adminBalance_btn = findViewById(R.id.adh_adminAccountButton);
 
         logout_ib = findViewById(R.id.adh_logoutButton);
 
@@ -61,6 +62,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         totalUsers_tv = findViewById(R.id.adh_totalUsersTextView);
         commission_tv = findViewById(R.id.adh_commissionEditText);
         currentCommission_tv = findViewById(R.id.adh_currentCommissionTextView);
+        adminBalance_tv = findViewById(R.id.adh_adminAccountTextView);
 
         progressDialog = new ProgressDialog(AdminHomePage.this);
         progressDialog.setMessage("Please wait...");
@@ -71,17 +73,36 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
         submitCommission_btn.setOnClickListener(this);
+        adminBalance_btn.setOnClickListener(this);
 
     }
 
     public void onStart(){
         super.onStart();
+        setAdminBalance();
         TotalAangadias();
         TotalUsers();
         SetCommission();
     }
 
-//    setting commission
+    //setting admin balance
+    private void setAdminBalance() {
+        databaseReference.child("adminBalance")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String balance = dataSnapshot.child("total_balance").getValue(String.class);
+                        adminBalance_tv.setText("Rs "+balance+"/-");
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    //    setting commission
     private void SetCommission() {
         databaseReference.child("adminCommission")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -208,6 +229,10 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
 //                commission
             case R.id.adh_submitCommissionBtn:
                 SubmitCommission();
+                break;
+//                admin balance
+            case R.id.adh_adminAccountButton:
+                getSupportFragmentManager().beginTransaction().replace(R.id.adh_fragment_container, new AdminBalance()).addToBackStack("adminBalance").commit();
                 break;
         }//switch ends
 

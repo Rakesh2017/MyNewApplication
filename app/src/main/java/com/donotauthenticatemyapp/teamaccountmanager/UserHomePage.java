@@ -59,7 +59,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     private static final String TOTAL_BALANCE = "total_balance";
 
     String userUID_tx, amountToBeSent_tx, userUIDToSendMoney_tx, userKeyToSendMoney_tx, today_dateTime
-            , commissionDeducted_tx, transactionAmount_tx;
+            , commissionDeducted_tx, transactionAmount_tx, commission;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -198,7 +198,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                 new MaterialDialog.Builder(UserHomePage.this)
                         .title("Transaction Failed!")
                         .titleColor(Color.WHITE)
-                        .content("You can not Transact Balance To Yourself.\nTry Transaction with another account.")
+                        .content("You can not Transact Balance To Yourself. Try Transaction with another account.")
                         .icon(getResources().getDrawable(R.drawable.ic_warning))
                         .contentColor(getResources().getColor(R.color.lightCoral))
                         .backgroundColor(getResources().getColor(R.color.black90))
@@ -345,7 +345,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String commission = dataSnapshot.child("commission").getValue(String.class);
+                        commission = dataSnapshot.child("commission").getValue(String.class);
                         double double_commission = Double.parseDouble(commission);
                         final String temp = transactionAmount_tx = amountToBeSent_tx;
                         final int transact_balance_after_commission = (int)(Double.parseDouble(amountToBeSent_tx)
@@ -356,7 +356,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         new MaterialDialog.Builder(UserHomePage.this)
                                 .title("Commission Deduction.")
                                 .content(commission+"% commission will be deducted from your transaction" +
-                                        ". After commission Rs "+ commissionDeducted_tx +"/- will be" +
+                                        ". After commission, Rs "+ commissionDeducted_tx +"/- will be " +
                                         "deducted. Transaction balance of Rs "+temp+"/-"
                                          +" will be reduced to Rs "+ amountToBeSent_tx+"/-")
                                 .contentColorRes(R.color.white)
@@ -421,7 +421,6 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
 //                                    finally make transaction
                         if (!TextUtils.isEmpty(today_dateTime)){
                             MakeTransaction();
-                            count = 0;
                             break;
                         }
 
@@ -452,25 +451,30 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
 //    finally Making Transaction
     private void MakeTransaction() {
 //     getting balance of user to whom balance is to be sent
-        databaseReference.child("userBalance")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 //                        getting sender balance
                         String myKey = mAuth.getCurrentUser().getUid();
-                        String sender_balance = dataSnapshot.child(myKey).child("total_balance")
+                        String sender_balance = dataSnapshot.child("userBalance").child(myKey).child("total_balance")
                                 .getValue(String.class);
-                        final int my_deducted_balance = Integer.parseInt(sender_balance) - Integer.parseInt(amountToBeSent_tx);
+                        final int my_deducted_balance = Integer.parseInt(sender_balance) - Integer.parseInt(amountToBeSent_tx)
+                                                        - Integer.parseInt(commissionDeducted_tx);
 //                        setting my deducted balance
                         databaseReference.child("userBalance").child(myKey).child("total_balance")
                                 .setValue(String.valueOf(my_deducted_balance));
 //                         adding amount to receiver account
-                        String receiver_balance = dataSnapshot.child(userKeyToSendMoney_tx).child("total_balance")
+                        String receiver_balance = dataSnapshot.child("userBalance").child(userKeyToSendMoney_tx).child("total_balance")
                                 .getValue(String.class);
+                        if (TextUtils.isEmpty(receiver_balance)) receiver_balance = "0";
                         final int updated_balance_of_receiving_user = Integer.parseInt(receiver_balance) +
                                 Integer.parseInt(amountToBeSent_tx);
                         databaseReference.child("userBalance").child(userKeyToSendMoney_tx).child("total_balance")
                                 .setValue(String.valueOf(updated_balance_of_receiving_user));
+//    adding commission to admin account
+                        final String admin_balance = dataSnapshot.child("adminBalance").child("total_balance").getValue(String.class);
+                        final String updated_admin_balance = String.valueOf(Integer.parseInt(admin_balance) + Integer.parseInt(commissionDeducted_tx));
+                        databaseReference.child("adminBalance").child("total_balance").setValue(updated_admin_balance);
 
                         final String push_key = databaseReference.push().getKey();
 
@@ -499,6 +503,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceAdminAccount.child("transaction_amount").setValue(transactionAmount_tx);
                         databaseReferenceAdminAccount.child("sender_key").setValue(myKey);
                         databaseReferenceAdminAccount.child("receiver_key").setValue(userKeyToSendMoney_tx);
+                        databaseReferenceAdminAccount.child("commission_rate").setValue(commission);
 
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(UserHomePage.this)
@@ -560,6 +565,19 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                     .show();
             return false;
         }
+        else if (Integer.parseInt(amountToBeSent_tx) == 0){
+            new MaterialDialog.Builder(UserHomePage.this)
+                    .title("Failed")
+                    .titleColor(Color.WHITE)
+                    .content("Please Enter Amount")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+            return false;
+        }
+
         return true;
     }
 //  validations

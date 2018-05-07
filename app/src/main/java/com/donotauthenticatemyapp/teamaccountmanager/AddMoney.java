@@ -245,35 +245,59 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
                         progressDialog.show();
-                        Thread thread = new Thread(new Runnable() {
+
+                        final Thread thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
+                                int count = 0;
                                 Date dateTime = null;
-                                try {
-                                    NTPUDPClient timeClient = new NTPUDPClient();
-                                    InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-                                    TimeInfo timeInfo = timeClient.getTime(inetAddress);
-                                    long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
-                                    dateTime = new Date(returnTime);
-                                }
-                                catch (IOException e){
-                                    Log.w("raky", e.getCause());
-                                }
-                                Log.w("raky", String.valueOf(dateTime));
-                                String myDate = String.valueOf(dateTime);
-                                String date, time, year, month;
-                                date = myDate.substring(8, 10);
-                                month = myDate.substring(4, 7);
-                                time = myDate.substring(11, 16);
-                                year = myDate.substring(myDate.length()-4, myDate.length());
-                                today_dateTime = time+", "+date+" "+month+" "+year;
+                                NTPUDPClient timeClient = new NTPUDPClient();
+                                timeClient.setDefaultTimeout(1000);
+                                for (int retries = 7; retries >= 0; retries--) { // for
+                                    try {
+                                        count++;
+                                        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+                                        TimeInfo timeInfo = timeClient.getTime(inetAddress);
+                                        long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
+                                        dateTime = new Date(returnTime);
 
-                                String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-                                if (TextUtils.equals(identity, "admin")) AddMoneyByAdmin();
-                                else if (TextUtils.equals(identity, "aangadia")) AddMoneyByAangadia();
+                                        String myDate = String.valueOf(dateTime);
+                                        String date, time, year, month;
+                                        date = myDate.substring(8, 10);
+                                        month = myDate.substring(4, 7);
+                                        time = myDate.substring(11, 16);
+                                        year = myDate.substring(myDate.length() - 4, myDate.length());
+                                        today_dateTime = time + ", " + date + " " + month + " " + year;
+//                                    when get time then hit function
+                                        if (!TextUtils.isEmpty(today_dateTime)){
+                                            String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                                            if (TextUtils.equals(identity, "admin")) AddMoneyByAdmin();
+                                            else if (TextUtils.equals(identity, "aangadia")) AddMoneyByAangadia();
+                                            break;
+                                        }
+
+                                        if (count == 6){
+                                            progressDialog.dismiss();
+                                            new MaterialDialog.Builder(getContext())
+                                                    .title("Something went wrong!")
+                                                    .titleColor(Color.BLACK)
+                                                    .content("Unable to make connection with time server, please try again...")
+                                                    .icon(getResources().getDrawable(R.drawable.ic_success))
+                                                    .contentColor(getResources().getColor(R.color.green))
+                                                    .backgroundColor(getResources().getColor(R.color.white))
+                                                    .positiveText(R.string.ok)
+                                                    .show();
+                                        }
+
+                                    } catch (IOException e) {
+                                        Log.w("raky", e.getCause());
+                                        progressDialog.dismiss();
+                                    }
+                                }//for
                             }
                         });
                         thread.start();
+
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -329,7 +353,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                         new MaterialDialog.Builder(getActivity())
                                 .title("Transaction Successful")
                                 .titleColor(Color.BLACK)
-                                .content("Rs "+money_tx +" is credited to Account with " +
+                                .content("Rs "+money_tx +"/- is credited to Account with " +
                                         "\nUID: "+uid_tx)
                                 .icon(getResources().getDrawable(R.drawable.ic_success))
                                 .contentColor(getResources().getColor(R.color.black))

@@ -1,0 +1,140 @@
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/abt_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="5dp"
+    card_view:cardMaxElevation="5dp"
+    android:alwaysDrawnWithCache="true"
+    app:cardBackgroundColor="@color/whiteSmoke"
+    android:background="@color/whiteSmoke"
+    android:layout_centerHorizontal="true"
+    app:cardPreventCornerOverlap="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/abt_relativeLayout"
+        android:background="@color/whiteSmoke"
+        xmlns:app="http://schemas.android.com/tools"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+
+        <!--date-->
+        <TextView
+            android:id="@+id/abt_dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="date"
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold"
+            />
+
+        <!--commission-->
+        <TextView
+            android:id="@+id/abt_commission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/abt_dateTextView"
+            android:text="Commission: "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/abt_commissionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/abt_commission"
+            android:layout_below="@+id/abt_dateTextView"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/green"
+            />
+
+        <!--Transaction Amount-->
+        <TextView
+            android:id="@+id/abt_transactionAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/abt_commissionTextView"
+            android:text="Transaction Amount: "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginTop="2dp"
+            />
+
+        <TextView
+            android:id="@+id/abt_transactionAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/abt_transactionAmount"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_below="@+id/abt_commissionTextView"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/orangeDark"
+            />
+
+        <!--sender-->
+        <TextView
+            android:id="@+id/abt_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/abt_transactionAmountTextView"
+            android:text="Sender: "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginTop="2dp"
+            />
+
+        <TextView
+            android:id="@+id/abt_senderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/abt_sender"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_below="@+id/abt_transactionAmountTextView"
+            android:layout_marginTop="2dp"
+            />
+
+        <!--Receiver-->
+        <TextView
+            android:id="@+id/abt_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/abt_senderTextView"
+            android:text="Receiver: "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginTop="2dp"
+            />
+
+        <TextView
+            android:id="@+id/abt_receiverTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/abt_receiver"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_below="@+id/abt_senderTextView"
+            android:layout_marginTop="2dp"
+            />
+
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            android:layout_below="@+id/abt_receiverTextView"
+            android:layout_marginTop="8dp"
+            />
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -67,14 +67,83 @@
 
             </RelativeLayout>
 
-            <!--Add Aangadia-->
+
+            <!--Admin Account-->
             <RelativeLayout
-                android:id="@+id/adh_addAangadiaRelativeLayout"
+                android:id="@+id/adh_adminAccountRelativeLayout"
                 android:layout_below="@+id/aap_emptyRelativeLayout"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_shadow_1"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                >
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_account"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/adh_adminAccountButton"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_adminAccountHeaderTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admin Account"
+                    android:layout_toEndOf="@+id/adh_adminAccountButton"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_adminAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Balance: "
+                    android:drawableStart="@drawable/ic_pointing_arrow"
+                    android:drawablePadding="@dimen/drawablePadding"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/adh_adminAccountButton"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/adh_adminAccountHeaderTextView"
+                    android:layout_marginStart="15dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    />
+
+                <TextView
+                    android:id="@+id/adh_adminAccountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/adh_adminAccount"
+                    android:layout_below="@+id/adh_adminAccountHeaderTextView"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/hintPlaceholderSingle"
+                    android:textColorHint="@color/black"
+                    android:textStyle="bold"
+                    style="@style/MyCustomTextStyleSmall"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+            <!--Add Aangadia-->
+            <RelativeLayout
+                android:id="@+id/adh_addAangadiaRelativeLayout"
+                android:layout_below="@+id/adh_adminAccountRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_6"
                 android:padding="@dimen/activity_horizontal_margin"
                 android:elevation="@dimen/elevation_5"
                 tools:targetApi="lollipop"
