@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/whiteSmoke"
         >
-        <!--admin-->
+        <!--aangadia-->
         <util.android.textviews.FontTextView
             android:id="@+id/ahp_userUIDTextView"
             android:layout_width="wrap_content"
@@ -21,8 +21,21 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:textColor="@color/black90"
+            android:textStyle="bold"
             />
+        <!--aangadia name-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/ahp_aangadiaNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ahp_userUIDTextView"
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginBottom="7dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+
         <!--logout-->
         <ImageButton
             android:id="@+id/ahp_logoutButton"
@@ -64,10 +77,49 @@
 
             </RelativeLayout>
 
+
+            <!--cash in account-->
+            <RelativeLayout
+                android:id="@+id/ahp_cashRelativeLayout"
+                android:layout_below="@+id/aap_emptyRelativeLayout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_shadow_3"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                >
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/ic_account"
+                    tools:ignore="ContentDescription"
+                    android:id="@+id/ahp_cashButton"
+                    />
+
+                <TextView
+                    android:id="@+id/ahp_cashTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cash In Hand Transactions"
+                    android:layout_toEndOf="@+id/ahp_cashButton"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:layout_marginStart="10dp"
+                    />
+
+
+            </RelativeLayout>
+
+
             <!--Add Aangadia-->
             <RelativeLayout
                 android:id="@+id/ahp_addAangadiaRelativeLayout"
-                android:layout_below="@+id/aap_emptyRelativeLayout"
+                android:layout_below="@+id/ahp_cashRelativeLayout"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

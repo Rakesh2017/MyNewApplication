@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -21,18 +21,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import util.android.textviews.FontTextView;
+
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton logout_ib, addUser_ib, allUsers_btn;
+    ImageButton logout_ib, addUser_ib, allUsers_btn, account_btn;
     TextView allUsersCount_tv, uid_tv;
+    FontTextView aangadiaName_ftv;
 
     SharedPreferences userIdentifierSharedPreferences;
 
     private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String AANGADIA_UID = "aangadia_uid";
+    private static final String AANGADIA_NAME_FTV = "aangadia_name_ftv";
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
+    private static final String AANGADIA_KEY = "aangadia_key";
 
     String aangadiaUID_tx;
 
@@ -49,13 +54,16 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         logout_ib = findViewById(R.id.ahp_logoutButton);
         addUser_ib = findViewById(R.id.ahp_addUserButton);
         allUsers_btn = findViewById(R.id.ahp_allUsersButton);
+        account_btn = findViewById(R.id.ahp_cashButton);
         allUsersCount_tv = findViewById(R.id.ahp_totalUsersTextView);
+        aangadiaName_ftv = findViewById(R.id.ahp_aangadiaNameTextView);
 
         uid_tv = findViewById(R.id.ahp_userUIDTextView);
 
         addUser_ib.setOnClickListener(this);
         allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
+        account_btn.setOnClickListener(this);
 
     }
 
@@ -66,6 +74,32 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
         uid_tv.setText("UID: "+aangadiaUID_tx);
         AllUsersCount();
+        setUserName();
+    }
+
+    //    setting aangadia name at bottom
+    private void setUserName() {
+        String name = userIdentifierSharedPreferences.getString(AANGADIA_NAME_FTV, "");
+        if (!TextUtils.isEmpty(name))  aangadiaName_ftv.setText("User Name: "+name);
+
+        String key = userIdentifierSharedPreferences.getString(AANGADIA_KEY, "");
+        databaseReference.child("AangadiaProfile").child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = dataSnapshot.child("userName").getValue(String.class);
+                        aangadiaName_ftv.setText("User Name: "+name);
+                        SharedPreferences.Editor editor = userIdentifierSharedPreferences.edit();
+                        editor.putString(AANGADIA_NAME_FTV, name);
+                        editor.apply();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 
 //    getting users count
@@ -143,6 +177,10 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                 //                all user
             case R.id.ahp_allUsersButton:
                 startActivity(new Intent(AangadiaHomePage.this, ListOfUsersForAangadia.class));
+                break;
+
+            case R.id.ahp_cashButton:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AangadiaAccount()).addToBackStack("aangadiaAccount").commit();
                 break;
 
         }

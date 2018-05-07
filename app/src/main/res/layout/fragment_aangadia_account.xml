@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_container_add_money"
-    tools:context=".AdminBalance">
+    tools:context=".AangadiaAccount">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main.appbar"
@@ -35,71 +35,17 @@
                 android:background="@color/appColor"
                 android:padding="@dimen/activity_horizontal_margin"
                 >
-
-                <LinearLayout
-                    android:id="@+id/fab_linearLayout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    >
-                    <!--ist part-->
-                    <RelativeLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        >
-                        <!--balance-->
-                        <TextView
-                            android:id="@+id/fab_totalMoney"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Balance"
-                            style="@style/MyCustomTextStyleMedium"
-                            android:textColor="@color/black90"
-                            />
-
-                        <TextView
-                            android:id="@+id/fab_totalMoneyTextView"
-                            android:layout_below="@+id/fab_totalMoney"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:hint="@string/hintPlaceholderSingle"
-                            style="@style/MyCustomTextStyleLarge"
-                            android:textColorHint="@color/white"
-                            android:textSize="24sp"
-                            android:drawableStart="@drawable/ic_rupee"
-                            android:drawablePadding="8dp"
-                            android:textColor="@color/white"
-                            />
-
-                    </RelativeLayout>
-
-                    <!--2nd part-->
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        >
-
                         <!--user uid-->
                         <TextView
-                            android:id="@+id/fab_userUidTextView"
+                            android:id="@+id/faa_userUidTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="Admin Account"
+                            android:text="Aangadia Account"
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             style="@style/MyCustomTextStyleMedium"
-                            android:layout_marginTop="2dp"
+                            android:layout_centerVertical="true"
                             />
-
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
 
             </RelativeLayout>
 
@@ -118,7 +64,7 @@
         >
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/fab_recyclerView"
+            android:id="@+id/faa_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/fading_app_color"

@@ -37,6 +37,7 @@ import java.text.NumberFormat;
 import java.util.Date;
 
 import mehdi.sakout.fancybuttons.FancyButton;
+import util.android.textviews.FontTextView;
 
 import static com.donotauthenticatemyapp.teamaccountmanager.AddUser.TIME_SERVER;
 
@@ -45,6 +46,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     ImageButton logout_ib;
     FancyButton sendMoney_btn;
     TextView uid_tv, totalBalance_tv, transaction_tv, amountInWords_tv;
+    FontTextView userName_ftv;
 
     EditText amountToBeSent_et, userUIDToSendMoney_et;
 
@@ -52,6 +54,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String USER_UID = "user_uid";
     private static final String USER_KEY = "user_key";
+    private static final String USER_NAME_FTV = "user_name_ftv";
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
@@ -83,6 +86,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         amountToBeSent_et = findViewById(R.id.auh_amountEditText);
         userUIDToSendMoney_et = findViewById(R.id.auh_userUIDEditText);
         amountInWords_tv = findViewById(R.id.auh_numberToEnglishTextView);
+        userName_ftv = findViewById(R.id.auh_userNameTextView);
 
         progressDialog = new ProgressDialog(UserHomePage.this);
         progressDialogWait = new ProgressDialog(UserHomePage.this);
@@ -156,8 +160,35 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         userUID_tx = userIdentifierSharedPreferences.getString(USER_UID, "");
         uid_tv.setText("UID: "+userUID_tx);
         setTotalBalance();
+        setUserName();
     }
-//    onStart
+    //    onStart
+
+//    setting user name at bottom
+    private void setUserName() {
+        String name = userIdentifierSharedPreferences.getString(USER_NAME_FTV, "");
+        if (!TextUtils.isEmpty(name))  userName_ftv.setText("User Name: "+name);
+
+        String key = userIdentifierSharedPreferences.getString(USER_KEY, "");
+        databaseReference.child("userProfile").child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = dataSnapshot.child("userName").getValue(String.class);
+                        userName_ftv.setText("User Name: "+name);
+                        SharedPreferences.Editor editor = userIdentifierSharedPreferences.edit();
+                        editor.putString(USER_NAME_FTV, name);
+                        editor.apply();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
 
 //    onclick
     @Override
@@ -406,7 +437,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                 for (int retries = 7; retries >= 0; retries--) { // for
                     try {
                         count++;
-                        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+                        InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
                         TimeInfo timeInfo = timeClient.getTime(inetAddress);
                         long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
                         dateTime = new Date(returnTime);

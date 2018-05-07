@@ -253,14 +253,17 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                                 Date dateTime = null;
                                 NTPUDPClient timeClient = new NTPUDPClient();
                                 timeClient.setDefaultTimeout(1000);
+                                Log.w("raky", "count: "+count);
                                 for (int retries = 7; retries >= 0; retries--) { // for
                                     try {
                                         count++;
-                                        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+                                        InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
+                                        Log.w("raky", "in: "+inetAddress);
                                         TimeInfo timeInfo = timeClient.getTime(inetAddress);
                                         long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
                                         dateTime = new Date(returnTime);
 
+                                        Log.w("raky", "date: "+dateTime);
                                         String myDate = String.valueOf(dateTime);
                                         String date, time, year, month;
                                         date = myDate.substring(8, 10);
@@ -276,18 +279,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                                             break;
                                         }
 
-                                        if (count == 6){
-                                            progressDialog.dismiss();
-                                            new MaterialDialog.Builder(getContext())
-                                                    .title("Something went wrong!")
-                                                    .titleColor(Color.BLACK)
-                                                    .content("Unable to make connection with time server, please try again...")
-                                                    .icon(getResources().getDrawable(R.drawable.ic_success))
-                                                    .contentColor(getResources().getColor(R.color.green))
-                                                    .backgroundColor(getResources().getColor(R.color.white))
-                                                    .positiveText(R.string.ok)
-                                                    .show();
-                                        }
+                                        Log.w("raky", "q"+count);
 
                                     } catch (IOException e) {
                                         Log.w("raky", e.getCause());
@@ -340,15 +332,24 @@ public class AddMoney extends Fragment implements View.OnClickListener {
 
                         String timestamp_unique_key = databaseReference.push().getKey();
 
-                        DatabaseReference databaseReferenceMoneyAddedByADMIN = databaseReference.child(TRANSACTIONS).child(key)
+                        DatabaseReference databaseReferenceMoneyAddedByAangadia = databaseReference.child(TRANSACTIONS).child(key)
                                 .child(timestamp_unique_key);
-                        databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED_BY).setValue("aangadia");
-                        databaseReferenceMoneyAddedByADMIN.child(MONEY_ADDED).setValue(money_tx);
-                        databaseReferenceMoneyAddedByADMIN.child(CURRENT_BALANCE).setValue(balance_to_be_added_at_database);
-                        databaseReferenceMoneyAddedByADMIN.child(PREVIOUS_BALANCE).setValue(previous_total_balance);
-                        databaseReferenceMoneyAddedByADMIN.child(MODE).setValue("moneyAdd");
-                        databaseReferenceMoneyAddedByADMIN.child(DATE_TIME).setValue(today_dateTime);
-                        databaseReferenceMoneyAddedByADMIN.child(AANGADIA_KEY).setValue(aangadia_key);
+                        databaseReferenceMoneyAddedByAangadia.child(MONEY_ADDED_BY).setValue("aangadia");
+                        databaseReferenceMoneyAddedByAangadia.child(MONEY_ADDED).setValue(money_tx);
+                        databaseReferenceMoneyAddedByAangadia.child(CURRENT_BALANCE).setValue(balance_to_be_added_at_database);
+                        databaseReferenceMoneyAddedByAangadia.child(PREVIOUS_BALANCE).setValue(previous_total_balance);
+                        databaseReferenceMoneyAddedByAangadia.child(MODE).setValue("moneyAdd");
+                        databaseReferenceMoneyAddedByAangadia.child(DATE_TIME).setValue(today_dateTime);
+                        databaseReferenceMoneyAddedByAangadia.child(AANGADIA_KEY).setValue(aangadia_key);
+
+//                        setting data in aangadia cash in account
+                        String aangadia_key = userIdentifierSharedPreferences.getString(AANGADIA_KEY, "");
+                        DatabaseReference databaseReferenceMoneyAddedInCashInAccount = databaseReference.child("aangadiaCashInAccount").child(aangadia_key)
+                                .child(timestamp_unique_key);
+                        databaseReferenceMoneyAddedInCashInAccount.child(MONEY_ADDED).setValue(money_tx);
+                        databaseReferenceMoneyAddedInCashInAccount.child(DATE_TIME).setValue(today_dateTime);
+                        databaseReferenceMoneyAddedInCashInAccount.child("user_key").setValue(key);
+
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(getActivity())
                                 .title("Transaction Successful")

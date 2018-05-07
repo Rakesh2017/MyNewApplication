@@ -2,11 +2,11 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,18 +18,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AdminBalance extends Fragment {
+public class AangadiaAccount extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter ;
@@ -37,10 +35,13 @@ public class AdminBalance extends Fragment {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     ProgressDialog progressDialog;
+    private SharedPreferences userIdentifierSharedPreferences;
+    protected static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
+    private static final String AANGADIA_KEY = "aangadia_key";
 
     TextView balance_tv;
 
-    public AdminBalance() {
+    public AangadiaAccount() {
         // Required empty public constructor
     }
 
@@ -49,10 +50,9 @@ public class AdminBalance extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_admin_balance, container, false);
+        View view = inflater.inflate(R.layout.fragment_aangadia_account, container, false);
 
-        recyclerView = view.findViewById(R.id.fab_recyclerView);
-        balance_tv = view.findViewById(R.id.fab_totalMoneyTextView);
+        recyclerView = view.findViewById(R.id.faa_recyclerView);
         recyclerView.setHasFixedSize(true);
 
         recyclerView.isDuplicateParentStateEnabled();
@@ -68,44 +68,24 @@ public class AdminBalance extends Fragment {
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading Data...");
+        userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
         return view;
     }
 
-//    onStart
+    //    onStart
     public void onStart(){
         super.onStart();
 
-        setBalance();
         LoadData();
     }
     //    onStart
 
-    private void setBalance() {
-        databaseReference.child("adminBalance")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String balance = dataSnapshot.child("total_balance").getValue(String.class);
-                        if (!TextUtils.isEmpty(balance)){
-                            NumberFormat formatter = new DecimalFormat("#,###");
-                            String formatted_balance = formatter.format(Long.parseLong(balance));
-                            balance_tv.setText(formatted_balance);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-    }
-
-
-//    load data
+    //    load data
     private void LoadData() {
         progressDialog.show();
-        databaseReference.child("adminAccount").addListenerForSingleValueEvent(new ValueEventListener() {
+        String key = userIdentifierSharedPreferences.getString(AANGADIA_KEY,"");
+        databaseReference.child("aangadiaCashInAccount").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(list!=null) {
@@ -117,7 +97,7 @@ public class AdminBalance extends Fragment {
                     list.add(userData);
                 }
 
-                adapter = new ListOfAdminBalanceTransactionsRecyclerViewAdapter(getContext(), list);
+                adapter = new ListOfAangadiaAccountRecyclerViewAdapter(getContext(), list);
 
                 recyclerView.setAdapter(adapter);
 
@@ -134,5 +114,5 @@ public class AdminBalance extends Fragment {
     }
 //    load data
 
-
+//end
 }

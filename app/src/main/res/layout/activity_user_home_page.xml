@@ -81,7 +81,7 @@
         android:layout_height="match_parent"
         >
 
-    <!--admin-->
+    <!--user uid-->
     <util.android.textviews.FontTextView
         android:id="@+id/auh_userUIDTextView"
         android:layout_width="wrap_content"
@@ -90,8 +90,22 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:textColor="@color/black90"
+        android:textStyle="bold"
         tools:ignore="RelativeOverlap" />
+
+        <!--user name-->
+        <util.android.textviews.FontTextView
+            android:id="@+id/auh_userNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/auh_userUIDTextView"
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginBottom="7dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+
     <!--logout-->
     <ImageButton
         android:id="@+id/auh_logoutButton"

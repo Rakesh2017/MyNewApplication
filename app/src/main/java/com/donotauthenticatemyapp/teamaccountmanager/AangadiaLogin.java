@@ -66,6 +66,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
     private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String USER_IDENTITY = "userIdentity";
     private static final String AANGADIA_UID = "aangadia_uid";
+    private static final String AANGADIA_KEY = "aangadia_key";
 
 
     public AangadiaLogin() {
@@ -133,7 +134,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                 mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
                         .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                            public void onComplete(@NonNull final Task<AuthResult> task) {
                                 if (task.isSuccessful()) { //if 3
                                     final FirebaseUser user = mAuth.getCurrentUser();
                                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -148,6 +149,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                                                 editor.putString(FIRST_SCREEN, AANGADIA_HOME_PAGE);
                                                 editor1.putString(USER_IDENTITY, "aangadia");
                                                 editor1.putString(AANGADIA_UID, userName_tx.substring(0,7));
+                                                editor1.putString(AANGADIA_KEY, user.getUid());
                                                 editor.apply();
                                                 editor1.apply();
                                                 getActivity().finish();
