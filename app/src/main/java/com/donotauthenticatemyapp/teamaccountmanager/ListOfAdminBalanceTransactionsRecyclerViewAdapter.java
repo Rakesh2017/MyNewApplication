@@ -100,6 +100,14 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
                     }
                 });
 
+        YoYo.with(Techniques.ZoomIn)
+                .duration(delay)
+                .repeat(0)
+                .playOn(holder.cardView);
+
+        delay+=100;
+        if (delay == 500) delay = 100;
+
     }
 
     @Override
@@ -120,6 +128,7 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView commission_tv, sender_tv, receiver_tv, amount_tv, dateTime_tv;
+        CardView cardView;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -129,6 +138,8 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
             receiver_tv = itemView.findViewById(R.id.abt_receiverTextView);
             amount_tv = itemView.findViewById(R.id.abt_transactionAmountTextView);
             dateTime_tv = itemView.findViewById(R.id.abt_dateTextView);
+
+            cardView = itemView.findViewById(R.id.abt_cardview);
 
         }
     }

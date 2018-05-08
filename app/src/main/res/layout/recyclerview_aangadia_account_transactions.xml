@@ -9,8 +9,8 @@
     card_view:cardElevation="5dp"
     card_view:cardMaxElevation="5dp"
     android:alwaysDrawnWithCache="true"
-    app:cardBackgroundColor="@color/whiteSmoke"
-    android:background="@color/whiteSmoke"
+    app:cardBackgroundColor="@color/white"
+    android:background="@color/white"
     android:layout_centerHorizontal="true"
     app:cardPreventCornerOverlap="true"
     android:fitsSystemWindows="true">
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rva_relativeLayout"
-        android:background="@color/whiteSmoke"
+        android:background="@color/white"
         xmlns:app="http://schemas.android.com/tools"
         android:padding="8dp"
         >

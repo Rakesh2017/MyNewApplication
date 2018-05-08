@@ -21,12 +21,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import util.android.textviews.FontTextView;
 
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton logout_ib, addUser_ib, allUsers_btn, account_btn;
-    TextView allUsersCount_tv, uid_tv;
+    TextView allUsersCount_tv, uid_tv, totalAangadiaTransactions_tv;
     FontTextView aangadiaName_ftv;
 
     SharedPreferences userIdentifierSharedPreferences;
@@ -57,6 +60,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         account_btn = findViewById(R.id.ahp_cashButton);
         allUsersCount_tv = findViewById(R.id.ahp_totalUsersTextView);
         aangadiaName_ftv = findViewById(R.id.ahp_aangadiaNameTextView);
+        totalAangadiaTransactions_tv = findViewById(R.id.ahp_totalTransactionsTextView);
 
         uid_tv = findViewById(R.id.ahp_userUIDTextView);
 
@@ -73,9 +77,48 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
         aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
         uid_tv.setText("UID: "+aangadiaUID_tx);
+        setTotalTransactionAmount();
         AllUsersCount();
         setUserName();
     }
+
+    //    setting total amount transactions
+    private void setTotalTransactionAmount() {
+        final String key = userIdentifierSharedPreferences.getString(AANGADIA_KEY, "");
+        databaseReference.child("aangadiaCashInAccount")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try { //try
+                            if (dataSnapshot.hasChild(key)){ //if
+                                long sum = 0;
+                                for (DataSnapshot snapshot : dataSnapshot.child(key).getChildren()) {
+                                    sum = sum + Long.parseLong(snapshot.child("money_added").getValue(String.class));
+                                }
+                                if (!TextUtils.isEmpty(String.valueOf(sum))){
+                                    NumberFormat formatter = new DecimalFormat("#,###");
+                                    String formatted_balance = formatter.format(sum);
+                                    totalAangadiaTransactions_tv.setText("Rs "+formatted_balance);
+                                }
+                                else totalAangadiaTransactions_tv.setText("Rs 0.0");
+                            } //if
+                            else { //else
+                                totalAangadiaTransactions_tv.setTextColor(getResources().getColor(R.color.red));
+                                totalAangadiaTransactions_tv.setText("Rs 0.0 (No Transaction yet)");
+                            } //else
+                        } //try
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+    //    setting total amount transactions
+
 
     //    setting aangadia name at bottom
     private void setUserName() {

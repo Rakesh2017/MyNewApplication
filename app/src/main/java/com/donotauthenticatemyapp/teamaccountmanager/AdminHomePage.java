@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
@@ -33,7 +37,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
 
-    TextView totalAangadia_tv, totalUsers_tv, commission_tv, currentCommission_tv, adminBalance_tv;
+    TextView totalAangadia_tv, totalUsers_tv, commission_tv, currentCommission_tv, adminBalance_tv, totalAangadiaTransactions_tv;
     String commission_tx;
 
     int totalAangadia, totalUsers;
@@ -63,6 +67,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         commission_tv = findViewById(R.id.adh_commissionEditText);
         currentCommission_tv = findViewById(R.id.adh_currentCommissionTextView);
         adminBalance_tv = findViewById(R.id.adh_adminAccountTextView);
+        totalAangadiaTransactions_tv = findViewById(R.id.adh_totalTransactionsTextView);
 
         progressDialog = new ProgressDialog(AdminHomePage.this);
         progressDialog.setMessage("Please wait...");
@@ -83,6 +88,32 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         TotalAangadias();
         TotalUsers();
         SetCommission();
+        setTotalAangadiaTransactions();
+    }
+
+    private void setTotalAangadiaTransactions() {
+        databaseReference.child("aangadiaCashInAccount")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        long sum = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                                sum = sum + Long.parseLong(snapshot1.child("money_added").getValue(String.class));
+                            }
+                            if (!TextUtils.isEmpty(String.valueOf(sum))){
+                                NumberFormat formatter = new DecimalFormat("#,###");
+                                String formatted_balance = formatter.format(sum);
+                                totalAangadiaTransactions_tv.setText("Rs "+formatted_balance+"/-");
+                            }
+                            else totalAangadiaTransactions_tv.setText("Rs 0.0");
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     //setting admin balance

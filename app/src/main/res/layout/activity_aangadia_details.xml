@@ -7,6 +7,7 @@
     android:id="@+id/fragment_container_aangadia_details"
     tools:context=".AangadiaDetails">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,13 +33,114 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aangadia Details"
+            android:layout_alignParentEnd="true"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:id="@+id/ad_balanceRelativeLayout"
+            android:layout_below="@+id/ad_backButton"
+            android:background="@drawable/rounded_edit_text"
+            android:padding="@dimen/activity_horizontal_margin"
+            >
+
+            <!--user snd uid name-->
+            <TextView
+                android:id="@+id/ad_userNameHeaderTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/MyCustomTextStyleSmall"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/red"
+                android:hint="@string/hintPlaceholderSingle"
+                android:textStyle="bold"
+                />
+
+<!--balance-->
+                    <TextView
+                        android:id="@+id/ad_totalTransactionMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ad_userNameHeaderTextView"
+                        android:text="Total Transaction Amount"
+                        style="@style/MyCustomTextStyleMedium"
+                        android:textColor="@color/black90"
+                        />
+
+                    <TextView
+                        android:id="@+id/ad_totalTransactionMoneyTextView"
+                        android:layout_below="@+id/ad_totalTransactionMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/hintPlaceholderSingle"
+                        style="@style/MyCustomTextStyleLarge"
+                        android:textSize="24sp"
+                        android:drawableStart="@drawable/ic_rupee"
+                        android:drawablePadding="8dp"
+                        android:textColor="@color/green"
+                        />
+
+            <View
+                android:id="@+id/ad_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black90"
+                android:layout_below="@+id/ad_totalTransactionMoneyTextView"
+                android:layout_marginTop="12dp"
+                />
+
+
+            <TextView
+                android:id="@+id/ad_transaction"
+                android:layout_below="@+id/ad_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transactions"
+                style="@style/MyCustomTextStyleMedium"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black90"
+                android:layout_marginTop="12dp"
+                android:drawableEnd="@drawable/ic_transactions"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/ad_expandTextView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_below="@+id/ad_balanceRelativeLayout"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/ic_expand"
+            />
+
+        <!--hidden profile content-->
+
+        <RelativeLayout
+            android:id="@+id/ad_hiddenProfileRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ad_expandTextView"
+            android:visibility="gone"
+            >
 
 
         <RelativeLayout
             android:id="@+id/ad_uidRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ad_homeButton"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:background="@drawable/rounded_edit_text_1"
             android:padding="8dp"
@@ -280,7 +382,7 @@
 
 
         </RelativeLayout>
-
+        </RelativeLayout>
 
     </RelativeLayout>
 

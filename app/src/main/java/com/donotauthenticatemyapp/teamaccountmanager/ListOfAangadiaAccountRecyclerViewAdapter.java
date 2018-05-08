@@ -2,6 +2,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,6 +84,14 @@ public class ListOfAangadiaAccountRecyclerViewAdapter extends RecyclerView.Adapt
                     }
                 });
 
+        YoYo.with(Techniques.ZoomIn)
+                .duration(delay)
+                .repeat(0)
+                .playOn(holder.cardView);
+
+        delay+=100;
+        if (delay == 500) delay = 100;
+
     }
 
     @Override
@@ -102,12 +113,16 @@ public class ListOfAangadiaAccountRecyclerViewAdapter extends RecyclerView.Adapt
 
         TextView user_tv, amount_tv, dateTime_tv;
 
+        CardView cardView;
+
         ViewHolder(View itemView) {
             super(itemView);
 
             user_tv = itemView.findViewById(R.id.rva_userTextView);
             amount_tv = itemView.findViewById(R.id.rva_balanceCreditedTextView);
             dateTime_tv = itemView.findViewById(R.id.rva_dateTextView);
+            cardView = itemView.findViewById(R.id.rva_cardview);
+
 
         }
     }

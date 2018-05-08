@@ -32,6 +32,15 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Details"
+            android:layout_alignParentEnd="true"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,12 +52,27 @@
             android:padding="@dimen/activity_horizontal_margin"
             >
 
+            <!--user snd uid name-->
+            <TextView
+                android:id="@+id/ud_userNameHeaderTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/MyCustomTextStyleSmall"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/red"
+                android:hint="@string/hintPlaceholderSingle"
+                android:textStyle="bold"
+                />
+
+
             <LinearLayout
                 android:id="@+id/ud_linearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_below="@+id/ud_userNameHeaderTextView"
                 android:weightSum="2"
+                android:layout_marginTop="7dp"
                 >
 
                 <RelativeLayout
@@ -126,11 +150,31 @@
 
         </RelativeLayout>
 
+        <!--expand button-->
+        <Button
+            android:id="@+id/ud_expandTextView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_below="@+id/ud_balanceRelativeLayout"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/ic_expand"
+            />
+
+    <!--hidden profile content-->
+
+    <RelativeLayout
+        android:id="@+id/ud_hiddenProfileRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ud_expandTextView"
+        android:visibility="gone"
+        >
+
+
         <RelativeLayout
             android:id="@+id/ud_uidRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ud_balanceRelativeLayout"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:padding="8dp"
             android:background="@drawable/rounded_edit_text_1"
@@ -439,8 +483,7 @@
 
 
         </RelativeLayout>
-
-
+        </RelativeLayout>
 
     </RelativeLayout>
 

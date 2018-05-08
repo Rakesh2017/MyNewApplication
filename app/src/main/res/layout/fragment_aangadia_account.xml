@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_container_add_money"
     tools:context=".AangadiaAccount">
 
@@ -35,13 +36,40 @@
                 android:background="@color/appColor"
                 android:padding="@dimen/activity_horizontal_margin"
                 >
+                <!--transaction balance-->
+                <TextView
+                    android:id="@+id/faa_transactions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Transaction"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:textColor="@color/black90"
+                    android:textStyle="bold"
+                    />
+
+                <!--transaction balance-->
+                <TextView
+                    android:id="@+id/faa_transactionsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hintPlaceholderSingle"
+                    android:layout_below="@+id/faa_transactions"
+                    style="@style/MyCustomTextStyleLarge"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="4dp"
+                    android:drawableStart="@drawable/ic_rupee"
+                    android:drawablePadding="4dp"
+                    android:textStyle="bold"
+                    />
+
                         <!--user uid-->
                         <TextView
                             android:id="@+id/faa_userUidTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="Aangadia Account"
+                            android:text="Aangadia \nAccount"
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             style="@style/MyCustomTextStyleMedium"
                             android:layout_centerVertical="true"
@@ -59,15 +87,74 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/whiteSmoke"
+        android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:id="@+id/faa_ll"
+            android:background="@color/white"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            >
+
+
+            <TextView
+                android:id="@+id/faa_listLengthTextView"
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Total : _______"
+                android:layout_gravity="center"
+                style="@style/MyCustomTextStyleSmall"
+                android:gravity="center"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:id="@+id/faa_limitEditText"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="Limit To"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:inputType="number"
+                android:maxLength="5"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                tools:ignore="LabelFor" />
+
+            <TextView
+                android:id="@+id/faa_setLimitTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                style="@style/MyCustomTextStyleMedium"
+                android:text="Set"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                />
+
+
+        </LinearLayout>
+
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/faa_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/fading_app_color"
+            android:layout_below="@+id/faa_ll"
             />
 
     </RelativeLayout>

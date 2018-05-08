@@ -2,14 +2,19 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,12 +27,14 @@ import java.text.NumberFormat;
 public class UserDetails extends AppCompatActivity implements View.OnClickListener {
 
     TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv, state_tv, city_tv, addMoney_tv
-            , totalBalance_tv, transaction_tv;
+            , totalBalance_tv, transaction_tv, userNameHeader_tv;
     String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx, state_tx, city_tx;
 
     ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn, home_btn;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+    Button expandTextView_btn;
 
     private static final String USER_UID_PREF = "user_uid_pref";
     private static final String USER_UID = "user_uid";
@@ -43,6 +50,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private static final String PATH = "path";
     private static final String USER_BALANCE = "userBalance";
     private static final String TOTAL_BALANCE = "total_balance";
+
+    RelativeLayout hiddenProfile_rl;
+
 
 
     SharedPreferences sharedPreferences, passwordSharedPreferences, userIdentifierSharedPreferences;
@@ -67,6 +77,10 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         editPassword_btn = findViewById(R.id.ud_editPasswordButton);
         editName_btn = findViewById(R.id.ud_editNameButton);
         editPhone_btn = findViewById(R.id.ud_editPhoneButton);
+        userNameHeader_tv = findViewById(R.id.ud_userNameHeaderTextView);
+        expandTextView_btn = findViewById(R.id.ud_expandTextView);
+
+        hiddenProfile_rl = findViewById(R.id.ud_hiddenProfileRelativeLayout);
 
         back_btn = findViewById(R.id.ud_backButton);
         home_btn = findViewById(R.id.ud_homeButton);
@@ -83,6 +97,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         editPhone_btn.setOnClickListener(this);
         addMoney_tv.setOnClickListener(this);
         transaction_tv.setOnClickListener(this);
+        expandTextView_btn.setOnClickListener(this);
     }
 
 //    onStart
@@ -108,6 +123,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 state_tx = dataSnapshot.child("state").getValue(String.class);
                 city_tx = dataSnapshot.child("city").getValue(String.class);
 
+                userNameHeader_tv.setText(uid_tx+", "+name_tx);
                 name_tv.setText(name_tx);
                 uid_tv.setText(uid_tx);
                 password_tv.setText(password_tx);
@@ -174,6 +190,31 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             case R.id.ud_backButton:
                 onBackPressed();
                 break;
+            //                expand profile
+            case R.id.ud_expandTextView:
+                if (hiddenProfile_rl.getVisibility() == View.GONE){
+                    hiddenProfile_rl.setVisibility(View.VISIBLE);
+                    expandTextView_btn.setBackground(getResources().getDrawable(R.drawable.ic_collapse));
+                    YoYo.with(Techniques.FadeIn)
+                            .duration(300)
+                            .repeat(0)
+                            .playOn(hiddenProfile_rl);
+                }
+                else if (hiddenProfile_rl.getVisibility() == View.VISIBLE){
+                    expandTextView_btn.setBackground(getResources().getDrawable(R.drawable.ic_expand));
+                    YoYo.with(Techniques.FadeOut)
+                            .duration(300)
+                            .repeat(0)
+                            .playOn(hiddenProfile_rl);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hiddenProfile_rl.setVisibility(View.GONE);
+                        }
+                    },300);
+                }
+                break;
+
 //                change password
             case R.id.ud_editPasswordButton:
                 if (TextUtils.isEmpty(password_tx) || TextUtils.isEmpty(uid_tx) ){

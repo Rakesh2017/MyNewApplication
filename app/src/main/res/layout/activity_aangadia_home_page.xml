@@ -112,6 +112,35 @@
                     android:layout_marginStart="10dp"
                     />
 
+                <!--total transactions-->
+                <TextView
+                    android:id="@+id/ahp_totalTransactionTextView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transactions: "
+                    android:drawableStart="@drawable/ic_pointing_arrow"
+                    android:drawablePadding="@dimen/drawablePadding"
+                    android:gravity="center"
+                    android:layout_toEndOf="@+id/ahp_cashButton"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/ahp_cashTextView"
+                    android:layout_marginStart="15dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/ahp_totalTransactionsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ahp_totalTransactionTextView1"
+                    android:layout_toEndOf="@+id/ahp_totalTransactionTextView1"
+                    android:hint="@string/hintPlaceholderSingleSmall"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:layout_marginStart="4dp"
+                    android:textStyle="bold"
+                    />
+
 
             </RelativeLayout>
 
