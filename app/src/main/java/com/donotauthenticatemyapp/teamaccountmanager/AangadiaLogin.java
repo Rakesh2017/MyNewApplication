@@ -24,15 +24,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PlayGamesAuthCredential;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -67,6 +63,8 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
     private static final String USER_IDENTITY = "userIdentity";
     private static final String AANGADIA_UID = "aangadia_uid";
     private static final String AANGADIA_KEY = "aangadia_key";
+    private static final String PASSWORD_KEY = "password_key";
+    private static final String FIRST_TIME = "first_time";
 
 
     public AangadiaLogin() {
@@ -141,8 +139,8 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             if (dataSnapshot.child("AangadiaProfile").hasChild(user.getUid())){//if 4
-                                                startActivity(new Intent(getActivity(), AangadiaHomePage.class));
-
+                                                final String password_key = dataSnapshot.child("PasswordKey")
+                                                        .child(user.getUid()).child("key").getValue(String.class);
 
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                 SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
@@ -150,10 +148,16 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                                                 editor1.putString(USER_IDENTITY, "aangadia");
                                                 editor1.putString(AANGADIA_UID, userName_tx.substring(0,7));
                                                 editor1.putString(AANGADIA_KEY, user.getUid());
+                                                editor1.putString(PASSWORD_KEY, password_key);
+                                                editor1.putInt(FIRST_TIME, 1);
                                                 editor.apply();
                                                 editor1.apply();
                                                 getActivity().finish();
+
+                                                startActivity(new Intent(getActivity(), AangadiaHomePage.class));
                                                 progressDialog.dismiss();
+
+
                                             }
                                             else {
                                                 new MaterialDialog.Builder(getActivity())
@@ -243,6 +247,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
         }
         return true;
     }// editTextValidations end
+
 
 
 //end

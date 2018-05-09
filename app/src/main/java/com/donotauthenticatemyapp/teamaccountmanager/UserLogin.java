@@ -64,6 +64,7 @@ public class UserLogin extends Fragment implements View.OnClickListener {
     private static final String USER_IDENTITY = "userIdentity";
     private static final String USER_UID = "user_uid";
     private static final String USER_KEY = "user_key";
+    private static final String PASSWORD_KEY = "password_key";
 
 
     public UserLogin() {
@@ -148,12 +149,15 @@ public class UserLogin extends Fragment implements View.OnClickListener {
                                         if (dataSnapshot.child("userProfile").hasChild(user.getUid())){//if 4
                                             startActivity(new Intent(getActivity(), UserHomePage.class));
 
+                                            final String password_key = dataSnapshot.child("PasswordKey")
+                                                    .child(user.getUid()).child("key").getValue(String.class);
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
                                             editor.putString(FIRST_SCREEN, USER_HOME_PAGE);
                                             editor1.putString(USER_IDENTITY, "user");
                                             editor1.putString(USER_UID, uid_tx.substring(0,7));
                                             editor1.putString(USER_KEY, user.getUid());
+                                            editor1.putString(PASSWORD_KEY, password_key);
                                             editor.apply();
                                             editor1.apply();
                                             getActivity().finish();

@@ -1,14 +1,17 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -41,6 +44,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
     private static final String AANGADIA_KEY = "aangadia_key";
+    private static final String AANGADIA_PASSWORD_KEY = "aangadia_password_key";
 
     String aangadiaUID_tx;
 
@@ -77,10 +81,52 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
         aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
         uid_tv.setText("UID: "+aangadiaUID_tx);
+
+        //        check password change
+        new PasswordCheck(AangadiaHomePage.this).checkIfPasswordChanged();
+
         setTotalTransactionAmount();
         AllUsersCount();
         setUserName();
+
     }
+
+    //    check if password changed
+  /*  public void checkIfPasswordChanged(){
+        final String key = userIdentifierSharedPreferences.getString(AANGADIA_KEY, "");
+        final String saved_password_key = userIdentifierSharedPreferences.getString(AANGADIA_PASSWORD_KEY, "");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("aangadiaPasswordKey").child(key)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final String password_key = dataSnapshot.child("key").getValue(String.class);
+                        if (!TextUtils.isEmpty(password_key)){
+                            if (TextUtils.equals(password_key, saved_password_key)){
+                                setTotalTransactionAmount();
+                                AllUsersCount();
+                                setUserName();
+                            }
+                            else {
+                                SharedPreferences sharedpreferences = getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(FIRST_SCREEN, "");
+                                editor.clear();
+                                editor.apply();
+                                AangadiaHomePage.this.finish();
+                                startActivity(new Intent(AangadiaHomePage.this, Login.class));
+                                Toast.makeText(AangadiaHomePage.this, "Password Changed, " +
+                                        "Please Login Again", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }*/
+    //    check if password changed
 
     //    setting total amount transactions
     private void setTotalTransactionAmount() {
@@ -188,6 +234,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                                 SharedPreferences sharedpreferences = getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
                                 editor.putString(FIRST_SCREEN, "");
+                                editor.clear();
                                 editor.apply();
 
                                 mAuth = FirebaseAuth.getInstance();
@@ -230,4 +277,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
 
     }//onclick
+
+
+    //ends
 }

@@ -159,6 +159,10 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
         userUID_tx = userIdentifierSharedPreferences.getString(USER_UID, "");
         uid_tv.setText("UID: "+userUID_tx);
+
+        //        check password change
+        new PasswordCheck(UserHomePage.this).checkIfPasswordChangedForUser();
+
         setTotalBalance();
         setUserName();
     }
@@ -376,13 +380,21 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        String temp = null;
                         commission = dataSnapshot.child("commission").getValue(String.class);
-                        double double_commission = Double.parseDouble(commission);
-                        final String temp = transactionAmount_tx = amountToBeSent_tx;
-                        final int transact_balance_after_commission = (int)(Double.parseDouble(amountToBeSent_tx)
-                                - (double_commission * Double.parseDouble(amountToBeSent_tx))/100);
-                        commissionDeducted_tx = String.valueOf(Integer.parseInt(temp) - transact_balance_after_commission);
-                        amountToBeSent_tx = String.valueOf(transact_balance_after_commission);
+                        if (!TextUtils.isEmpty(commission)){
+                            double double_commission = Double.parseDouble(commission);
+                            temp = transactionAmount_tx = amountToBeSent_tx;
+                            final int transact_balance_after_commission = (int)(Double.parseDouble(amountToBeSent_tx)
+                                    - (double_commission * Double.parseDouble(amountToBeSent_tx))/100);
+                            commissionDeducted_tx = String.valueOf(Integer.parseInt(temp) - transact_balance_after_commission);
+                            amountToBeSent_tx = String.valueOf(transact_balance_after_commission);
+                        }
+
+                        else {
+                            commissionDeducted_tx = "0";
+                            temp = amountToBeSent_tx;
+                        }
 
                         new MaterialDialog.Builder(UserHomePage.this)
                                 .title("Commission Deduction.")

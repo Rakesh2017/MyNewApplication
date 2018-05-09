@@ -170,16 +170,6 @@
                     android:layout_marginStart="15dp"
                     />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Related stats will be shown in rest of portion"
-                    android:layout_toEndOf="@+id/adh_addAangadiaButton"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/adh_addAangadiaTextView"
-                    android:layout_marginStart="15dp"
-                    style="@style/MyCustomTextStyleSmall"
-                    />
 
             </RelativeLayout>
 
@@ -310,17 +300,6 @@
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
                     android:layout_marginStart="15dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Related stats will be shown in rest of portion"
-                    android:layout_toEndOf="@+id/adh_addUserButton"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/adh_addUserTextView"
-                    android:layout_marginStart="15dp"
-                    style="@style/MyCustomTextStyleSmall"
                     />
 
             </RelativeLayout>

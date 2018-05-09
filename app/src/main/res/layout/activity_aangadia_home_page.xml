@@ -179,17 +179,6 @@
                     android:layout_marginStart="10dp"
                     />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Related stats will be shown in rest of portion"
-                    android:layout_toEndOf="@+id/ahp_addUserButton"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/ahp_addUserTextView"
-                    android:layout_marginStart="10dp"
-                    style="@style/MyCustomTextStyleSmall"
-                    />
-
             </RelativeLayout>
 
 

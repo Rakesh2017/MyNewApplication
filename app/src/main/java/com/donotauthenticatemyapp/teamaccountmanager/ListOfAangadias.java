@@ -242,6 +242,9 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                     list.add(aangadiaData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfAangadiasRecyclerViewAdapter(ListOfAangadias.this, list);
                 recyclerView.setAdapter(adapter);
 
@@ -275,7 +278,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         new MaterialDialog.Builder(ListOfAangadias.this)
                 .title("Empty!")
                 .titleColor(Color.BLACK)
-                .content("No Such Data, Please make sure you have entered correct search key.")
+                .content("No Data Available")
                 .icon(getResources().getDrawable(R.drawable.ic_warning))
                 .contentColor(getResources().getColor(R.color.black))
                 .backgroundColor(getResources().getColor(R.color.white))

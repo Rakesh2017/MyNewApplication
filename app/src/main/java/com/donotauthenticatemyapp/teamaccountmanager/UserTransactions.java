@@ -3,6 +3,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +12,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +35,10 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class UserTransactions extends Fragment {
 
-    TextView balance_tv, uid_tv, userName_tv;
+    TextView balance_tv, uid_tv, userName_tv, setLimit_tv, listLength_tv;
+    EditText limit_et;
+
+    int limit = 10;
     String balance_tx;
     SharedPreferences sharedPreferences, userIdentifierSharedPreferences;
 
@@ -77,6 +83,11 @@ public class UserTransactions extends Fragment {
         uid_tv = view.findViewById(R.id.ft_userUidTextView);
         userName_tv = view.findViewById(R.id.ft_userNameTextView);
 
+        setLimit_tv = view.findViewById(R.id.ft_setLimitTextView);
+        listLength_tv = view.findViewById(R.id.ft_listLengthTextView);
+        limit_et = view.findViewById(R.id.ft_limitEditText);
+
+
         recyclerView = view.findViewById(R.id.ft_recyclerView);
         recyclerView.setHasFixedSize(true);
 
@@ -90,6 +101,25 @@ public class UserTransactions extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
 
 
+        setLimit_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String get_limit = limit_et.getText().toString().trim();
+
+                if (!TextUtils.isEmpty(get_limit)){
+                    limit = Integer.parseInt(get_limit);
+                    String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                    if (TextUtils.equals(identity, "aangadia") || TextUtils.equals(identity, "admin")){
+                        ListLengthAdminAndAangadia();
+                        LoadTransactionsForAangadiaAndAdmin();
+                    }
+                    else if (TextUtils.equals(identity, "user")){
+                        ListLengthUser();
+                        LoadTransactionForUser();
+                    }
+                }
+            }
+        });
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading Data...");
@@ -110,17 +140,61 @@ public class UserTransactions extends Fragment {
         if (TextUtils.equals(identity, "aangadia") || TextUtils.equals(identity, "admin")){
             setUIDAndUserNameForAangaisaAndAdmin();
             setBalanceForAangadiaAndAdmin();
+            ListLengthAdminAndAangadia();
             LoadTransactionsForAangadiaAndAdmin();
         }
         else if (TextUtils.equals(identity, "user")){
             setUIDAndUserNameForUser();
             setBalanceForUser();
+            ListLengthUser();
             LoadTransactionForUser();
             userName_tv.setVisibility(View.GONE);
         }
 
     }
     //    onStart
+
+    public void ListLengthAdminAndAangadia(){
+        final String key = sharedPreferences.getString(KEY, "");
+        databaseReference.child("transactions").child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try { //try
+                            long total = dataSnapshot.getChildrenCount();
+                            listLength_tv.setText("Total: "+String.valueOf(total));
+                        } //try
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void ListLengthUser(){
+        final String key = userIdentifierSharedPreferences.getString(USER_KEY, "");
+        databaseReference.child("transactions").child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try { //try
+                            long total = dataSnapshot.getChildrenCount();
+                            listLength_tv.setText("Total: "+String.valueOf(total));
+                        } //try
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
 
 
     private void setUIDAndUserNameForUser() {
@@ -159,7 +233,7 @@ public class UserTransactions extends Fragment {
 
         progressDialog.show();
         final String key = userIdentifierSharedPreferences.getString(USER_KEY, "");
-        databaseReference.child(TRANSACTIONS).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(TRANSACTIONS).child(key).limitToLast(limit).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(list!=null) {
@@ -227,7 +301,7 @@ public class UserTransactions extends Fragment {
 
         progressDialog.show();
         final String key = sharedPreferences.getString(KEY, "");
-        databaseReference.child(TRANSACTIONS).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(TRANSACTIONS).child(key).limitToLast(limit).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(list!=null) {
@@ -238,7 +312,8 @@ public class UserTransactions extends Fragment {
                     RecyclerViewListAangadiaData userData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
                     list.add(userData);
                 }
-
+                if (list.isEmpty())
+                    showEmptyPage();
                 adapter = new ListOfUserTransactionsRecyclerViewAdapter(getContext(), list);
 
                 recyclerView.setAdapter(adapter);
@@ -254,6 +329,19 @@ public class UserTransactions extends Fragment {
             }
         });
 
+    }
+
+    //    show empty page
+    public void showEmptyPage(){
+        new MaterialDialog.Builder(getContext())
+                .title("Empty!")
+                .titleColor(Color.BLACK)
+                .content("No Data Available")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.black))
+                .backgroundColor(getResources().getColor(R.color.white))
+                .positiveText(R.string.ok)
+                .show();
     }
 
 

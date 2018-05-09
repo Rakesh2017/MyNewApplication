@@ -319,6 +319,8 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                     list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
                 adapter = new ListOfUsersForAdminRecyclerViewAdapter(ListOfUsersForAdmin.this, list);
 
                 recyclerView.setAdapter(adapter);
@@ -341,7 +343,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
         new MaterialDialog.Builder(ListOfUsersForAdmin.this)
                 .title("Empty!")
                 .titleColor(Color.BLACK)
-                .content("No Such Data, Please make sure you have entered correct search key.")
+                .content("No Data Available.")
                 .icon(getResources().getDrawable(R.drawable.ic_warning))
                 .contentColor(getResources().getColor(R.color.black))
                 .backgroundColor(getResources().getColor(R.color.white))

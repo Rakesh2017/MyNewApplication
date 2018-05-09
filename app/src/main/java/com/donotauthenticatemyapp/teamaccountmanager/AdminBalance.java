@@ -2,6 +2,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,15 +11,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -38,7 +39,10 @@ public class AdminBalance extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     ProgressDialog progressDialog;
 
-    TextView balance_tv;
+    TextView balance_tv, setLimit_tv, listLength_tv;
+    EditText limit_et;
+
+    int limit = 10;
 
     public AdminBalance() {
         // Required empty public constructor
@@ -53,6 +57,11 @@ public class AdminBalance extends Fragment {
 
         recyclerView = view.findViewById(R.id.fab_recyclerView);
         balance_tv = view.findViewById(R.id.fab_totalMoneyTextView);
+
+        setLimit_tv = view.findViewById(R.id.fab_setLimitTextView);
+        listLength_tv = view.findViewById(R.id.fab_listLengthTextView);
+        limit_et = view.findViewById(R.id.fab_limitEditText);
+
         recyclerView.setHasFixedSize(true);
 
         recyclerView.isDuplicateParentStateEnabled();
@@ -63,6 +72,19 @@ public class AdminBalance extends Fragment {
 
         // Setting RecyclerView layout as LinearLayout.
         recyclerView.setLayoutManager(mLayoutManager);
+
+        setLimit_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String get_limit = limit_et.getText().toString().trim();
+
+                if (!TextUtils.isEmpty(get_limit)){
+                    limit = Integer.parseInt(get_limit);
+                    LoadData();
+                }
+            }
+        });
+
 
 
 
@@ -77,9 +99,31 @@ public class AdminBalance extends Fragment {
         super.onStart();
 
         setBalance();
+        ListLength();
         LoadData();
     }
     //    onStart
+
+    public void ListLength(){
+        databaseReference.child("adminAccount")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try { //try
+                            long total = dataSnapshot.getChildrenCount();
+                            listLength_tv.setText("Total: "+String.valueOf(total));
+                        } //try
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
 
     private void setBalance() {
         databaseReference.child("adminBalance")
@@ -105,7 +149,7 @@ public class AdminBalance extends Fragment {
 //    load data
     private void LoadData() {
         progressDialog.show();
-        databaseReference.child("adminAccount").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("adminAccount").limitToLast(limit).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(list!=null) {
@@ -115,7 +159,10 @@ public class AdminBalance extends Fragment {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     RecyclerViewListAangadiaData userData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
                     list.add(userData);
-                }
+                    }
+
+                if (list.isEmpty())
+                    showEmptyPage();
 
                 adapter = new ListOfAdminBalanceTransactionsRecyclerViewAdapter(getContext(), list);
 
@@ -133,6 +180,19 @@ public class AdminBalance extends Fragment {
         });
     }
 //    load data
+
+    //    show empty page
+    public void showEmptyPage(){
+        new MaterialDialog.Builder(getContext())
+                .title("Empty!")
+                .titleColor(Color.BLACK)
+                .content("No Data Available.")
+                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                .contentColor(getResources().getColor(R.color.black))
+                .backgroundColor(getResources().getColor(R.color.white))
+                .positiveText(R.string.ok)
+                .show();
+    }
 
 
 }

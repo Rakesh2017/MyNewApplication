@@ -97,7 +97,7 @@ public class ChangePassword extends Fragment {
 
         progressDialog = new ProgressDialog(getContext());
         // Setting up message in Progress dialog.
-        progressDialog.setMessage("updating password...");
+        progressDialog.setMessage("changing password...");
 
         password = view.findViewById(R.id.cp_passwordEditText);
 
@@ -171,13 +171,17 @@ public class ChangePassword extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                //Log.w("raky", user.getDisplayName());
+                                                final String password_key = getPasswordKey();
+
                                                 Log.d("raky", "User password updated.");
                                                 String key = mAuth2.getCurrentUser().getUid();
                                                 databaseReference.child(path_tx).child(key)
                                                         .child("password").setValue(password_tx);
+                                                databaseReference.child("PasswordKey").child(key)
+                                                        .child("key").setValue(password_key);
                                                 ChangeValuesOnUpdation();
                                                 PasswordUpdateSuccessful();
+                                                progressDialog.dismiss();
                                             }
                                             else {
                                                 new MaterialDialog.Builder(getActivity())
@@ -189,6 +193,7 @@ public class ChangePassword extends Fragment {
                                                         .backgroundColor(getResources().getColor(R.color.black90))
                                                         .positiveText(R.string.ok)
                                                         .show();
+                                                progressDialog.dismiss();
 
                                             }
                                         }
@@ -196,7 +201,7 @@ public class ChangePassword extends Fragment {
                         } // else ends
 
                         mAuth2.signOut();
-                        progressDialog.dismiss();
+                      //  progressDialog.dismiss();
                     }
                 });
     }
@@ -238,6 +243,11 @@ public class ChangePassword extends Fragment {
         currentPassword_tv.setText(password_tx);
     }
 
+
+    //    generate 4 digit password check key
+    public String getPasswordKey() {
+        return UUID.randomUUID().toString().substring(0,4);
+    }
 
 //ends
 }

@@ -255,6 +255,9 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                             else
                             {
                                 String aangadiaUid = mAuth2.getCurrentUser().getUid();
+                                final String password_key = getPasswordKey();
+
+                                databaseReference.child("PasswordKey").child(aangadiaUid).child("key").setValue(password_key);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("userName").setValue(userName_tx);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("uid").setValue(sub_id);
                                 databaseReference.child("AangadiaProfile").child(aangadiaUid).child("password").setValue(password_tx);
@@ -408,6 +411,12 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
 
     }
 //    getting date and time
+
+    //    generate 4 digit password check key
+
+    public String getPasswordKey() {
+        return UUID.randomUUID().toString().substring(0,4);
+    }
 
     //end
 }

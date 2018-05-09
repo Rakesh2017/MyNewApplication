@@ -103,8 +103,16 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 //    onStart
     public void onStart(){
         super.onStart();
+
         loadData();
         setTotalBalance();
+
+        String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+        if (TextUtils.equals(identity, "aangadia")){
+            //        check password change
+            new PasswordCheck(UserDetails.this).checkIfPasswordChanged();
+        }
+
     }
 
 

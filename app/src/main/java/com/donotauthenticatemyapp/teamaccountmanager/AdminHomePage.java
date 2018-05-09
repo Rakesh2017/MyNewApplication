@@ -124,6 +124,9 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String balance = dataSnapshot.child("total_balance").getValue(String.class);
                         adminBalance_tv.setText("Rs "+balance+"/-");
+                        if (TextUtils.isEmpty(balance)){
+                            adminBalance_tv.setText("Rs "+0.0+"/-");
+                        }
                     }
 
                     @Override
@@ -141,6 +144,9 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String commission = dataSnapshot.child("commission").getValue(String.class);
                         currentCommission_tv.setText(commission+"%");
+                        if (TextUtils.isEmpty(commission)){
+                            currentCommission_tv.setText("not set");
+                        }
                     }
 
                     @Override
@@ -323,11 +329,11 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
             return false;
         }
         try {
-              if (Integer.parseInt(commission_tx) > 100){
+              if (Integer.parseInt(commission_tx) > 100 ||Integer.parseInt(commission_tx) < 1 ){
                 new MaterialDialog.Builder(AdminHomePage.this)
                         .title("InValid Commission!")
                         .titleColor(Color.WHITE)
-                        .content("Commission can never be more than 100%")
+                        .content("Commission can neither be less than 0 or more than 100")
                         .icon(getResources().getDrawable(R.drawable.ic_warning))
                         .contentColor(getResources().getColor(R.color.lightCoral))
                         .backgroundColor(getResources().getColor(R.color.black90))

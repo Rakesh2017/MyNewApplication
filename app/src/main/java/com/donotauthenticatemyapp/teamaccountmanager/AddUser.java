@@ -307,6 +307,10 @@ public class AddUser extends Fragment implements View.OnClickListener {
                         String aangadia_name = dataSnapshot.child("userName").getValue(String.class);
                         String aangadia_UID = dataSnapshot.child("uid").getValue(String.class);
                         String userUID = mAuth2.getCurrentUser().getUid();
+
+                        final String password_key = getPasswordKey();
+
+                        databaseReference.child("PasswordKey").child(userUID).child("key").setValue(password_key);
                         databaseReference.child(USER_PROFILE).child(userUID).child("userName").setValue(userName_tx);
                         databaseReference.child(USER_PROFILE).child(userUID).child("uid").setValue(sub_id);
                         databaseReference.child(USER_PROFILE).child(userUID).child("password").setValue(password_tx);
@@ -352,6 +356,9 @@ public class AddUser extends Fragment implements View.OnClickListener {
 //    user created by admin
     public void UserCreatedByAdmin(){
         String userUID = mAuth2.getCurrentUser().getUid();
+        final String password_key = getPasswordKey();
+
+        databaseReference.child("PasswordKey").child(userUID).child("key").setValue(password_key);
         databaseReference.child(USER_PROFILE).child(userUID).child("userName").setValue(userName_tx);
         databaseReference.child(USER_PROFILE).child(userUID).child("uid").setValue(sub_id);
         databaseReference.child(USER_PROFILE).child(userUID).child("password").setValue(password_tx);
@@ -362,6 +369,7 @@ public class AddUser extends Fragment implements View.OnClickListener {
         databaseReference.child(USER_PROFILE).child(userUID).child("state").setValue(state_tx);
         databaseReference.child(USER_PROFILE).child(userUID).child("city").setValue(city_tx);
         databaseReference.child(USER_PROFILE).child(userUID).child("created_by").setValue("admin");
+
 
         new MaterialDialog.Builder(getActivity())
                 .title("Account Successfully Created")
@@ -506,33 +514,41 @@ public void CreatingFirebaseAuthInstance(){
     //    getting date and time
     private static class GetDateTime extends AsyncTask<Void, Void, String> {
 
-        Date dateTime;
         @Override
         protected String doInBackground(Void... voids) {
-            try {
-                NTPUDPClient timeClient = new NTPUDPClient();
-                InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-                TimeInfo timeInfo = timeClient.getTime(inetAddress);
-                long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
-                dateTime = new Date(returnTime);
-            }
-            catch (IOException e){
-                Log.w("raky", e.getCause());
-            }
+            int count = 0;
+            Date dateTime = null;
+            NTPUDPClient timeClient = new NTPUDPClient();
+            timeClient.setDefaultTimeout(1000);
+            for (int retries = 7; retries >= 0; retries--) { // for
+                try {
+                    count++;
+                    InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
+                    TimeInfo timeInfo = timeClient.getTime(inetAddress);
+                    long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
+                    dateTime = new Date(returnTime);
+
+                } catch (IOException e) {
+                   e.printStackTrace();
+                }
+            }//for
             return String.valueOf(dateTime);
         }
 
         @Override
         protected void onPostExecute(String myDate){
-            Log.w("raky", "this year: "+myDate);
-            AddAangadia addAangadia = new AddAangadia();
-            //  date = myDate.substring(0, 10);
-            // time = myDate.substring(12, 16);
             year = myDate.substring(myDate.length()-2, myDate.length());
         }
 
     }
 //    getting date and time
+
+    //    generate 4 digit password check key
+
+    public String getPasswordKey() {
+        return UUID.randomUUID().toString().substring(0,4);
+    }
+
 
 //    ends
 }

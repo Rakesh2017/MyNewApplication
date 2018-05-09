@@ -96,8 +96,16 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
         userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
         aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
 
-        LoadData();
 
+
+    }
+
+    public void onStart(){
+        super.onStart();
+        //        check password change
+        //        check password change
+        new PasswordCheck(ListOfUsersForAangadia.this).checkIfPasswordChanged();
+        LoadData();
     }
 
     @Override
@@ -310,7 +318,8 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                     RecyclerViewListAangadiaData userData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
                     list.add(userData);
                 }
-
+                if (list.isEmpty())
+                    showEmptyPage();
                 adapter = new ListOfUsersForAangadiaRecyclerViewAdapter(ListOfUsersForAangadia.this, list);
 
                 recyclerView.setAdapter(adapter);
@@ -333,7 +342,7 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
         new MaterialDialog.Builder(ListOfUsersForAangadia.this)
                 .title("Empty!")
                 .titleColor(Color.BLACK)
-                .content("No Such Data, Please make sure you have entered correct search key.")
+                .content("No Data Available.")
                 .icon(getResources().getDrawable(R.drawable.ic_warning))
                 .contentColor(getResources().getColor(R.color.black))
                 .backgroundColor(getResources().getColor(R.color.white))
