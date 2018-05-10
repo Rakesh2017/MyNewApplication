@@ -286,4 +286,10 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                 .show();
     }
     //end
+
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
+
 }

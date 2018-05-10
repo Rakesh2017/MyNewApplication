@@ -516,8 +516,16 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                                 .setValue(String.valueOf(updated_balance_of_receiving_user));
 //    adding commission to admin account
                         final String admin_balance = dataSnapshot.child("adminBalance").child("total_balance").getValue(String.class);
-                        final String updated_admin_balance = String.valueOf(Integer.parseInt(admin_balance) + Integer.parseInt(commissionDeducted_tx));
-                        databaseReference.child("adminBalance").child("total_balance").setValue(updated_admin_balance);
+
+                        if (!TextUtils.isEmpty(admin_balance)){
+                            final String updated_admin_balance = String.valueOf(Integer.parseInt(admin_balance) + Integer.parseInt(commissionDeducted_tx));
+                            databaseReference.child("adminBalance").child("total_balance").setValue(updated_admin_balance);
+                        }
+                        else { //for first time only when admin balance is empty
+                             databaseReference.child("adminBalance").child("total_balance").setValue(commissionDeducted_tx);
+                        }
+
+
 
                         final String push_key = databaseReference.push().getKey();
 
@@ -529,6 +537,8 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceSender.child("receiver_key").setValue(userKeyToSendMoney_tx);
                         databaseReferenceSender.child("balance_after_debit").setValue(Integer.toString(my_deducted_balance));
                         databaseReferenceSender.child("dateTime").setValue(today_dateTime);
+                        databaseReferenceSender.child("commission").setValue(commissionDeducted_tx);
+                        databaseReferenceSender.child("commission_rate").setValue(commission);
 
 //                        setting receiver transaction
                         DatabaseReference databaseReferenceReceiver = databaseReference.child("transactions").child(userKeyToSendMoney_tx).child(push_key);
@@ -538,6 +548,8 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceReceiver.child("sender_key").setValue(myKey);
                         databaseReferenceReceiver.child("balance_after_credit").setValue(Integer.toString(updated_balance_of_receiving_user));
                         databaseReferenceReceiver.child("dateTime").setValue(today_dateTime);
+                        databaseReferenceReceiver.child("commission").setValue(commissionDeducted_tx);
+                        databaseReferenceReceiver.child("commission_rate").setValue(commission);
 
 //                        setting transaction record in admin account
                         DatabaseReference databaseReferenceAdminAccount = databaseReference.child("adminAccount").child(push_key);
@@ -705,6 +717,13 @@ private void setTotalBalance() {
 //    logout
 
     //ends
+
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+        if (progressDialogWait.isShowing()) progressDialogWait.dismiss();
+    }
+
 }
 
 

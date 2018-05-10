@@ -329,7 +329,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
             return false;
         }
         try {
-              if (Integer.parseInt(commission_tx) > 100 ||Integer.parseInt(commission_tx) < 1 ){
+              if (Integer.parseInt(commission_tx) > 100 ||Integer.parseInt(commission_tx) < 0 ){
                 new MaterialDialog.Builder(AdminHomePage.this)
                         .title("InValid Commission!")
                         .titleColor(Color.WHITE)
@@ -363,6 +363,11 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
             finish();
         }
     }//onBackPressed ends
+
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
 
 //    end
 }

@@ -142,6 +142,31 @@
             android:textStyle="bold"
             />
 
+        <!--commission-->
+        <TextView
+            android:id="@+id/td_commission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/td_balanceAfterTransactionTextView"
+            android:hint="Commission: "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginStart="8dp"
+            />
+
+        <TextView
+            android:id="@+id/td_commissionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/td_commission"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/td_balanceAfterTransactionTextView"
+            android:textStyle="bold"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/orangeDark"
+            />
+
 
 
     </RelativeLayout>

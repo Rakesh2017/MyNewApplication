@@ -175,5 +175,11 @@ public class ChangeName extends Fragment {
         currentName_tv.setText(newName_tx);
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
+
+
 //end
 }

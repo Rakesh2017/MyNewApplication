@@ -174,5 +174,11 @@ public class ChangePhone extends Fragment {
         currentPhone_tv.setText(newPhone_tx);
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
+
+
 //    ends
 }

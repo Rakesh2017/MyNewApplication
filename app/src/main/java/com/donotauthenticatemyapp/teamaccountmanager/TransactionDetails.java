@@ -30,8 +30,10 @@ import java.text.NumberFormat;
  */
 public class TransactionDetails extends Fragment {
 
-    TextView dateTime_tv, balanceCredited_tv, mode_tv, transactionBy_tv, transactionBy_tv0, previousBalance_tv, balanceAfterTransaction_tv;
-    String dateTime_tx, balanceCredited_tx, mode_tx, transactionBy_tx, previousBalance_tx, aangadiaKey_tx, balanceAfterTransaction_tx;
+    TextView dateTime_tv, balanceCredited_tv, mode_tv, transactionBy_tv
+            , transactionBy_tv0, previousBalance_tv, balanceAfterTransaction_tv, commission_tv, commission1_tv;
+    String dateTime_tx, balanceCredited_tx, mode_tx, transactionBy_tx, previousBalance_tx
+            , aangadiaKey_tx, balanceAfterTransaction_tx, commission_tx;
 
     SharedPreferences transactionSharedPreferences;
     private final String transactionPref = "transactionPref";
@@ -49,6 +51,8 @@ public class TransactionDetails extends Fragment {
     private final String BALANCE_CREDITED = "balance_credited";
     private final String RECEIVER_KEY = "receiver_key";
     private final String SENDER_KEY = "sender_key";
+    private final String COMMISSION = "commission";
+    private final String COMMISSION_RATE = "commission_rate";
 
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -72,6 +76,8 @@ public class TransactionDetails extends Fragment {
         transactionBy_tv0 = view.findViewById(R.id.td_moneyAddedBy);
         previousBalance_tv = view.findViewById(R.id.td_previousBalanceTextView);
         balanceAfterTransaction_tv = view.findViewById(R.id.td_balanceAfterTransactionTextView);
+        commission_tv = view.findViewById(R.id.td_commissionTextView);
+        commission1_tv = view.findViewById(R.id.td_commission);
         relativeLayout = view.findViewById(R.id.td_relativeLayout);
 
 
@@ -107,6 +113,8 @@ public class TransactionDetails extends Fragment {
 
 //        if mode is money Add
         if(TextUtils.equals(mode_tx, "moneyAdd")) {
+            commission_tv.setVisibility(View.GONE);
+            commission1_tv.setVisibility(View.GONE);
             balanceCredited_tx = transactionSharedPreferences.getString(MONEY_ADDED, "");
             transactionBy_tx = transactionSharedPreferences.getString(MONEY_ADDED_BY, "");
             previousBalance_tx = transactionSharedPreferences.getString(PREVIOUS_BALANCE, "");
@@ -143,11 +151,13 @@ public class TransactionDetails extends Fragment {
                 previousBalance_tv.setText("Rs 0.00");
             }
 
+
             if (TextUtils.equals(transactionBy_tx, "aangadia") && !TextUtils.isEmpty(transactionBy_tx))
                 setAangadiaDetails();
             else if ((TextUtils.equals(transactionBy_tx, "admin") && !TextUtils.isEmpty(transactionBy_tx)))
                 transactionBy_tv.setText("Admin");
         }// if mode is money add
+
 
 //        if mode is credit
         else if (TextUtils.equals(mode_tx, "credit")){
@@ -157,6 +167,8 @@ public class TransactionDetails extends Fragment {
               balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_CREDITED, "");
               previousBalance_tx = transactionSharedPreferences.getString(CURRENT_BALANCE, "");
               balanceAfterTransaction_tx = transactionSharedPreferences.getString(BALANCE_AFTER_CREDIT, "");
+              commission_tx = transactionSharedPreferences.getString(COMMISSION, "");
+              String commission_rate = transactionSharedPreferences.getString(COMMISSION_RATE, "");
 
             String credit = "Credit";
             mode_tv.setText(credit);
@@ -185,6 +197,14 @@ public class TransactionDetails extends Fragment {
             } else {
                 previousBalance_tv.setText("Rs 0.00");
             }
+            if (!TextUtils.isEmpty(commission_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(commission_tx));
+                commission_tv.setText("Rs " + formatted_balance+" ("+commission_rate+"%)");
+            } else {
+                commission_tv.setText("Rs 0 (0%)");
+            }
+
               CreditAndDebitTransactionBy();
         }
 
@@ -197,6 +217,8 @@ public class TransactionDetails extends Fragment {
             balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_DEBITED, "");
             previousBalance_tx = transactionSharedPreferences.getString(CURRENT_BALANCE, "");
             balanceAfterTransaction_tx = transactionSharedPreferences.getString(BALANCE_AFTER_DEBIT, "");
+            commission_tx = transactionSharedPreferences.getString(COMMISSION, "");
+            String commission_rate = transactionSharedPreferences.getString(COMMISSION_RATE, "");
 
             String debit = "Debit";
             mode_tv.setText(debit);
@@ -225,6 +247,14 @@ public class TransactionDetails extends Fragment {
             } else {
                 previousBalance_tv.setText("Rs 0.00");
             }
+            if (!TextUtils.isEmpty(commission_tx)) {
+                NumberFormat formatter = new DecimalFormat("#,###");
+                String formatted_balance = formatter.format(Long.parseLong(commission_tx));
+                commission_tv.setText("Rs " + formatted_balance+" ("+commission_rate+"%)");
+            } else {
+                commission_tv.setText("Rs 0 (0%)");
+            }
+
             CreditAndDebitTransactionBy();
         }
 

@@ -5,7 +5,16 @@
     android:layout_height="match_parent"
     android:background="@color/whiteSmoke"
     android:id="@+id/fragment_container_user_details"
-    tools:context=".UserDetails">
+    tools:context=".UserDetails"
+    >
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -169,7 +178,6 @@
         android:layout_below="@+id/ud_expandTextView"
         android:visibility="gone"
         >
-
 
         <RelativeLayout
             android:id="@+id/ud_uidRelativeLayout"
@@ -486,5 +494,7 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

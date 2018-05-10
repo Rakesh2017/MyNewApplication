@@ -344,6 +344,10 @@ public class UserTransactions extends Fragment {
                 .show();
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
 
 //    end
 }

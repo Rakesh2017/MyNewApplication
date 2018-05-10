@@ -350,5 +350,10 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                 .show();
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
+
     //end
 }

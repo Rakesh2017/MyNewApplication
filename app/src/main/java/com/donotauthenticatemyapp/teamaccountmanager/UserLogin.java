@@ -253,6 +253,10 @@ public class UserLogin extends Fragment implements View.OnClickListener {
     }// editTextValidations end
 
 
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
 
 //end
 }

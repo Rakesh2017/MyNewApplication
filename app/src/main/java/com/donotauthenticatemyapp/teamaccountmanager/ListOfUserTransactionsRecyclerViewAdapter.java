@@ -46,6 +46,8 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
     private final String BALANCE_CREDITED = "balance_credited";
     private final String RECEIVER_KEY = "receiver_key";
     private final String SENDER_KEY = "sender_key";
+    private final String COMMISSION = "commission";
+    private final String COMMISSION_RATE = "commission_rate";
 
     SharedPreferences userIdentifierSharedPreferences;
 
@@ -133,6 +135,8 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                         editor.putString(BALANCE_CREDITED, UploadInfo.getBalance_credited());
                         editor.putString(BALANCE_AFTER_CREDIT, UploadInfo.getBalance_after_credit());
                         editor.putString(SENDER_KEY, UploadInfo.getSender_key());
+                        editor.putString(COMMISSION, UploadInfo.getCommission());
+                        editor.putString(COMMISSION_RATE, UploadInfo.getCommission_rate());
                     }
 
                     //debit
@@ -140,6 +144,8 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                         editor.putString(BALANCE_DEBITED, UploadInfo.getBalance_debited());
                         editor.putString(BALANCE_AFTER_DEBIT, UploadInfo.getBalance_after_debit());
                         editor.putString(RECEIVER_KEY, UploadInfo.getReceiver_key());
+                        editor.putString(COMMISSION, UploadInfo.getCommission());
+                        editor.putString(COMMISSION_RATE, UploadInfo.getCommission_rate());
                     }
 
 

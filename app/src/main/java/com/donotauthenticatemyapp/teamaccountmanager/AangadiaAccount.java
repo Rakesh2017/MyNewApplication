@@ -105,7 +105,6 @@ public class AangadiaAccount extends Fragment {
             }
         });
 
-
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading Data...");
         sharedPreferences = getActivity().getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);

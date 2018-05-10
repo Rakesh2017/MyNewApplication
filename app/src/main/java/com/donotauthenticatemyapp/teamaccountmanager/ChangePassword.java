@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -228,6 +229,18 @@ public class ChangePassword extends Fragment {
                     .title("Invalid Password")
                     .titleColor(Color.WHITE)
                     .content("Length of Password should be at least of length 8.")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+            return false;
+        }
+        else if (TextUtils.equals(password_tx, oldPassword_tx)){
+            new MaterialDialog.Builder(getActivity())
+                    .title("Cannot Proceed...")
+                    .titleColor(Color.WHITE)
+                    .content("New Password cannot be same as old password. In that case no need to change password.")
                     .icon(getResources().getDrawable(R.drawable.ic_warning))
                     .contentColor(getResources().getColor(R.color.lightCoral))
                     .backgroundColor(getResources().getColor(R.color.black90))

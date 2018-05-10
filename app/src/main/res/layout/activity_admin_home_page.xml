@@ -169,6 +169,18 @@
                     style="@style/MyCustomTextStyleMedium"
                     android:layout_marginStart="15dp"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/adh_addAangadiaTextView"
+                    android:text="Aangadia details will be visible in All Aangadias Module."
+                    android:layout_toEndOf="@+id/adh_addAangadiaButton"
+                    android:layout_marginTop="4dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:layout_marginStart="15dp"
+                    android:drawableStart="@drawable/ic_down_arrow"
+                    android:drawablePadding="7dp"
+                    />
 
 
             </RelativeLayout>
@@ -300,6 +312,19 @@
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
                     android:layout_marginStart="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/adh_addUserTextView"
+                    android:text="User details will be visible in All Users Module."
+                    android:layout_toEndOf="@+id/adh_addUserButton"
+                    android:layout_marginTop="4dp"
+                    style="@style/MyCustomTextStyleSmall"
+                    android:layout_marginStart="15dp"
+                    android:drawableStart="@drawable/ic_down_arrow"
+                    android:drawablePadding="7dp"
                     />
 
             </RelativeLayout>

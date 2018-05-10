@@ -242,5 +242,6 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
     }
 //    onClick
 
+
     //end
 }

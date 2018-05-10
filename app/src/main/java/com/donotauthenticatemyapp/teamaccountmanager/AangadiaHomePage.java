@@ -278,6 +278,5 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
     }//onclick
 
-
     //ends
 }

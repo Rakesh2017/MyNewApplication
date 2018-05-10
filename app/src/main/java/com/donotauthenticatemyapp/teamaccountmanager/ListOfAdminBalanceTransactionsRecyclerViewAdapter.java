@@ -1,8 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +8,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -25,8 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerView.Adapter<ListOfAdminBalanceTransactionsRecyclerViewAdapter.ViewHolder> {
@@ -133,7 +127,7 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
         ViewHolder(View itemView) {
             super(itemView);
 
-            commission_tv = itemView.findViewById(R.id.abt_commissionTextView);
+            commission_tv = itemView.findViewById(R.id.td_commissionTextView);
             sender_tv = itemView.findViewById(R.id.abt_senderTextView);
             receiver_tv = itemView.findViewById(R.id.abt_receiverTextView);
             amount_tv = itemView.findViewById(R.id.abt_transactionAmountTextView);

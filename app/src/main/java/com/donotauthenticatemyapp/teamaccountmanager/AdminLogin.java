@@ -309,7 +309,10 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
     }
     //    authentication failed
 
-
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
 
 //    ends
 }

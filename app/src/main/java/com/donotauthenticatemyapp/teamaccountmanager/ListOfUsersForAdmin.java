@@ -351,5 +351,10 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                 .show();
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
+
     //end
 }

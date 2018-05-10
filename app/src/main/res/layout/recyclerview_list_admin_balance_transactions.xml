@@ -36,7 +36,7 @@
 
         <!--commission-->
         <TextView
-            android:id="@+id/abt_commission"
+            android:id="@+id/td_commission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/abt_dateTextView"
@@ -45,10 +45,10 @@
             />
 
         <TextView
-            android:id="@+id/abt_commissionTextView"
+            android:id="@+id/td_commissionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/abt_commission"
+            android:layout_toEndOf="@+id/td_commission"
             android:layout_below="@+id/abt_dateTextView"
             android:textStyle="bold"
             style="@style/MyCustomTextStyleSmall"
@@ -60,7 +60,7 @@
             android:id="@+id/abt_transactionAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/abt_commissionTextView"
+            android:layout_below="@+id/td_commissionTextView"
             android:text="Transaction Amount: "
             style="@style/MyCustomTextStyleSmall"
             android:layout_marginTop="2dp"
@@ -73,7 +73,7 @@
             android:layout_toEndOf="@+id/abt_transactionAmount"
             style="@style/MyCustomTextStyleSmall"
             android:textStyle="bold"
-            android:layout_below="@+id/abt_commissionTextView"
+            android:layout_below="@+id/td_commissionTextView"
             android:layout_marginTop="2dp"
             android:textColor="@color/orangeDark"
             />

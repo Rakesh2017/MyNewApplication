@@ -223,6 +223,19 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                     .show();
             return false;
         }
+        else if (Integer.parseInt(money_tx) < 1){
+            new MaterialDialog.Builder(getActivity())
+                    .title("Failed")
+                    .titleColor(Color.WHITE)
+                    .content("Please Enter Amount")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+            return false;
+        }
+
         return true;
     }
 
@@ -231,8 +244,8 @@ public class AddMoney extends Fragment implements View.OnClickListener {
 
         new MaterialDialog.Builder(getActivity())
                 .title("Are you sure to Add Money!")
-                .content("Rs "+money_tx+"/- will be added to Account with \nUID:"+uid_tx
-                        +"\nUser Name: "+userName_tx)
+                .content("Rs "+money_tx+"/- will be added to Account with UID:"+uid_tx
+                        +", User Name: "+userName_tx)
                 .contentColorRes(R.color.white)
                 .titleColor(getResources().getColor(R.color.whiteSmoke))
                 .positiveText("Confirm")
@@ -422,7 +435,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                                 .title("Transaction Successful")
                                 .titleColor(Color.BLACK)
                                 .content("Rs "+money_tx +" is credited to Account with " +
-                                        "\nUID: "+uid_tx)
+                                        "UID: "+uid_tx)
                                 .icon(getResources().getDrawable(R.drawable.ic_success))
                                 .contentColor(getResources().getColor(R.color.black))
                                 .backgroundColor(getResources().getColor(R.color.white))
