@@ -1,7 +1,9 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -76,11 +78,23 @@ public class AdminBalance extends Fragment {
         setLimit_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String get_limit = limit_et.getText().toString().trim();
+                final String get_limit = limit_et.getText().toString().trim();
 
                 if (!TextUtils.isEmpty(get_limit)){
-                    limit = Integer.parseInt(get_limit);
-                    LoadData();
+                    new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                        @Override
+                        public void onConnectionSuccess() {
+                            limit = Integer.parseInt(get_limit);
+                            LoadData();
+                        }
+                        @Override
+                        public void onConnectionFail(String msg) {
+                            NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                            noInternetConnectionAlert.DisplayNoInternetConnection();
+                            progressDialog.dismiss();
+                        }
+                    }).execute();
+
                 }
             }
         });

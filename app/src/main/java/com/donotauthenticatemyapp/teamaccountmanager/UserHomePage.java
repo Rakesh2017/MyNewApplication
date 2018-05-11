@@ -219,7 +219,18 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         if (Validations()) { //if 1
             progressDialogWait.show();
             if (CheckIfSendingToItSelf()){//if 2
-                CheckIfUserExist();
+                new CheckNetworkConnection(UserHomePage.this, new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        CheckIfUserExist();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(UserHomePage.this);
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
             }//if 2
         }//if 1
 
@@ -415,7 +426,19 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                                     public void onClick(MaterialDialog dialog, DialogAction which) {
                                         progressDialog.show();
 //                                                if having sufficient balance
-                                        getTimeAndMakeTransaction();
+                                        new CheckNetworkConnection(UserHomePage.this, new CheckNetworkConnection.OnConnectionCallback() {
+                                            @Override
+                                            public void onConnectionSuccess() {
+                                                getTimeAndMakeTransaction();
+                                            }
+                                            @Override
+                                            public void onConnectionFail(String msg) {
+                                                NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(UserHomePage.this);
+                                                noInternetConnectionAlert.DisplayNoInternetConnection();
+                                                progressDialog.dismiss();
+                                            }
+                                        }).execute();
+
                                     }
                                 })
                                 .onNegative(new MaterialDialog.SingleButtonCallback() {

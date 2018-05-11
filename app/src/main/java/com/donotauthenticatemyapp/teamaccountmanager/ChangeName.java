@@ -91,7 +91,21 @@ public class ChangeName extends Fragment {
             @Override
             public void onClick(View view) {
                 newName_tx = newName_et.getText().toString().trim();
-                if(EditTextValidations() && !TextUtils.isEmpty(key_tx)) updateName();
+                if(EditTextValidations() && !TextUtils.isEmpty(key_tx)){
+                    new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                        @Override
+                        public void onConnectionSuccess() {
+                            updateName(); //update name
+                        }
+                        @Override
+                        public void onConnectionFail(String msg) {
+                            NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                            noInternetConnectionAlert.DisplayNoInternetConnection();
+                            progressDialog.dismiss();
+                        }
+                    }).execute();
+
+                }
             }
         });
 

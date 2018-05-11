@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -97,10 +98,11 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         long sum = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                                 sum = sum + Long.parseLong(snapshot1.child("money_added").getValue(String.class));
                             }
+                        }
                             if (!TextUtils.isEmpty(String.valueOf(sum))){
                                 NumberFormat formatter = new DecimalFormat("#,###");
                                 String formatted_balance = formatter.format(sum);
@@ -108,7 +110,6 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                             }
                             else totalAangadiaTransactions_tv.setText("Rs 0.0");
                         }
-                    }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
@@ -280,40 +281,55 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         commission_tx = commission_tv.getText().toString().trim();
         if (CommissionValidation()){ //if
             progressDialog.show();
-            databaseReference.child("adminCommission").child("commission").setValue(commission_tx)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            new MaterialDialog.Builder(AdminHomePage.this)
-                                    .title("Success")
-                                    .titleColor(Color.BLACK)
-                                    .content("Commission set to "+commission_tx +"%")
-                                    .icon(getResources().getDrawable(R.drawable.ic_success))
-                                    .contentColor(getResources().getColor(R.color.black))
-                                    .backgroundColor(getResources().getColor(R.color.white))
-                                    .positiveText(R.string.ok)
-                                    .show();
-                            currentCommission_tv.setText(commission_tx+"%");
-                            progressDialog.dismiss();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
+            new CheckNetworkConnection(AdminHomePage.this, new CheckNetworkConnection.OnConnectionCallback() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    new MaterialDialog.Builder(AdminHomePage.this)
-                            .title("Failed")
-                            .titleColor(Color.BLACK)
-                            .content(e.getLocalizedMessage())
-                            .icon(getResources().getDrawable(R.drawable.ic_success))
-                            .contentColor(getResources().getColor(R.color.green))
-                            .backgroundColor(getResources().getColor(R.color.white))
-                            .positiveText(R.string.ok)
-                            .show();
+                public void onConnectionSuccess() {
+                    FinallySetCommission();
+                }
+                @Override
+                public void onConnectionFail(String msg) {
+                    NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(AdminHomePage.this);
+                    noInternetConnectionAlert.DisplayNoInternetConnection();
                     progressDialog.dismiss();
                 }
-            });
+            }).execute();
         }//if
     }
     //    submitting commission
+
+    public void FinallySetCommission(){
+        databaseReference.child("adminCommission").child("commission").setValue(commission_tx)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        new MaterialDialog.Builder(AdminHomePage.this)
+                                .title("Success")
+                                .titleColor(Color.BLACK)
+                                .content("Commission set to "+commission_tx +"%")
+                                .icon(getResources().getDrawable(R.drawable.ic_success))
+                                .contentColor(getResources().getColor(R.color.black))
+                                .backgroundColor(getResources().getColor(R.color.white))
+                                .positiveText(R.string.ok)
+                                .show();
+                        currentCommission_tv.setText(commission_tx+"%");
+                        progressDialog.dismiss();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                new MaterialDialog.Builder(AdminHomePage.this)
+                        .title("Failed")
+                        .titleColor(Color.BLACK)
+                        .content(e.getLocalizedMessage())
+                        .icon(getResources().getDrawable(R.drawable.ic_success))
+                        .contentColor(getResources().getColor(R.color.green))
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText(R.string.ok)
+                        .show();
+                progressDialog.dismiss();
+            }
+        });
+    }
 
     public Boolean CommissionValidation(){
         if (TextUtils.isEmpty(commission_tx)){

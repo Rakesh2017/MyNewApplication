@@ -97,7 +97,21 @@ public class ChangePhone extends Fragment {
             @Override
             public void onClick(View view) {
                 newPhone_tx = newPhone_et.getText().toString().trim();
-                if(EditTextValidations() && !TextUtils.isEmpty(key_tx)) updatePhone();
+                if(EditTextValidations() && !TextUtils.isEmpty(key_tx)){
+                    new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                        @Override
+                        public void onConnectionSuccess() {
+                            updatePhone(); //update number
+                        }
+                        @Override
+                        public void onConnectionFail(String msg) {
+                            NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                            noInternetConnectionAlert.DisplayNoInternetConnection();
+                            progressDialog.dismiss();
+                        }
+                    }).execute();
+                    updatePhone();
+                }
             }
         });
 

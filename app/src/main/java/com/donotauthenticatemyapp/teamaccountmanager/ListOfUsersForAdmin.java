@@ -112,11 +112,22 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
             name_tx = name_et.getText().toString().trim();
             aangadiaName_tx = aangdiaName_et.getText().toString().trim();
 
-            if (!TextUtils.isEmpty(state_tx)) FilterByState();
-            else if (!TextUtils.isEmpty(city_tx)) FilterByCity();
-            else if(!TextUtils.isEmpty(aangadiaName_tx)) FilterByAangadiaName();
-            else if (!TextUtils.isEmpty(uid_tx)) FilterByUID();
-            else if (!TextUtils.isEmpty(name_tx)) FilterByUserName();
+            new CheckNetworkConnection(ListOfUsersForAdmin.this, new CheckNetworkConnection.OnConnectionCallback() {
+                @Override
+                public void onConnectionSuccess() {
+                    if (!TextUtils.isEmpty(state_tx)) FilterByState();
+                    else if (!TextUtils.isEmpty(city_tx)) FilterByCity();
+                    else if(!TextUtils.isEmpty(aangadiaName_tx)) FilterByAangadiaName();
+                    else if (!TextUtils.isEmpty(uid_tx)) FilterByUID();
+                    else if (!TextUtils.isEmpty(name_tx)) FilterByUserName();
+                }
+                @Override
+                public void onConnectionFail(String msg) {
+                    NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfUsersForAdmin.this);
+                    noInternetConnectionAlert.DisplayNoInternetConnection();
+                    progressDialog.dismiss();
+                }
+            }).execute();
 
         }
 

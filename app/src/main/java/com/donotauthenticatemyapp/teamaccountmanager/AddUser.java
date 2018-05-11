@@ -286,8 +286,36 @@ public class AddUser extends Fragment implements View.OnClickListener {
                             Log.w("raky", "uid: "+mAuth1.getCurrentUser().getUid());
                             Log.w("raky", "identity: "+identity);
 
-                            if (TextUtils.equals(identity, "aangadia")) UserCreatedByAangadia();
-                            else if (TextUtils.equals(identity, "admin")) UserCreatedByAdmin();
+                            if (TextUtils.equals(identity, "aangadia")){
+                                new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                                    @Override
+                                    public void onConnectionSuccess() {
+                                        UserCreatedByAangadia();
+                                    }
+                                    @Override
+                                    public void onConnectionFail(String msg) {
+                                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                                        progressDialog.dismiss();
+                                    }
+                                }).execute();
+
+                            }
+                            else if (TextUtils.equals(identity, "admin")){
+                                new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                                    @Override
+                                    public void onConnectionSuccess() {
+                                        UserCreatedByAdmin();
+                                    }
+                                    @Override
+                                    public void onConnectionFail(String msg) {
+                                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                                        progressDialog.dismiss();
+                                    }
+                                }).execute();
+
+                            }
 
 
                         }

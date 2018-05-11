@@ -108,7 +108,21 @@ public class ChangePassword extends Fragment {
             @Override
             public void onClick(View view) {
                 password_tx = password.getText().toString().trim();
-                if(EditTextValidations()) updatePassword();
+                if(EditTextValidations()){
+                    new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                        @Override
+                        public void onConnectionSuccess() {
+                            updatePassword(); // update password
+                        }
+                        @Override
+                        public void onConnectionFail(String msg) {
+                            NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                            noInternetConnectionAlert.DisplayNoInternetConnection();
+                            progressDialog.dismiss();
+                        }
+                    }).execute();
+
+                }
             }
         });
 

@@ -94,10 +94,66 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         else if (id == R.id.loa_search){
             uid_tx = uid_et.getText().toString().trim();
             name_tx = name_et.getText().toString().trim();
-            if (TextUtils.isEmpty(uid_tx) && TextUtils.isEmpty(name_tx)) enterEitherUidOrName();
-            else if (!TextUtils.isEmpty(name_tx) && TextUtils.isEmpty(uid_tx)) FilterByUserName();
-            else if (TextUtils.isEmpty(name_tx) && !TextUtils.isEmpty(uid_tx)) FilterByUID();
-            else if (!TextUtils.isEmpty(name_tx) && !TextUtils.isEmpty(uid_tx)) FilterByNameAndUID();
+            if (TextUtils.isEmpty(uid_tx) && TextUtils.isEmpty(name_tx)){ //if1
+                new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        enterEitherUidOrName();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfAangadias.this);
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
+
+            } //if1
+            else if (!TextUtils.isEmpty(name_tx) && TextUtils.isEmpty(uid_tx)){
+                new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        FilterByUserName();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfAangadias.this);
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
+
+            }
+            else if (TextUtils.isEmpty(name_tx) && !TextUtils.isEmpty(uid_tx)) {
+                new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        FilterByUID();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfAangadias.this);
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
+
+            }
+            else if (!TextUtils.isEmpty(name_tx) && !TextUtils.isEmpty(uid_tx)){
+                new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        FilterByNameAndUID();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfAangadias.this);
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
+
+            }
         }
 
 

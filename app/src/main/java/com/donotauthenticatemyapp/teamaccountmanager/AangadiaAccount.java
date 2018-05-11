@@ -92,12 +92,24 @@ public class AangadiaAccount extends Fragment {
                 if (!TextUtils.isEmpty(get_limit)){
                     limit = Integer.parseInt(get_limit);
 
-                    String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-                    if (TextUtils.equals(identity, "aangadia")) {
-                        LoadDataForAangadia();
-                    } else if (TextUtils.equals(identity, "admin")){
-                        LoadDataForAdmin();
-                    }
+                    final String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                    new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                        @Override
+                        public void onConnectionSuccess() {
+                            if (TextUtils.equals(identity, "aangadia")) {
+                                LoadDataForAangadia();
+                            } else if (TextUtils.equals(identity, "admin")){
+                                LoadDataForAdmin();
+                            }
+                        }
+                        @Override
+                        public void onConnectionFail(String msg) {
+                            NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                            noInternetConnectionAlert.DisplayNoInternetConnection();
+                            progressDialog.dismiss();
+                        }
+                    }).execute();
+
 
                 }
 

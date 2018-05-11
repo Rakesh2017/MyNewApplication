@@ -214,7 +214,21 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                         .positiveText(R.string.ok)
                         .show();
             }
-            else CreateAangadia();
+            else {
+                new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        CreateAangadia();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
+
+            }
 
         }
     }
@@ -360,25 +374,6 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
         mAuth2 = FirebaseAuth.getInstance(myApp);
     }
 
-    public void changePassword(){
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String newPassword = "password123";
-        Log.w("raky", "hit");
-
-        user.updatePassword(newPassword)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            //Log.w("raky", user.getDisplayName());
-                            Log.d("raky", "User password updated.");
-                        }
-                        else {
-                            Log.d("raky", "User password failed.");
-                        }
-                    }
-                });
-    }
 
 
 //    getting date and time

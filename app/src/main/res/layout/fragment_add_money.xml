@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_container_add_money"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".AddMoney">
 
     <android.support.design.widget.AppBarLayout
