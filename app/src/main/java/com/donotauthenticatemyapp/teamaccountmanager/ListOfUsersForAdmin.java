@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -88,7 +89,53 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                 (ListOfUsersForAdmin.this,android.R.layout.simple_list_item_1,india_cities);
         city_et.setAdapter(adapter_cities);
 
-        LoadData();
+        new CheckNetworkConnection(ListOfUsersForAdmin.this, new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                LoadData();
+            }
+
+            @Override
+            public void onConnectionFail(String msg) {
+                try {
+                    new MaterialDialog.Builder(ListOfUsersForAdmin.this)
+                            .title("No Internet Access!")
+                            .titleColor(Color.BLACK)
+                            .content("No internet connectivity detected. Please make sure you have working internet connection and try again.")
+                            .icon(getResources().getDrawable(R.drawable.ic_no_internet_connection))
+                            .contentColor(getResources().getColor(R.color.black))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveColor(getResources().getColor(R.color.green))
+                            .negativeText("Cancel")
+                            .negativeColor(getResources().getColor(R.color.red))
+                            .positiveText("Try Again!")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    LoadData();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .cancelable(false)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).execute();
+
+    }
+
+    public void onStart(){
+        super.onStart();
+        //        check password change
+
 
     }
 
@@ -351,15 +398,21 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
 
     //    show empty page
     public void showEmptyPage(){
-        new MaterialDialog.Builder(ListOfUsersForAdmin.this)
-                .title("Empty!")
-                .titleColor(Color.BLACK)
-                .content("No Data Available.")
-                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                .contentColor(getResources().getColor(R.color.black))
-                .backgroundColor(getResources().getColor(R.color.white))
-                .positiveText(R.string.ok)
-                .show();
+        try{
+            new MaterialDialog.Builder(ListOfUsersForAdmin.this)
+                    .title("Empty!")
+                    .titleColor(Color.BLACK)
+                    .content("No Data Available.")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.black))
+                    .backgroundColor(getResources().getColor(R.color.white))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (Exception e){
+//            exception
+        }
+
     }
 
     public void onDestroy(){

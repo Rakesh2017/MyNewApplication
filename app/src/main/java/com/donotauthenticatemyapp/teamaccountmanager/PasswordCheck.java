@@ -1,6 +1,7 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;

@@ -1,8 +1,10 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import pl.droidsonroids.gif.GifImageView;
 import util.android.textviews.FontTextView;
 
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
@@ -47,6 +50,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
     private static final String AANGADIA_PASSWORD_KEY = "aangadia_password_key";
 
     String aangadiaUID_tx;
+    GifImageView loadingGIf;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -68,6 +72,8 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
         uid_tv = findViewById(R.id.ahp_userUIDTextView);
 
+        loadingGIf = findViewById(R.id.ahp_loadingGif);
+
         addUser_ib.setOnClickListener(this);
         allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
@@ -75,58 +81,62 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
     }
 
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
         userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
         aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
-        uid_tv.setText("UID: "+aangadiaUID_tx);
+        uid_tv.setText("UID: " + aangadiaUID_tx);
 
-        //        check password change
-        new PasswordCheck(AangadiaHomePage.this).checkIfPasswordChanged();
+        loadingGIf.setVisibility(View.VISIBLE);
+        new CheckNetworkConnection(AangadiaHomePage.this, new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                //        check password change
+                new PasswordCheck(AangadiaHomePage.this).checkIfPasswordChanged();
+                setTotalTransactionAmount();
+                AllUsersCount();
+                setUserName();
+                loadingGIf.setVisibility(View.GONE);
+            }
 
-        setTotalTransactionAmount();
-        AllUsersCount();
-        setUserName();
+            @Override
+            public void onConnectionFail(String msg) {
+                loadingGIf.setVisibility(View.GONE);
+                try {
+                    new MaterialDialog.Builder(AangadiaHomePage.this)
+                            .title("No Internet Access!")
+                            .titleColor(Color.BLACK)
+                            .content("No internet connectivity detected. Please make sure you have working internet connection and try again.")
+                            .icon(getResources().getDrawable(R.drawable.ic_no_internet_connection))
+                            .contentColor(getResources().getColor(R.color.black))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveColor(getResources().getColor(R.color.green))
+                            .negativeText("Cancel")
+                            .negativeColor(getResources().getColor(R.color.red))
+                            .positiveText("Try Again!")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    onStart();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .cancelable(false)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+            }
+        }).execute();
     }
-
-    //    check if password changed
-  /*  public void checkIfPasswordChanged(){
-        final String key = userIdentifierSharedPreferences.getString(AANGADIA_KEY, "");
-        final String saved_password_key = userIdentifierSharedPreferences.getString(AANGADIA_PASSWORD_KEY, "");
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("aangadiaPasswordKey").child(key)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        final String password_key = dataSnapshot.child("key").getValue(String.class);
-                        if (!TextUtils.isEmpty(password_key)){
-                            if (TextUtils.equals(password_key, saved_password_key)){
-                                setTotalTransactionAmount();
-                                AllUsersCount();
-                                setUserName();
-                            }
-                            else {
-                                SharedPreferences sharedpreferences = getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(FIRST_SCREEN, "");
-                                editor.clear();
-                                editor.apply();
-                                AangadiaHomePage.this.finish();
-                                startActivity(new Intent(AangadiaHomePage.this, Login.class));
-                                Toast.makeText(AangadiaHomePage.this, "Password Changed, " +
-                                        "Please Login Again", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-    }*/
-    //    check if password changed
+//    onStart
 
     //    setting total amount transactions
     private void setTotalTransactionAmount() {
@@ -196,7 +206,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         DatabaseReference childReference = databaseReference.child("userProfile");
         Query query = childReference.orderByChild("aangadia_uid").equalTo(aangadiaUID_tx);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String user_count = String.valueOf((int) snapshot.getChildrenCount());
@@ -262,15 +272,33 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
 //                add user
             case R.id.ahp_addUserButton:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AddUser()).addToBackStack("addUser").commit();
+                try{
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AddUser()).addToBackStack("addUser").commit();
+
+                }
+                catch (IllegalStateException e){
+//                    exception
+                }
                 break;
                 //                all user
             case R.id.ahp_allUsersButton:
-                startActivity(new Intent(AangadiaHomePage.this, ListOfUsersForAangadia.class));
+                try{
+                    startActivity(new Intent(AangadiaHomePage.this, ListOfUsersForAangadia.class));
+
+                }
+                catch (IllegalStateException | ActivityNotFoundException e){
+//                    exception
+                }
                 break;
 
             case R.id.ahp_cashButton:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AangadiaAccount()).addToBackStack("aangadiaAccount").commit();
+                try{
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AangadiaAccount()).addToBackStack("aangadiaAccount").commit();
+
+                }
+                catch (IllegalStateException e){
+//                    exception
+                }
                 break;
 
         }

@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -104,14 +105,25 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     public void onStart(){
         super.onStart();
 
-        loadData();
-        setTotalBalance();
+        new CheckNetworkConnection(UserDetails.this, new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                loadData();
+                setTotalBalance();
 
-        String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-        if (TextUtils.equals(identity, "aangadia")){
-            //        check password change
-            new PasswordCheck(UserDetails.this).checkIfPasswordChanged();
-        }
+                String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                if (TextUtils.equals(identity, "aangadia")){
+                    //        check password change
+                    new PasswordCheck(UserDetails.this).checkIfPasswordChanged();
+                }
+            }
+            @Override
+            public void onConnectionFail(String msg) {
+                NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(UserDetails.this);
+                noInternetConnectionAlert.DisplayNoInternetConnection();
+            }
+        }).execute();
+
 
     }
 
@@ -225,36 +237,78 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
 //                change password
             case R.id.ud_editPasswordButton:
-                if (TextUtils.isEmpty(password_tx) || TextUtils.isEmpty(uid_tx) ){
-                    Toast.makeText(this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                try {
+                    if (TextUtils.isEmpty(password_tx) || TextUtils.isEmpty(uid_tx) ){
+                        Toast.makeText(this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                    }
+                    else getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new ChangePassword()).addToBackStack("changePassword").commit();
+
                 }
-                else getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new ChangePassword()).addToBackStack("changePassword").commit();
+                catch (IllegalStateException e)
+                {
+//                    exception
+                }
                 break;
 //                changing name
             case R.id.ud_editNameButton:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new ChangeName()).addToBackStack("changeName").commit();
+                try {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new ChangeName()).addToBackStack("changeName").commit();
+
+                }
+                catch (IllegalStateException e)
+                {
+//                    exception
+                }
                 break;
 
 //                 changing phone
             case R.id.ud_editPhoneButton:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new ChangePhone()).addToBackStack("changePhone").commit();
+                try {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new ChangePhone()).addToBackStack("changePhone").commit();
+
+                }
+                catch (IllegalStateException e)
+                {
+//                    exception
+                }
                 break;
 
 //                home button
             case R.id.ud_homeButton:
-                String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-                if (TextUtils.equals(identity, "admin")) startActivity(new Intent(this, AdminHomePage.class));
-                else if (TextUtils.equals(identity, "aangadia")) startActivity(new Intent(this, AangadiaHomePage.class));
-                this.finish();
+                try {
+                    String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                    if (TextUtils.equals(identity, "admin")) startActivity(new Intent(this, AdminHomePage.class));
+                    else if (TextUtils.equals(identity, "aangadia")) startActivity(new Intent(this, AangadiaHomePage.class));
+                    this.finish();
+                }
+                catch (IllegalStateException |ActivityNotFoundException e)
+                {
+//                    exception
+                }
+
                 break;
 
             //                add money
             case R.id.ud_addMoneyTextView:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new AddMoney()).addToBackStack("addMoney").commit();
+                try {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new AddMoney()).addToBackStack("addMoney").commit();
+
+                }
+                catch (IllegalStateException e)
+                {
+//                    exception
+                }
                 break;
 
             case R.id.ud_transaction:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new UserTransactions()).addToBackStack("transactions").commit();
+                try {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new UserTransactions()).addToBackStack("transactions").commit();
+
+                }
+                catch (IllegalStateException e)
+                {
+//                    exception
+                }
                 break;
 
         }

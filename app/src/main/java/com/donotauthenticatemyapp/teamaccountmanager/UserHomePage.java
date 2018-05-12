@@ -37,6 +37,7 @@ import java.text.NumberFormat;
 import java.util.Date;
 
 import mehdi.sakout.fancybuttons.FancyButton;
+import pl.droidsonroids.gif.GifImageView;
 import util.android.textviews.FontTextView;
 
 import static com.donotauthenticatemyapp.teamaccountmanager.AddUser.TIME_SERVER;
@@ -69,6 +70,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     FirebaseAuth mAuth;
     Boolean checkUser;
     ProgressDialog progressDialog, progressDialogWait;
+    GifImageView loadingGIf;
 
 
     @Override
@@ -87,6 +89,8 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         userUIDToSendMoney_et = findViewById(R.id.auh_userUIDEditText);
         amountInWords_tv = findViewById(R.id.auh_numberToEnglishTextView);
         userName_ftv = findViewById(R.id.auh_userNameTextView);
+
+        loadingGIf = findViewById(R.id.auh_loadingGif);
 
         progressDialog = new ProgressDialog(UserHomePage.this);
         progressDialogWait = new ProgressDialog(UserHomePage.this);
@@ -160,11 +164,53 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         userUID_tx = userIdentifierSharedPreferences.getString(USER_UID, "");
         uid_tv.setText("UID: "+userUID_tx);
 
-        //        check password change
-        new PasswordCheck(UserHomePage.this).checkIfPasswordChangedForUser();
+        loadingGIf.setVisibility(View.VISIBLE);
+        new CheckNetworkConnection(UserHomePage.this, new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                //        check password change
 
-        setTotalBalance();
-        setUserName();
+                new PasswordCheck(UserHomePage.this).checkIfPasswordChangedForUser();
+                setTotalBalance();
+                setUserName();
+                loadingGIf.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onConnectionFail(String msg) {
+                loadingGIf.setVisibility(View.GONE);
+                try {
+                    new MaterialDialog.Builder(UserHomePage.this)
+                            .title("No Internet Access!")
+                            .titleColor(Color.BLACK)
+                            .content("No internet connectivity detected. Please make sure you have working internet connection and try again.")
+                            .icon(getResources().getDrawable(R.drawable.ic_no_internet_connection))
+                            .contentColor(getResources().getColor(R.color.black))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveColor(getResources().getColor(R.color.green))
+                            .negativeText("Cancel")
+                            .negativeColor(getResources().getColor(R.color.red))
+                            .positiveText("Try Again!")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    onStart();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .cancelable(false)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).execute();
     }
     //    onStart
 

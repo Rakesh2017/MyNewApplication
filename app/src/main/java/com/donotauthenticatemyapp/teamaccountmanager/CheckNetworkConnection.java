@@ -58,19 +58,19 @@ public class CheckNetworkConnection extends AsyncTask<Void, Void, Boolean> {
 
 class NetWorkInfoUtility {
 
-    public boolean isWifiEnable() {
+    private boolean isWifiEnable() {
         return isWifiEnable;
     }
 
-    public void setIsWifiEnable(boolean isWifiEnable) {
+    private void setIsWifiEnable(boolean isWifiEnable) {
         this.isWifiEnable = isWifiEnable;
     }
 
-    public boolean isMobileNetworkAvailable() {
+    private boolean isMobileNetworkAvailable() {
         return isMobileNetworkAvailable;
     }
 
-    public void setIsMobileNetworkAvailable(boolean isMobileNetworkAvailable) {
+    private void setIsMobileNetworkAvailable(boolean isMobileNetworkAvailable) {
         this.isMobileNetworkAvailable = isMobileNetworkAvailable;
     }
 

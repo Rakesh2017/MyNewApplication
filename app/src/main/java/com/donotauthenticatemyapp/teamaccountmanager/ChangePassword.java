@@ -2,6 +2,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -199,16 +200,22 @@ public class ChangePassword extends Fragment {
                                                 progressDialog.dismiss();
                                             }
                                             else {
-                                                new MaterialDialog.Builder(getActivity())
-                                                        .title("Failed.")
-                                                        .titleColor(Color.WHITE)
-                                                        .content(task.getException().getLocalizedMessage())
-                                                        .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                                        .contentColor(getResources().getColor(R.color.lightCoral))
-                                                        .backgroundColor(getResources().getColor(R.color.black90))
-                                                        .positiveText(R.string.ok)
-                                                        .show();
-                                                progressDialog.dismiss();
+                                                try {
+                                                    new MaterialDialog.Builder(getActivity())
+                                                            .title("Failed.")
+                                                            .titleColor(Color.WHITE)
+                                                            .content(task.getException().getLocalizedMessage())
+                                                            .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                                            .contentColor(getResources().getColor(R.color.lightCoral))
+                                                            .backgroundColor(getResources().getColor(R.color.black90))
+                                                            .positiveText(R.string.ok)
+                                                            .show();
+                                                    progressDialog.dismiss();
+                                                }
+                                                catch (Exception e){
+//                                                    exception
+                                                }
+
 
                                             }
                                         }
@@ -224,15 +231,21 @@ public class ChangePassword extends Fragment {
 
 //    password updated
     public void PasswordUpdateSuccessful() {
-        new MaterialDialog.Builder(getActivity())
-                .title("Password Updated")
-                .titleColor(Color.WHITE)
-                .content("New Password: " + password_tx)
-                .icon(getResources().getDrawable(R.drawable.ic_success))
-                .contentColor(getResources().getColor(R.color.lightCoral))
-                .backgroundColor(getResources().getColor(R.color.black90))
-                .positiveText(R.string.ok)
-                .show();
+        try {
+            new MaterialDialog.Builder(getActivity())
+                    .title("Password Updated")
+                    .titleColor(Color.WHITE)
+                    .content("New Password: " + password_tx)
+                    .icon(getResources().getDrawable(R.drawable.ic_success))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (Exception e){
+
+        }
+
     }
 
 

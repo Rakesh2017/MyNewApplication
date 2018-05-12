@@ -135,55 +135,58 @@ public class UserLogin extends Fragment implements View.OnClickListener {
         password_tx = password_et.getText().toString().trim();
 
         if (editTextValidations()){ //if 2
-            progressDialog.show();
-            uid_tx = uid_tx + PLAY_EMAIL;
-            mAuth.signInWithEmailAndPassword(uid_tx, password_tx)
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) { //if 3
-                                final FirebaseUser user = mAuth.getCurrentUser();
-                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.child("userProfile").hasChild(user.getUid())){//if 4
-                                            startActivity(new Intent(getActivity(), UserHomePage.class));
+            new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                @Override
+                public void onConnectionSuccess() {
+                    SignIn();
+                }
+                @Override
+                public void onConnectionFail(String msg) {
+                    NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                    noInternetConnectionAlert.DisplayNoInternetConnection();
+                    progressDialog.dismiss();
+                }
+            }).execute();
 
-                                            final String password_key = dataSnapshot.child("PasswordKey")
-                                                    .child(user.getUid()).child("key").getValue(String.class);
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
-                                            editor.putString(FIRST_SCREEN, USER_HOME_PAGE);
-                                            editor1.putString(USER_IDENTITY, "user");
-                                            editor1.putString(USER_UID, uid_tx.substring(0,7));
-                                            editor1.putString(USER_KEY, user.getUid());
-                                            editor1.putString(PASSWORD_KEY, password_key);
-                                            editor.apply();
-                                            editor1.apply();
-                                            getActivity().finish();
-                                            progressDialog.dismiss();
-                                        }
-                                        else {
-                                            new MaterialDialog.Builder(getActivity())
-                                                    .title("Failed")
-                                                    .titleColor(Color.WHITE)
-                                                    .content(uid_tx.substring(0,7)+" is not a User Account.")
-                                                    .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                                    .contentColor(getResources().getColor(R.color.lightCoral))
-                                                    .backgroundColor(getResources().getColor(R.color.black90))
-                                                    .positiveText(R.string.ok)
-                                                    .show();
-                                            mAuth.signOut();
-                                            progressDialog.dismiss();
-                                        }
-                                    } //if 4
+        }//if 2
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+    }
+//    login user
+
+    public void SignIn(){
+        progressDialog.show();
+        uid_tx = uid_tx + PLAY_EMAIL;
+        mAuth.signInWithEmailAndPassword(uid_tx, password_tx)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) { //if 3
+                            final FirebaseUser user = mAuth.getCurrentUser();
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.child("userProfile").hasChild(user.getUid())){//if 4
+                                        startActivity(new Intent(getActivity(), UserHomePage.class));
+
+                                        final String password_key = dataSnapshot.child("PasswordKey")
+                                                .child(user.getUid()).child("key").getValue(String.class);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
+                                        editor.putString(FIRST_SCREEN, USER_HOME_PAGE);
+                                        editor1.putString(USER_IDENTITY, "user");
+                                        editor1.putString(USER_UID, uid_tx.substring(0,7));
+                                        editor1.putString(USER_KEY, user.getUid());
+                                        editor1.putString(PASSWORD_KEY, password_key);
+                                        editor.apply();
+                                        editor1.apply();
+                                        getActivity().finish();
+                                        progressDialog.dismiss();
+                                    }
+                                    else {
                                         new MaterialDialog.Builder(getActivity())
                                                 .title("Failed")
                                                 .titleColor(Color.WHITE)
-                                                .content("Something went wrong. Try Again")
+                                                .content(uid_tx.substring(0,7)+" is not a User Account.")
                                                 .icon(getResources().getDrawable(R.drawable.ic_warning))
                                                 .contentColor(getResources().getColor(R.color.lightCoral))
                                                 .backgroundColor(getResources().getColor(R.color.black90))
@@ -192,29 +195,42 @@ public class UserLogin extends Fragment implements View.OnClickListener {
                                         mAuth.signOut();
                                         progressDialog.dismiss();
                                     }
-                                });
+                                } //if 4
 
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                new MaterialDialog.Builder(getActivity())
-                                        .title("Failed")
-                                        .titleColor(Color.WHITE)
-                                        .content(task.getException().getLocalizedMessage())
-                                        .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                        .contentColor(getResources().getColor(R.color.lightCoral))
-                                        .backgroundColor(getResources().getColor(R.color.black90))
-                                        .positiveText(R.string.ok)
-                                        .show();
-                                progressDialog.dismiss();
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    new MaterialDialog.Builder(getActivity())
+                                            .title("Failed")
+                                            .titleColor(Color.WHITE)
+                                            .content("Something went wrong. Try Again")
+                                            .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                            .contentColor(getResources().getColor(R.color.lightCoral))
+                                            .backgroundColor(getResources().getColor(R.color.black90))
+                                            .positiveText(R.string.ok)
+                                            .show();
+                                    mAuth.signOut();
+                                    progressDialog.dismiss();
+                                }
+                            });
 
-                            }//else
-                        } //if 3
-                    });
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("Failed")
+                                    .titleColor(Color.WHITE)
+                                    .content(task.getException().getLocalizedMessage())
+                                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                    .contentColor(getResources().getColor(R.color.lightCoral))
+                                    .backgroundColor(getResources().getColor(R.color.black90))
+                                    .positiveText(R.string.ok)
+                                    .show();
+                            progressDialog.dismiss();
 
-        }//if 2
-
+                        }//else
+                    } //if 3
+                });
     }
-//    login user
+
 
     //    validations
     public boolean editTextValidations(){

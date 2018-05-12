@@ -127,92 +127,113 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
             password_tx = password_et.getText().toString().trim();
 
             if (editTextValidations()){ //if 2
-                progressDialog.show();
-                userName_tx = userName_tx + PLAY_EMAIL;
-                mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull final Task<AuthResult> task) {
-                                if (task.isSuccessful()) { //if 3
-                                    final FirebaseUser user = mAuth.getCurrentUser();
-                                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.child("AangadiaProfile").hasChild(user.getUid())){//if 4
-                                                final String password_key = dataSnapshot.child("PasswordKey")
-                                                        .child(user.getUid()).child("key").getValue(String.class);
-
-                                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
-                                                editor.putString(FIRST_SCREEN, AANGADIA_HOME_PAGE);
-                                                editor1.putString(USER_IDENTITY, "aangadia");
-                                                editor1.putString(AANGADIA_UID, userName_tx.substring(0,7));
-                                                editor1.putString(AANGADIA_KEY, user.getUid());
-                                                editor1.putString(PASSWORD_KEY, password_key);
-                                                editor1.putInt(FIRST_TIME, 1);
-                                                editor.apply();
-                                                editor1.apply();
-                                                getActivity().finish();
-
-                                                startActivity(new Intent(getActivity(), AangadiaHomePage.class));
-                                                progressDialog.dismiss();
-
-
-                                            }
-                                            else {
-                                                new MaterialDialog.Builder(getActivity())
-                                                        .title("Failed")
-                                                        .titleColor(Color.WHITE)
-                                                        .content(userName_tx.substring(0,7)+" is not a Aangadia Account.")
-                                                        .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                                        .contentColor(getResources().getColor(R.color.lightCoral))
-                                                        .backgroundColor(getResources().getColor(R.color.black90))
-                                                        .positiveText(R.string.ok)
-                                                        .show();
-                                                mAuth.signOut();
-                                                progressDialog.dismiss();
-                                            }
-                                        } //if 4
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-                                            new MaterialDialog.Builder(getActivity())
-                                                    .title("Failed")
-                                                    .titleColor(Color.WHITE)
-                                                    .content("Something went wrong. Try Again")
-                                                    .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                                    .contentColor(getResources().getColor(R.color.lightCoral))
-                                                    .backgroundColor(getResources().getColor(R.color.black90))
-                                                    .positiveText(R.string.ok)
-                                                    .show();
-                                            mAuth.signOut();
-                                            progressDialog.dismiss();
-                                        }
-                                    });
-
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    new MaterialDialog.Builder(getActivity())
-                                            .title("Failed")
-                                            .titleColor(Color.WHITE)
-                                            .content(task.getException().getLocalizedMessage())
-                                            .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                            .contentColor(getResources().getColor(R.color.lightCoral))
-                                            .backgroundColor(getResources().getColor(R.color.black90))
-                                            .positiveText(R.string.ok)
-                                            .show();
-                                    progressDialog.dismiss();
-
-                                }//else
-                            } //if 3
-                        });
+                new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        SignIn();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
 
             }//if 2
         }//main if
     }//onclick
 
 
-//    validations
+    //    sign in
+    protected void SignIn(){
+        progressDialog.show();
+        userName_tx = userName_tx + PLAY_EMAIL;
+        mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<AuthResult> task) {
+                        if (task.isSuccessful()) { //if 3
+                            final FirebaseUser user = mAuth.getCurrentUser();
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.child("AangadiaProfile").hasChild(user.getUid())){//if 4
+                                        final String password_key = dataSnapshot.child("PasswordKey")
+                                                .child(user.getUid()).child("key").getValue(String.class);
+
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        SharedPreferences.Editor editor1 = userIdentifierSharedPreferences.edit();
+                                        editor.putString(FIRST_SCREEN, AANGADIA_HOME_PAGE);
+                                        editor1.putString(USER_IDENTITY, "aangadia");
+                                        editor1.putString(AANGADIA_UID, userName_tx.substring(0,7));
+                                        editor1.putString(AANGADIA_KEY, user.getUid());
+                                        editor1.putString(PASSWORD_KEY, password_key);
+                                        editor1.putInt(FIRST_TIME, 1);
+                                        editor.apply();
+                                        editor1.apply();
+                                        getActivity().finish();
+
+                                        startActivity(new Intent(getActivity(), AangadiaHomePage.class));
+                                        progressDialog.dismiss();
+
+
+                                    }
+                                    else {
+                                        new MaterialDialog.Builder(getActivity())
+                                                .title("Failed")
+                                                .titleColor(Color.WHITE)
+                                                .content(userName_tx.substring(0,7)+" is not a Aangadia Account.")
+                                                .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                                .contentColor(getResources().getColor(R.color.lightCoral))
+                                                .backgroundColor(getResources().getColor(R.color.black90))
+                                                .positiveText(R.string.ok)
+                                                .show();
+                                        mAuth.signOut();
+                                        progressDialog.dismiss();
+                                    }
+                                } //if 4
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    new MaterialDialog.Builder(getActivity())
+                                            .title("Failed")
+                                            .titleColor(Color.WHITE)
+                                            .content("Something went wrong. Try Again")
+                                            .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                            .contentColor(getResources().getColor(R.color.lightCoral))
+                                            .backgroundColor(getResources().getColor(R.color.black90))
+                                            .positiveText(R.string.ok)
+                                            .show();
+                                    mAuth.signOut();
+                                    progressDialog.dismiss();
+                                }
+                            });
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("Failed")
+                                    .titleColor(Color.WHITE)
+                                    .content(task.getException().getLocalizedMessage())
+                                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                    .contentColor(getResources().getColor(R.color.lightCoral))
+                                    .backgroundColor(getResources().getColor(R.color.black90))
+                                    .positiveText(R.string.ok)
+                                    .show();
+                            progressDialog.dismiss();
+
+                        }//else
+                    } //if 3
+                });
+
+    }
+//    sign in
+
+
+
+
+    //    validations
     public boolean editTextValidations(){
         try {
             if(userName_tx.length() != 7){
@@ -243,7 +264,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
             return true;
         }
         catch (NullPointerException | ActivityNotFoundException e){
-            e.printStackTrace();
+//           exception
         }
         return true;
     }// editTextValidations end

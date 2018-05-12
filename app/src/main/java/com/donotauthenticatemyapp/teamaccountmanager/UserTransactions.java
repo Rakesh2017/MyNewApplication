@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -148,20 +149,59 @@ public class UserTransactions extends Fragment {
     public void onStart(){
         super.onStart();
 
-        String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-        if (TextUtils.equals(identity, "aangadia") || TextUtils.equals(identity, "admin")){
-            setUIDAndUserNameForAangaisaAndAdmin();
-            setBalanceForAangadiaAndAdmin();
-            ListLengthAdminAndAangadia();
-            LoadTransactionsForAangadiaAndAdmin();
-        }
-        else if (TextUtils.equals(identity, "user")){
-            setUIDAndUserNameForUser();
-            setBalanceForUser();
-            ListLengthUser();
-            LoadTransactionForUser();
-            userName_tv.setVisibility(View.GONE);
-        }
+        new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
+                if (TextUtils.equals(identity, "aangadia") || TextUtils.equals(identity, "admin")){
+                    setUIDAndUserNameForAangaisaAndAdmin();
+                    setBalanceForAangadiaAndAdmin();
+                    ListLengthAdminAndAangadia();
+                    LoadTransactionsForAangadiaAndAdmin();
+                }
+                else if (TextUtils.equals(identity, "user")){
+                    setUIDAndUserNameForUser();
+                    setBalanceForUser();
+                    ListLengthUser();
+                    LoadTransactionForUser();
+                    userName_tv.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onConnectionFail(String msg) {
+                progressDialog.dismiss();
+                try {
+                    new MaterialDialog.Builder(getActivity())
+                            .title("No Internet Access!")
+                            .titleColor(Color.BLACK)
+                            .content("No internet connectivity detected. Please make sure you have working internet connection and try again.")
+                            .icon(getResources().getDrawable(R.drawable.ic_no_internet_connection))
+                            .contentColor(getResources().getColor(R.color.black))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveColor(getResources().getColor(R.color.green))
+                            .negativeText("Cancel")
+                            .negativeColor(getResources().getColor(R.color.red))
+                            .positiveText("Try Again!")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    onStart();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .cancelable(false)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).execute();
 
     }
     //    onStart

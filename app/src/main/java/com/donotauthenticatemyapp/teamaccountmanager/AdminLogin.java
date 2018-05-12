@@ -125,93 +125,110 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
             userName_tx = userName_et.getText().toString().trim();
             password_tx = password_et.getText().toString().trim();
             if (editTextValidations()){ //if 2
+                new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+                    @Override
+                    public void onConnectionSuccess() {
+                        SignIn();
+                    }
+                    @Override
+                    public void onConnectionFail(String msg) {
+                        NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
+                        noInternetConnectionAlert.DisplayNoInternetConnection();
+                        progressDialog.dismiss();
+                    }
+                }).execute();
 
-                progressDialog.show();
-//                Signing in
-                mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    progressDialog.dismiss();
-
-                                    new MaterialDialog.Builder(getActivity())
-                                        .title(R.string.masterKey)
-                                        .content("You have successfully Logged in. Now You need to enter master key to use owner account")
-                                        .contentColorRes(R.color.appColor)
-                                        .titleColor(getResources().getColor(R.color.white))
-                                        .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                                        .positiveText("Confirm")
-                                        .positiveColorRes(R.color.googleGreen)
-                                        .negativeText("Cancel")
-                                        .negativeColorRes(R.color.googleRed)
-                                        .backgroundColor(getResources().getColor(R.color.black90))
-                                        .icon(getResources().getDrawable(R.drawable.ic_password))
-                                        .inputRange(8, 8, getResources().getColor(R.color.lightCoral))
-                                        .input("8 digit master key", "", new MaterialDialog.InputCallback() {
-                                            @Override
-                                            public void onInput(MaterialDialog dialog, final CharSequence input) {
-                                                progressDialog.show();
-//                                                matching master key
-                                                databaseReference
-                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                String masterKey = dataSnapshot.child("security").child("masterKey").getValue(String.class);
-                                                                if (TextUtils.equals(masterKey, input)){
-//check whether is really admin email
-                                                                    String isAdmin = dataSnapshot.child("adminProfile").child("email").getValue(String.class);
-                                                                    if (TextUtils.equals(isAdmin, userName_tx)){
-                                                                        startActivity(new Intent(getActivity(), AdminHomePage.class));
-                                                                        progressDialog.dismiss();
-//                                                                    shared preference
-                                                                        settingSharedPrefForLandingPageHandling();
-                                                                        getActivity().finish();
-                                                                    }
-                                                                    else {
-                                                                        suspiciousActivityMessage();
-                                                                        progressDialog.dismiss();
-
-                                                                    } // admin email check ends
-
-                                                                }
-                                                                else {
-                                                                    incorrectMasterKeyMessage();
-                                                                    progressDialog.dismiss();
-
-                                                                }//master key check ends
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-                                                                progressDialog.dismiss();
-
-                                                            }
-                                                        });
-
-                                            }
-                                        }).show();
-
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    try {
-                                       authenticationFailedMessage();
-                                        progressDialog.dismiss();
-
-                                    }
-                                    catch (NullPointerException | ActivityNotFoundException e){
-                                        e.printStackTrace();
-                                        progressDialog.dismiss();
-
-                                    }
-                                }//try
-
-                            }
-                        });//sign in
             }// if 2
         }//if 1
 
     }// onclick ends
+
+//    sign in
+    public void SignIn(){
+        progressDialog.show();
+//                Signing in
+        mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            progressDialog.dismiss();
+
+                            new MaterialDialog.Builder(getActivity())
+                                    .title(R.string.masterKey)
+                                    .content("You have successfully Logged in. Now You need to enter master key to use owner account")
+                                    .contentColorRes(R.color.appColor)
+                                    .titleColor(getResources().getColor(R.color.white))
+                                    .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                                    .positiveText("Confirm")
+                                    .positiveColorRes(R.color.googleGreen)
+                                    .negativeText("Cancel")
+                                    .negativeColorRes(R.color.googleRed)
+                                    .backgroundColor(getResources().getColor(R.color.black90))
+                                    .icon(getResources().getDrawable(R.drawable.ic_password))
+                                    .inputRange(8, 8, getResources().getColor(R.color.lightCoral))
+                                    .input("8 digit master key", "", new MaterialDialog.InputCallback() {
+                                        @Override
+                                        public void onInput(MaterialDialog dialog, final CharSequence input) {
+                                            progressDialog.show();
+//                                                matching master key
+                                            databaseReference
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            String masterKey = dataSnapshot.child("security").child("masterKey").getValue(String.class);
+                                                            if (TextUtils.equals(masterKey, input)){
+//check whether is really admin email
+                                                                String isAdmin = dataSnapshot.child("adminProfile").child("email").getValue(String.class);
+                                                                if (TextUtils.equals(isAdmin, userName_tx)){
+                                                                    startActivity(new Intent(getActivity(), AdminHomePage.class));
+                                                                    progressDialog.dismiss();
+//                                                                    shared preference
+                                                                    settingSharedPrefForLandingPageHandling();
+                                                                    getActivity().finish();
+                                                                }
+                                                                else {
+                                                                    suspiciousActivityMessage();
+                                                                    progressDialog.dismiss();
+
+                                                                } // admin email check ends
+
+                                                            }
+                                                            else {
+                                                                incorrectMasterKeyMessage();
+                                                                progressDialog.dismiss();
+
+                                                            }//master key check ends
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+                                                            progressDialog.dismiss();
+
+                                                        }
+                                                    });
+
+                                        }
+                                    }).show();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            try {
+                                authenticationFailedMessage();
+                                progressDialog.dismiss();
+
+                            }
+                            catch (NullPointerException | ActivityNotFoundException e){
+                                e.printStackTrace();
+                                progressDialog.dismiss();
+
+                            }
+                        }//try
+
+                    }
+                });//sign in
+    }
+
 
 //    setting shared login pref
     public void settingSharedPrefForLandingPageHandling(){
@@ -269,50 +286,70 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
 
 //    display message is another account is being used
     public void suspiciousActivityMessage(){
-        new MaterialDialog.Builder(getActivity())
-                .title("Suspicious Activity!")
-                .titleColor(Color.WHITE)
-                .content("This is not a Admin UserName.")
-                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                .contentColor(getResources().getColor(R.color.lightCoral))
-                .backgroundColor(getResources().getColor(R.color.black90))
-                .positiveText(R.string.ok)
-                .show();
+        try {
+            new MaterialDialog.Builder(getActivity())
+                    .title("Suspicious Activity!")
+                    .titleColor(Color.WHITE)
+                    .content("This is not a Admin UserName.")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (NullPointerException | ActivityNotFoundException e){
+//            exception
+        }
+
     }
     //    display message is another account is being used
 
 //    if wrong master key is entered
     public void incorrectMasterKeyMessage(){
-        new MaterialDialog.Builder(getActivity())
-                .title("Incorrect Master Key")
-                .titleColor(Color.WHITE)
-                .content("Either your entered master key is incorrect or it can be old one.")
-                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                .contentColor(getResources().getColor(R.color.lightCoral))
-                .backgroundColor(getResources().getColor(R.color.black90))
-                .positiveText(R.string.ok)
-                .show();
+        try {
+            new MaterialDialog.Builder(getActivity())
+                    .title("Incorrect Master Key")
+                    .titleColor(Color.WHITE)
+                    .content("Either your entered master key is incorrect or it can be old one.")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (NullPointerException | ActivityNotFoundException e){
+//            exception
+        }
+
     }
 //    if wrong master key is entered
 
     //    authentication failed
     public void authenticationFailedMessage(){
-        new MaterialDialog.Builder(getActivity())
-                .title("Authentication Failed!")
-                .titleColor(Color.BLACK)
-                .content("Either UserName or Password is incorrect")
-                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                .contentColor(getResources().getColor(R.color.lightCoral))
-                .backgroundColor(getResources().getColor(R.color.white))
-                .positiveText(R.string.ok)
-                .show();
+        try {
+            new MaterialDialog.Builder(getActivity())
+                    .title("Authentication Failed!")
+                    .titleColor(Color.BLACK)
+                    .content("Either UserName or Password is incorrect")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.white))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (NullPointerException | ActivityNotFoundException e){
+//            exception
+        }
+
     }
     //    authentication failed
 
+//    onDestroy
     public void onDestroy(){
         super.onDestroy();
         if (progressDialog.isShowing()) progressDialog.dismiss();
     }
+    //    onDestroy
 
 //    ends
 }

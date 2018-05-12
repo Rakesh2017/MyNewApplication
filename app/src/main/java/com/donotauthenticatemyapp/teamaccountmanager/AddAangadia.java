@@ -305,7 +305,8 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
 //        create aangadia
 
     public boolean EditTextValidations(){
-         if (userName_tx.isEmpty()){
+        try {
+            if (userName_tx.isEmpty()){
                 new MaterialDialog.Builder(getActivity())
                         .title("Invalid UserName")
                         .titleColor(Color.WHITE)
@@ -331,31 +332,38 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                     return false;
                 }
             }
-       else if (password_tx.length() < 8){
-            new MaterialDialog.Builder(getActivity())
-                    .title("Invalid Password")
-                    .titleColor(Color.WHITE)
-                    .content("Length of Password should be at least of length 8.")
-                    .icon(getResources().getDrawable(R.drawable.ic_warning))
-                    .contentColor(getResources().getColor(R.color.lightCoral))
-                    .backgroundColor(getResources().getColor(R.color.black90))
-                    .positiveText(R.string.ok)
-                    .show();
+            else if (password_tx.length() < 8){
+                new MaterialDialog.Builder(getActivity())
+                        .title("Invalid Password")
+                        .titleColor(Color.WHITE)
+                        .content("Length of Password should be at least of length 8.")
+                        .icon(getResources().getDrawable(R.drawable.ic_warning))
+                        .contentColor(getResources().getColor(R.color.lightCoral))
+                        .backgroundColor(getResources().getColor(R.color.black90))
+                        .positiveText(R.string.ok)
+                        .show();
+                return false;
+            }
+
+            else if(TextUtils.isEmpty(answer_tx)){
+                new MaterialDialog.Builder(getActivity())
+                        .title("Invalid Answer")
+                        .titleColor(Color.WHITE)
+                        .content("For Security purpose you have to answer one of the above questions.")
+                        .icon(getResources().getDrawable(R.drawable.ic_warning))
+                        .contentColor(getResources().getColor(R.color.lightCoral))
+                        .backgroundColor(getResources().getColor(R.color.black90))
+                        .positiveText(R.string.ok)
+                        .show();
+                return false;
+            }
+
+        }
+        catch (Exception e){
+//            exception
             return false;
         }
 
-        else if(TextUtils.isEmpty(answer_tx)){
-            new MaterialDialog.Builder(getActivity())
-                    .title("Invalid Answer")
-                    .titleColor(Color.WHITE)
-                    .content("For Security purpose you have to answer one of the above questions.")
-                    .icon(getResources().getDrawable(R.drawable.ic_warning))
-                    .contentColor(getResources().getColor(R.color.lightCoral))
-                    .backgroundColor(getResources().getColor(R.color.black90))
-                    .positiveText(R.string.ok)
-                    .show();
-            return false;
-        }
             return true;
     }
 

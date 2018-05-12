@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:15.0.0'
     implementation 'commons-net:commons-net:3.3' //server time
     implementation 'com.android.support:cardview-v7:27.1.1' //card view
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10' //gif loader
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

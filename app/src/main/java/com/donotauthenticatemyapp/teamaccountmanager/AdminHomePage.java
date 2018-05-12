@@ -30,6 +30,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import mehdi.sakout.fancybuttons.FancyButton;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
 
@@ -49,6 +51,8 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     FirebaseAuth mAuth;
     ProgressDialog progressDialog;
 
+    GifImageView loadingGIf;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,8 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         allUsers_btn = findViewById(R.id.adh_allUsersButton);
         submitCommission_btn = findViewById(R.id.adh_submitCommissionBtn);
         adminBalance_btn = findViewById(R.id.adh_adminAccountButton);
+
+        loadingGIf = findViewById(R.id.aap_loadingGif);
 
         logout_ib = findViewById(R.id.adh_logoutButton);
 
@@ -85,11 +91,55 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
 
     public void onStart(){
         super.onStart();
-        setAdminBalance();
-        TotalAangadias();
-        TotalUsers();
-        SetCommission();
-        setTotalAangadiaTransactions();
+
+        loadingGIf.setVisibility(View.VISIBLE);
+        new CheckNetworkConnection(AdminHomePage.this, new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                setAdminBalance();
+                TotalAangadias();
+                TotalUsers();
+                SetCommission();
+                setTotalAangadiaTransactions();
+                loadingGIf.setVisibility(View.GONE);
+            }
+            @Override
+            public void onConnectionFail(String msg) {
+                loadingGIf.setVisibility(View.GONE);
+                try {
+                    new MaterialDialog.Builder(AdminHomePage.this)
+                            .title("No Internet Access!")
+                            .titleColor(Color.BLACK)
+                            .content("No internet connectivity detected. Please make sure you have working internet connection and try again.")
+                            .icon(getResources().getDrawable(R.drawable.ic_no_internet_connection))
+                            .contentColor(getResources().getColor(R.color.black))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveColor(getResources().getColor(R.color.green))
+                            .negativeText("Cancel")
+                            .negativeColor(getResources().getColor(R.color.red))
+                            .positiveText("Try Again!")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    onStart();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .cancelable(false)
+                            .show();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }).execute();
+
     }
 
     private void setTotalAangadiaTransactions() {

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -92,6 +93,17 @@ public class TransactionDetails extends Fragment {
         transactionSharedPreferences = getActivity().getSharedPreferences(transactionPref, Context.MODE_PRIVATE);
         LoadAnimation();
         setData();
+        new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+
+            }
+            @Override
+            public void onConnectionFail(String msg) {
+                Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            }
+        }).execute();
+
 
     }
 

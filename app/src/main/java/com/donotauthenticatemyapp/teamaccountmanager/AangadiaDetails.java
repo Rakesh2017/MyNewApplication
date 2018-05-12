@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -212,36 +213,66 @@ public class AangadiaDetails extends AppCompatActivity implements View.OnClickLi
 
 //                change password
             case R.id.ad_editPasswordButton:
-                if (TextUtils.isEmpty(password_tx) || TextUtils.isEmpty(uid_tx) ){
-                    Toast.makeText(this, "something went wrong!", Toast.LENGTH_SHORT).show();
+
+                try{
+                    if (TextUtils.isEmpty(password_tx) || TextUtils.isEmpty(uid_tx) ){
+                        Toast.makeText(this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                    }
+                    else getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePassword()).addToBackStack("changePassword").commit();
+
                 }
-                else getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePassword()).addToBackStack("changePassword").commit();
+                catch (IllegalStateException e){
+//                    exception
+                }
                 break;
 //                changing name
             case R.id.ad_editNameButton:
-                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangeName()).addToBackStack("changeName").commit();
+                try{
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangeName()).addToBackStack("changeName").commit();
+
+                }
+                catch (IllegalStateException e){
+//                    exception
+                }
                  break;
 
 //                 changing phone
             case R.id.ad_editPhoneButton:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePhone()).addToBackStack("changePhone").commit();
+                try{
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new ChangePhone()).addToBackStack("changePhone").commit();
+
+                }
+                catch (IllegalStateException e){
+//                    exception
+                }
                 break;
 
 //                home button
             case R.id.ad_homeButton:
-                startActivity(new Intent(this, AdminHomePage.class));
-                this.finish();
+                try{
+                    startActivity(new Intent(this, AdminHomePage.class));
+                    this.finish();
+                }
+                catch (IllegalStateException | ActivityNotFoundException e){
+//                    exception
+                }
+
                 break;
 //                aangadia accounts
             case R.id.ad_transaction:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new AangadiaAccount()).addToBackStack("aangadiaAccount").commit();
+                try{
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_details, new AangadiaAccount()).addToBackStack("aangadiaAccount").commit();
+
+                }
+                catch (IllegalStateException e){
+//                    exception
+                }
                 break;
 
         }
 
     }
 //    onClick
-
 
     //end
 }

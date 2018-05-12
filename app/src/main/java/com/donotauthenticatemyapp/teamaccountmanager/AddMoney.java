@@ -211,31 +211,36 @@ public class AddMoney extends Fragment implements View.OnClickListener {
     }//onclick ends
 
     public boolean MoneyValidation(){
-        if (TextUtils.isEmpty(money_tx)){
-            new MaterialDialog.Builder(getActivity())
-                    .title("Failed")
-                    .titleColor(Color.WHITE)
-                    .content("Please Enter Amount")
-                    .icon(getResources().getDrawable(R.drawable.ic_warning))
-                    .contentColor(getResources().getColor(R.color.lightCoral))
-                    .backgroundColor(getResources().getColor(R.color.black90))
-                    .positiveText(R.string.ok)
-                    .show();
-            return false;
+        try {
+            if (TextUtils.isEmpty(money_tx)){
+                new MaterialDialog.Builder(getActivity())
+                        .title("Failed")
+                        .titleColor(Color.WHITE)
+                        .content("Please Enter Amount")
+                        .icon(getResources().getDrawable(R.drawable.ic_warning))
+                        .contentColor(getResources().getColor(R.color.lightCoral))
+                        .backgroundColor(getResources().getColor(R.color.black90))
+                        .positiveText(R.string.ok)
+                        .show();
+                return false;
+            }
+            else if (Integer.parseInt(money_tx) < 1){
+                new MaterialDialog.Builder(getActivity())
+                        .title("Failed")
+                        .titleColor(Color.WHITE)
+                        .content("Please Enter Amount")
+                        .icon(getResources().getDrawable(R.drawable.ic_warning))
+                        .contentColor(getResources().getColor(R.color.lightCoral))
+                        .backgroundColor(getResources().getColor(R.color.black90))
+                        .positiveText(R.string.ok)
+                        .show();
+                return false;
+            }
         }
-        else if (Integer.parseInt(money_tx) < 1){
-            new MaterialDialog.Builder(getActivity())
-                    .title("Failed")
-                    .titleColor(Color.WHITE)
-                    .content("Please Enter Amount")
-                    .icon(getResources().getDrawable(R.drawable.ic_warning))
-                    .contentColor(getResources().getColor(R.color.lightCoral))
-                    .backgroundColor(getResources().getColor(R.color.black90))
-                    .positiveText(R.string.ok)
-                    .show();
+        catch (Exception e){
             return false;
+//            exception
         }
-
         return true;
     }
 
@@ -368,7 +373,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                                 .title("Transaction Successful")
                                 .titleColor(Color.BLACK)
                                 .content("Rs "+money_tx +"/- is credited to Account with " +
-                                        "\nUID: "+uid_tx)
+                                        "UID: "+uid_tx)
                                 .icon(getResources().getDrawable(R.drawable.ic_success))
                                 .contentColor(getResources().getColor(R.color.black))
                                 .backgroundColor(getResources().getColor(R.color.white))
@@ -446,15 +451,22 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         progressDialog.dismiss();
-                        new MaterialDialog.Builder(getActivity())
-                                .title("Failed")
-                                .titleColor(Color.BLACK)
-                                .content(databaseError.toString())
-                                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                                .contentColor(getResources().getColor(R.color.lightCoral))
-                                .backgroundColor(getResources().getColor(R.color.white))
-                                .positiveText(R.string.ok)
-                                .show();
+                        try {
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("Failed")
+                                    .titleColor(Color.BLACK)
+                                    .content(databaseError.toString())
+                                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                                    .contentColor(getResources().getColor(R.color.lightCoral))
+                                    .backgroundColor(getResources().getColor(R.color.white))
+                                    .positiveText(R.string.ok)
+                                    .show();
+                        }
+                        catch (Exception e){
+//            exception
+                        }
+
+
                     }
                 });
     }

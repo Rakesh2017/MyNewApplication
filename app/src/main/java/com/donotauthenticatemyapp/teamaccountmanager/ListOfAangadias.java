@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -76,11 +77,54 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         search_btn.setOnClickListener(this);
         reset_btn.setOnClickListener(this);
 
-        LoadData();
+        new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                LoadData();
+            }
 
-      //  String str = "1133596";
-       /// String findStr = "33";
-       // Log.w("raky", String.valueOf(str.split(findStr, -1).length-1));
+            @Override
+            public void onConnectionFail(String msg) {
+                try {
+                    new MaterialDialog.Builder(ListOfAangadias.this)
+                            .title("No Internet Access!")
+                            .titleColor(Color.BLACK)
+                            .content("No internet connectivity detected. Please make sure you have working internet connection and try again.")
+                            .icon(getResources().getDrawable(R.drawable.ic_no_internet_connection))
+                            .contentColor(getResources().getColor(R.color.black))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveColor(getResources().getColor(R.color.green))
+                            .negativeText("Cancel")
+                            .negativeColor(getResources().getColor(R.color.red))
+                            .positiveText("Try Again!")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    LoadData();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .cancelable(false)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).execute();
+    }
+
+//    onStart
+    public void onStart(){
+        super.onStart();
+
+
+
     }
 
     @Override
@@ -95,6 +139,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
             uid_tx = uid_et.getText().toString().trim();
             name_tx = name_et.getText().toString().trim();
             if (TextUtils.isEmpty(uid_tx) && TextUtils.isEmpty(name_tx)){ //if1
+                //progressDialog.show();
                 new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
                     @Override
                     public void onConnectionSuccess() {
@@ -318,28 +363,40 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
     }
 
     public void enterEitherUidOrName(){
-        new MaterialDialog.Builder(ListOfAangadias.this)
-                .title("Empty Search...")
-                .titleColor(Color.WHITE)
-                .content("Provide either uid or name or both")
-                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                .contentColor(getResources().getColor(R.color.lightCoral))
-                .backgroundColor(getResources().getColor(R.color.black90))
-                .positiveText(R.string.ok)
-                .show();
+        try{
+            new MaterialDialog.Builder(ListOfAangadias.this)
+                    .title("Empty Search...")
+                    .titleColor(Color.WHITE)
+                    .content("Provide either uid or name or both")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.lightCoral))
+                    .backgroundColor(getResources().getColor(R.color.black90))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (Exception e){
+//            exception
+        }
+
     }
 
 //    show empty page
     public void showEmptyPage(){
-        new MaterialDialog.Builder(ListOfAangadias.this)
-                .title("Empty!")
-                .titleColor(Color.BLACK)
-                .content("No Data Available")
-                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                .contentColor(getResources().getColor(R.color.black))
-                .backgroundColor(getResources().getColor(R.color.white))
-                .positiveText(R.string.ok)
-                .show();
+        try{
+            new MaterialDialog.Builder(ListOfAangadias.this)
+                    .title("Empty!")
+                    .titleColor(Color.BLACK)
+                    .content("No Data Available")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.black))
+                    .backgroundColor(getResources().getColor(R.color.white))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (Exception e){
+//            exception
+        }
+
     }
     //end
 

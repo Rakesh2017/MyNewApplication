@@ -35,17 +35,6 @@
             android:textStyle="bold"
             />
 
-        <ImageButton
-            android:id="@+id/rva_nextButton"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:background="@drawable/ic_next"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/rva_dateTextView"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="@dimen/activity_vertical_margin"
-            />
-
         <!--money added-->
         <TextView
             android:id="@+id/rva_balanceCredited"

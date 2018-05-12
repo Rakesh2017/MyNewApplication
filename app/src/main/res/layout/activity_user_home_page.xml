@@ -118,6 +118,19 @@
         android:layout_alignParentBottom="true"
         tools:ignore="ContentDescription,RelativeOverlap" />
 
+        <!--loading-->
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/auh_loadingGif"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/loading_gif"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_toStartOf="@+id/auh_logoutButton"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:visibility="gone"
+            />
+
 
         <TextView
             android:id="@+id/auh_numberToEnglishTextView"

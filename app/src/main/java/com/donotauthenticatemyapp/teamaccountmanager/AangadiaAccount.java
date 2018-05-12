@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,7 +62,7 @@ public class AangadiaAccount extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_aangadia_account, container, false);
@@ -345,18 +346,23 @@ public class AangadiaAccount extends Fragment {
 
     //    show empty page
     public void showEmptyPage(){
-        new MaterialDialog.Builder(getContext())
-                .title("Empty!")
-                .titleColor(Color.BLACK)
-                .content("Aangadia have not made any transaction yet.")
-                .icon(getResources().getDrawable(R.drawable.ic_warning))
-                .contentColor(getResources().getColor(R.color.black))
-                .backgroundColor(getResources().getColor(R.color.white))
-                .positiveText(R.string.ok)
-                .show();
+        try {
+            new MaterialDialog.Builder(getContext())
+                    .title("Empty!")
+                    .titleColor(Color.BLACK)
+                    .content("Aangadia have not made any transaction yet.")
+                    .icon(getResources().getDrawable(R.drawable.ic_warning))
+                    .contentColor(getResources().getColor(R.color.black))
+                    .backgroundColor(getResources().getColor(R.color.white))
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+        catch (Exception e){
+//            exception
+        }
+
     }
     //end
-
 
 //end
 }

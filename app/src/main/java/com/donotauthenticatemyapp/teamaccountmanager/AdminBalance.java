@@ -150,6 +150,7 @@ public class AdminBalance extends Fragment {
                             String formatted_balance = formatter.format(Long.parseLong(balance));
                             balance_tv.setText(formatted_balance);
                         }
+                        else balance_tv.setText("0.0");
                     }
 
                     @Override
