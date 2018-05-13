@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -81,6 +82,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void onStart() {
         super.onStart();
 
@@ -130,7 +132,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                             .cancelable(false)
                             .show();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    loadingGIf.setVisibility(View.GONE);
                 }
 
             }

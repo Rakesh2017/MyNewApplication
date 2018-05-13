@@ -134,6 +134,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                             .show();
                 }
                 catch (Exception e){
+                    loadingGIf.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
 

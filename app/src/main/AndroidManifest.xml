@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,11 +18,6 @@
         <activity
             android:name=".Login"
             android:windowSoftInputMode="adjustPan|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".AdminHomePage"
@@ -34,21 +28,28 @@
         <activity
             android:name=".ListOfAangadias"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".AangadiaDetails"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
+        <activity
+            android:name=".AangadiaDetails"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ListOfUsersForAdmin"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".UserDetails"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
+        <activity
+            android:name=".UserDetails"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ListOfUsersForAangadia"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".UserHomePage"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
+        <activity
+            android:name=".UserHomePage"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

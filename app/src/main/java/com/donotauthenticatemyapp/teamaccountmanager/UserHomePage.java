@@ -206,7 +206,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                             .cancelable(false)
                             .show();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    loadingGIf.setVisibility(View.GONE);
                 }
 
             }

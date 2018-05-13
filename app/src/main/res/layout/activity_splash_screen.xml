@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColor"
+    android:id="@+id/splashRelative"
+    tools:context=".SplashScreen">
+    
+    <ImageView
+        android:id="@+id/splashImage"
+        android:layout_width="132dp"
+        android:layout_height="132dp"
+        android:background="@drawable/ic_manager"
+        android:layout_centerInParent="true"
+        android:tint="@color/black90"
+        tools:ignore="ContentDescription" />
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/splashText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aangadia_account_manager"
+        style="@style/MyCustomTextStyleLarge"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="ubuntu.tff"
+        android:layout_below="@+id/splashImage"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>
