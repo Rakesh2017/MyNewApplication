@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import mehdi.sakout.fancybuttons.FancyButton;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -83,7 +85,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
         parentRelativeLayout = view.findViewById(R.id.lw_parentRelativeLayout);
 
 //        landing page shared pref
-        sharedPreferences = getActivity().getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
         userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
         progressDialog = new ProgressDialog(getContext());
@@ -127,6 +129,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
             password_tx = password_et.getText().toString().trim();
 
             if (editTextValidations()){ //if 2
+                progressDialog.show();
                 new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
                     @Override
                     public void onConnectionSuccess() {
@@ -150,7 +153,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
         progressDialog.show();
         userName_tx = userName_tx + PLAY_EMAIL;
         mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull final Task<AuthResult> task) {
                         if (task.isSuccessful()) { //if 3
@@ -215,7 +218,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                             new MaterialDialog.Builder(getActivity())
                                     .title("Failed")
                                     .titleColor(Color.WHITE)
-                                    .content(task.getException().getLocalizedMessage())
+                                    .content(Objects.requireNonNull(task.getException()).getLocalizedMessage())
                                     .icon(getResources().getDrawable(R.drawable.ic_warning))
                                     .contentColor(getResources().getColor(R.color.lightCoral))
                                     .backgroundColor(getResources().getColor(R.color.black90))
@@ -228,16 +231,13 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                 });
 
     }
-//    sign in
-
-
-
+    //   sign in
 
     //    validations
     public boolean editTextValidations(){
         try {
             if(userName_tx.length() != 7){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Invalid UID")
                         .titleColor(Color.WHITE)
                         .content("UID is 7 in length")
@@ -250,7 +250,7 @@ public class AangadiaLogin extends Fragment implements View.OnClickListener{
                 return false;
             }
             else if (TextUtils.isEmpty(password_tx)){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Invalid Password")
                         .titleColor(Color.WHITE)
                         .content("Password can't be empty. Please enter your password.")

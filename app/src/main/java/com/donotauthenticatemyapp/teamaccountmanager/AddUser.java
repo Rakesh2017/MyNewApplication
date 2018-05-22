@@ -20,7 +20,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
@@ -241,7 +240,7 @@ public class AddUser extends Fragment implements View.OnClickListener {
                         .positiveText(R.string.ok)
                         .show();
             }
-            else CreateAangadia();
+            else CreateUser();
 
         }
     }
@@ -249,7 +248,7 @@ public class AddUser extends Fragment implements View.OnClickListener {
 
 
     //    create aangadia
-    public void CreateAangadia(){
+    public void CreateUser(){
 
         progressDialog.show();
 
@@ -544,13 +543,11 @@ public void CreatingFirebaseAuthInstance(){
 
         @Override
         protected String doInBackground(Void... voids) {
-            int count = 0;
             Date dateTime = null;
             NTPUDPClient timeClient = new NTPUDPClient();
             timeClient.setDefaultTimeout(1000);
             for (int retries = 7; retries >= 0; retries--) { // for
                 try {
-                    count++;
                     InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
                     TimeInfo timeInfo = timeClient.getTime(inetAddress);
                     long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time

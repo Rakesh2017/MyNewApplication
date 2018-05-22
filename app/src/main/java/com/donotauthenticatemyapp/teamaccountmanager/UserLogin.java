@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import mehdi.sakout.fancybuttons.FancyButton;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -73,7 +75,7 @@ public class UserLogin extends Fragment implements View.OnClickListener {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_user_login, container, false);
@@ -92,7 +94,7 @@ public class UserLogin extends Fragment implements View.OnClickListener {
         progressDialog.setMessage("Logging in...");
 
         //        landing page shared pref
-        sharedPreferences = getActivity().getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANDING_ACTIVITY, MODE_PRIVATE);
         userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
         submit_btn.setOnClickListener(this);
@@ -134,7 +136,9 @@ public class UserLogin extends Fragment implements View.OnClickListener {
         uid_tx = uid_et.getText().toString().trim();
         password_tx = password_et.getText().toString().trim();
 
+
         if (editTextValidations()){ //if 2
+            progressDialog.show();
             new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
                 @Override
                 public void onConnectionSuccess() {
@@ -157,7 +161,7 @@ public class UserLogin extends Fragment implements View.OnClickListener {
         progressDialog.show();
         uid_tx = uid_tx + PLAY_EMAIL;
         mAuth.signInWithEmailAndPassword(uid_tx, password_tx)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) { //if 3
@@ -218,7 +222,7 @@ public class UserLogin extends Fragment implements View.OnClickListener {
                             new MaterialDialog.Builder(getActivity())
                                     .title("Failed")
                                     .titleColor(Color.WHITE)
-                                    .content(task.getException().getLocalizedMessage())
+                                    .content(Objects.requireNonNull(task.getException()).getLocalizedMessage())
                                     .icon(getResources().getDrawable(R.drawable.ic_warning))
                                     .contentColor(getResources().getColor(R.color.lightCoral))
                                     .backgroundColor(getResources().getColor(R.color.black90))
@@ -236,7 +240,7 @@ public class UserLogin extends Fragment implements View.OnClickListener {
     public boolean editTextValidations(){
         try {
             if(uid_tx.length() != 7){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Invalid UID")
                         .titleColor(Color.WHITE)
                         .content("UID is 7 in length")
@@ -249,7 +253,7 @@ public class UserLogin extends Fragment implements View.OnClickListener {
                 return false;
             }
             else if (TextUtils.isEmpty(password_tx)){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Invalid Password")
                         .titleColor(Color.WHITE)
                         .content("Password can't be empty. Please enter your password.")

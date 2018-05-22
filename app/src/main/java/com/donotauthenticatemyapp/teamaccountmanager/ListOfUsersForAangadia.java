@@ -97,15 +97,22 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
         userIdentifierSharedPreferences = getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
         aangadiaUID_tx = userIdentifierSharedPreferences.getString(AANGADIA_UID, "");
 
+       checkConnectionBeforeFirstTimeLoading();
+
+    }
+
+    //    internet check before load data
+    public void checkConnectionBeforeFirstTimeLoading(){
+        progressDialog.show();
         new CheckNetworkConnection(ListOfUsersForAangadia.this, new CheckNetworkConnection.OnConnectionCallback() {
             @Override
             public void onConnectionSuccess() {
-                new PasswordCheck(ListOfUsersForAangadia.this).checkIfPasswordChanged();
                 LoadData();
             }
 
             @Override
             public void onConnectionFail(String msg) {
+                progressDialog.dismiss();
                 try {
                     new MaterialDialog.Builder(ListOfUsersForAangadia.this)
                             .title("No Internet Access!")
@@ -121,7 +128,7 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(MaterialDialog dialog, DialogAction which) {
-                                    LoadData();
+                                    checkConnectionBeforeFirstTimeLoading();
                                 }
                             })
                             .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -138,14 +145,11 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
 
             }
         }).execute();
-
     }
+
 
     public void onStart(){
         super.onStart();
-        //        check password change
-
-
 
     }
 
@@ -158,7 +162,19 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
         }
 
         if (id == R.id.fa_resetImageButton){
-            LoadData();
+            progressDialog.show();
+            new CheckNetworkConnection(ListOfUsersForAangadia.this, new CheckNetworkConnection.OnConnectionCallback() {
+                @Override
+                public void onConnectionSuccess() {
+                    LoadData();
+                }
+                @Override
+                public void onConnectionFail(String msg) {
+                    NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfUsersForAangadia.this);
+                    noInternetConnectionAlert.DisplayNoInternetConnection();
+                    progressDialog.dismiss();
+                }
+            }).execute();
         }
 
 //        search button
@@ -343,7 +359,6 @@ public class ListOfUsersForAangadia extends AppCompatActivity implements View.On
 
     public void LoadData(){
 
-        progressDialog.show();
         DatabaseReference childReference = databaseReference.child("userProfile");
       //  Toast.makeText(this, ""+aangadiaUID_tx, Toast.LENGTH_SHORT).show();
         Query query = childReference.orderByChild("aangadia_uid").equalTo(aangadiaUID_tx);

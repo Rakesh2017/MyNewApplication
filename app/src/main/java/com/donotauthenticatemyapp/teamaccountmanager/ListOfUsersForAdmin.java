@@ -82,13 +82,20 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
         reset_btn.setOnClickListener(this);
 
         final ArrayAdapter<String> adapter_states = new ArrayAdapter<>
-                (ListOfUsersForAdmin.this,android.R.layout.simple_list_item_1,india_states);
+                (ListOfUsersForAdmin.this, android.R.layout.simple_list_item_1, india_states);
         state_et.setAdapter(adapter_states);
 
         final ArrayAdapter<String> adapter_cities = new ArrayAdapter<>
-                (ListOfUsersForAdmin.this,android.R.layout.simple_list_item_1,india_cities);
+                (ListOfUsersForAdmin.this, android.R.layout.simple_list_item_1, india_cities);
         city_et.setAdapter(adapter_cities);
 
+        checkConnectionBeforeFirstTimeLoading();
+    }
+
+
+//    internet check before load data
+    public void checkConnectionBeforeFirstTimeLoading(){
+        progressDialog.show();
         new CheckNetworkConnection(ListOfUsersForAdmin.this, new CheckNetworkConnection.OnConnectionCallback() {
             @Override
             public void onConnectionSuccess() {
@@ -97,6 +104,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onConnectionFail(String msg) {
+                progressDialog.dismiss();
                 try {
                     new MaterialDialog.Builder(ListOfUsersForAdmin.this)
                             .title("No Internet Access!")
@@ -112,7 +120,7 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(MaterialDialog dialog, DialogAction which) {
-                                    LoadData();
+                                    checkConnectionBeforeFirstTimeLoading();
                                 }
                             })
                             .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -129,7 +137,6 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
 
             }
         }).execute();
-
     }
 
     public void onStart(){
@@ -148,7 +155,20 @@ public class ListOfUsersForAdmin extends AppCompatActivity implements View.OnCli
         }
 
         if (id == R.id.lou_resetImageButton){
-            LoadData();
+            progressDialog.show();
+            new CheckNetworkConnection(ListOfUsersForAdmin.this, new CheckNetworkConnection.OnConnectionCallback() {
+                @Override
+                public void onConnectionSuccess() {
+                    LoadData();
+                }
+                @Override
+                public void onConnectionFail(String msg) {
+                    NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfUsersForAdmin.this);
+                    noInternetConnectionAlert.DisplayNoInternetConnection();
+                    progressDialog.dismiss();
+                }
+            }).execute();
+
         }
 
 //        search button

@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="@color/appColor"
-            />
+            android:contentDescription="@string/todo" />
 
     </RelativeLayout>
 
@@ -109,7 +109,7 @@
                     android:id="@+id/adh_adminAccountHeaderTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Admin Account"
+                    android:text="@string/admin_account"
                     android:layout_toEndOf="@+id/adh_adminAccountButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -120,7 +120,7 @@
                     android:id="@+id/adh_adminAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Balance: "
+                    android:text="@string/balance"
                     android:drawableStart="@drawable/ic_pointing_arrow"
                     android:drawablePadding="@dimen/drawablePadding"
                     android:gravity="center"
@@ -130,6 +130,7 @@
                     android:layout_below="@+id/adh_adminAccountHeaderTextView"
                     android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
+                    android:textColor="@color/black90"
                     />
 
                 <TextView
@@ -177,7 +178,7 @@
                     android:id="@+id/adh_addAangadiaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Aangadia"
+                    android:text="@string/add_aangadia"
                     android:layout_toEndOf="@+id/adh_addAangadiaButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -187,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/adh_addAangadiaTextView"
-                    android:text="Aangadia details will be visible in All Aangadias Module."
+                    android:text="@string/aangadia_details_will_be_visible_in_all_aangadias_module"
                     android:layout_toEndOf="@+id/adh_addAangadiaButton"
                     android:layout_marginTop="4dp"
                     style="@style/MyCustomTextStyleSmall"
@@ -227,7 +228,7 @@
                     android:id="@+id/adh_allAangadiaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All Aangadia"
+                    android:text="@string/all_aangadia"
                     android:layout_toEndOf="@+id/adh_allAangadiaButton"
                     android:layout_marginTop="15dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -249,6 +250,7 @@
                     android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
+                    android:textColor="@color/black90"
                     />
 
                 <TextView
@@ -261,6 +263,7 @@
                     style="@style/MyCustomTextStyleSmall"
                     android:layout_marginStart="4dp"
                     android:textStyle="bold"
+                    android:textColorHint="@color/black"
                     />
 
                 <!--total transactions-->
@@ -268,7 +271,7 @@
                     android:id="@+id/adh_totalTransactionTextView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Transactions: "
+                    android:text="@string/transactions"
                     android:drawableStart="@drawable/ic_pointing_arrow"
                     android:drawablePadding="@dimen/drawablePadding"
                     android:gravity="center"
@@ -278,6 +281,7 @@
                     android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
+                    android:textColor="@color/black90"
                     />
 
                 <TextView
@@ -290,6 +294,7 @@
                     style="@style/MyCustomTextStyleSmall"
                     android:layout_marginStart="4dp"
                     android:textStyle="bold"
+                    android:textColorHint="@color/black"
                     />
 
             </RelativeLayout>
@@ -321,7 +326,7 @@
                     android:id="@+id/adh_addUserTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add User"
+                    android:text="@string/add_user"
                     android:layout_toEndOf="@+id/adh_addUserButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -332,7 +337,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/adh_addUserTextView"
-                    android:text="User details will be visible in All Users Module."
+                    android:text="@string/user_details_will_be_visible_in_all_users_module"
                     android:layout_toEndOf="@+id/adh_addUserButton"
                     android:layout_marginTop="4dp"
                     style="@style/MyCustomTextStyleSmall"
@@ -371,14 +376,14 @@
                     android:id="@+id/adh_allUsersTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All Users"
+                    android:text="@string/all_users"
                     android:layout_toEndOf="@+id/adh_allUsersButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
                     android:layout_marginStart="15dp"
                     />
 
-                <!--total aangadias-->
+                <!--total users-->
                 <TextView
                     android:id="@+id/adh_totalUsersTextView1"
                     android:layout_width="wrap_content"
@@ -393,6 +398,7 @@
                     android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
+                    android:textColor="@color/black90"
                     />
 
                 <TextView
@@ -405,6 +411,7 @@
                     style="@style/MyCustomTextStyleSmall"
                     android:layout_marginStart="4dp"
                     android:textStyle="bold"
+                    android:textColorHint="@color/black"
                     />
 
             </RelativeLayout>
@@ -437,7 +444,7 @@
                     android:id="@+id/adh_commissionTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Commission"
+                    android:text="@string/add_commission"
                     android:layout_toEndOf="@+id/adh_commissionButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -448,7 +455,7 @@
                     android:id="@+id/adh_currentCommission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Commission: "
+                    android:text="@string/current_commission"
                     android:layout_alignStart="@+id/adh_commissionTextView"
                     android:layout_below="@+id/adh_commissionTextView"
                     android:layout_marginTop="12dp"
@@ -457,6 +464,7 @@
                     android:drawableStart="@drawable/ic_pointing_arrow"
                     android:drawablePadding="@dimen/drawablePadding"
                     android:gravity="center"
+                    android:textColor="@color/black90"
                     />
 
                 <TextView

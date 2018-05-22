@@ -45,6 +45,7 @@ import org.apache.commons.net.ntp.TimeInfo;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -94,7 +95,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_add_aangadia, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        Objects.requireNonNull(getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         CreatingFirebaseAuthInstance();
 
@@ -192,7 +193,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
     {
         if (EditTextValidations()){
             if (TextUtils.isEmpty(year)){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Failed!")
                         .titleColor(Color.WHITE)
                         .content("Server Error, Try Again...")
@@ -204,7 +205,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                 new GetDateTime().execute();
             }
             else if (TextUtils.isEmpty(question_tx)){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Failed!")
                         .titleColor(Color.WHITE)
                         .content("re-select Security Question!")
@@ -215,6 +216,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                         .show();
             }
             else {
+                progressDialog.show();
                 new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
                     @Override
                     public void onConnectionSuccess() {
@@ -222,6 +224,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
                     }
                     @Override
                     public void onConnectionFail(String msg) {
+                        progressDialog.dismiss();
                         NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(getActivity());
                         noInternetConnectionAlert.DisplayNoInternetConnection();
                         progressDialog.dismiss();
@@ -384,33 +387,32 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
 
 
 
-//    getting date and time
+    //    getting date and time
     private static class GetDateTime extends AsyncTask<Void, Void, String> {
 
-        Date dateTime;
         @Override
         protected String doInBackground(Void... voids) {
-            try {
-                NTPUDPClient timeClient = new NTPUDPClient();
-                InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-                TimeInfo timeInfo = timeClient.getTime(inetAddress);
-                long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
-                dateTime = new Date(returnTime);
-            }
-            catch (IOException e){
-                Log.w("raky", e.getCause());
-            }
+            Date dateTime = null;
+            NTPUDPClient timeClient = new NTPUDPClient();
+            timeClient.setDefaultTimeout(1000);
+            for (int retries = 7; retries >= 0; retries--) { // for
+                try {
+                    InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
+                    TimeInfo timeInfo = timeClient.getTime(inetAddress);
+                    long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
+                    dateTime = new Date(returnTime);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }//for
             return String.valueOf(dateTime);
         }
 
         @Override
         protected void onPostExecute(String myDate){
-                Log.w("raky", "this year: "+myDate);
-                AddAangadia addAangadia = new AddAangadia();
-              //  date = myDate.substring(0, 10);
-               // time = myDate.substring(12, 16);
-                year = myDate.substring(myDate.length()-2, myDate.length());
-            }
+            year = myDate.substring(myDate.length()-2, myDate.length());
+        }
 
     }
 //    getting date and time

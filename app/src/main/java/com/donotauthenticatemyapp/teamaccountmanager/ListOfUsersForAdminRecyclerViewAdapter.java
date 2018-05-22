@@ -29,6 +29,8 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
     private List<RecyclerViewListAangadiaData> MainImageUploadInfoList;
     private static final String USER_UID_PREF = "user_uid_pref";
     private static final String USER_UID = "user_uid";
+    private static final String USER_ID_DETAIL = "user_id_detail";
+    private static final String USER_NAME_DETAIL = "user_name_detail";
     SharedPreferences sharedPreferences;
 
     private int delay = 100;
@@ -71,6 +73,8 @@ public class ListOfUsersForAdminRecyclerViewAdapter extends RecyclerView.Adapter
                 sharedPreferences = context.getSharedPreferences(USER_UID_PREF, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(USER_UID, UploadInfo.getKey());
+                editor.putString(USER_ID_DETAIL, UploadInfo.getUid());
+                editor.putString(USER_NAME_DETAIL, UploadInfo.getUserName());
                 editor.apply();
                 try {
                     context.startActivity(new Intent(context, UserDetails.class));

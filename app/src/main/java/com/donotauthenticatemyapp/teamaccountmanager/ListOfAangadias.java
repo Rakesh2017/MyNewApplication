@@ -77,6 +77,13 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         search_btn.setOnClickListener(this);
         reset_btn.setOnClickListener(this);
 
+        checkConnectionBeforeFirstTimeLoading();
+    }
+
+
+    //    internet check before load data
+    public void checkConnectionBeforeFirstTimeLoading(){
+        progressDialog.show();
         new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
             @Override
             public void onConnectionSuccess() {
@@ -85,6 +92,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onConnectionFail(String msg) {
+                progressDialog.dismiss();
                 try {
                     new MaterialDialog.Builder(ListOfAangadias.this)
                             .title("No Internet Access!")
@@ -100,7 +108,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(MaterialDialog dialog, DialogAction which) {
-                                    LoadData();
+                                    checkConnectionBeforeFirstTimeLoading();
                                 }
                             })
                             .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -119,7 +127,10 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         }).execute();
     }
 
-//    onStart
+
+
+
+    //    onStart
     public void onStart(){
         super.onStart();
 
@@ -138,6 +149,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
         else if (id == R.id.loa_search){
             uid_tx = uid_et.getText().toString().trim();
             name_tx = name_et.getText().toString().trim();
+            progressDialog.show();
             if (TextUtils.isEmpty(uid_tx) && TextUtils.isEmpty(name_tx)){ //if1
                 //progressDialog.show();
                 new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
@@ -201,8 +213,20 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
             }
         }
 
-
-        else if (id == R.id.loa_resetImageButton) LoadData();
+        else if (id == R.id.loa_resetImageButton) {
+            new CheckNetworkConnection(ListOfAangadias.this, new CheckNetworkConnection.OnConnectionCallback() {
+                @Override
+                public void onConnectionSuccess() {
+                    LoadData();
+                }
+                @Override
+                public void onConnectionFail(String msg) {
+                    NoInternetConnectionAlert noInternetConnectionAlert = new NoInternetConnectionAlert(ListOfAangadias.this);
+                    noInternetConnectionAlert.DisplayNoInternetConnection();
+                    progressDialog.dismiss();
+                }
+            }).execute();
+        }
     }
 
 

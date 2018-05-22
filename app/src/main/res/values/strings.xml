@@ -47,5 +47,18 @@
     <string name="uid">UID</string>
     <string name="amount">Enter Amount</string>
     <string name="aangadia_account_manager">Aangadia  Account  Manager</string>
+    <string name="todo">TODO</string>
+    <string name="admin_account">Admin Account</string>
+    <string name="balance">Balance: </string>
+    <string name="add_aangadia">Add Aangadia</string>
+    <string name="aangadia_details_will_be_visible_in_all_aangadias_module">Aangadia details will be visible in All Aangadias Module.</string>
+    <string name="all_aangadia">All Aangadia</string>
+    <string name="transactions">Transactions:</string>
+    <string name="add_user">Add User</string>
+    <string name="user_details_will_be_visible_in_all_users_module">User details will be visible in All Users Module.</string>
+    <string name="all_users">All Users</string>
+    <string name="add_commission">Add Commission</string>
+    <string name="current_commission">Current Commission:</string>
+    <string name="cash_in_hand_transactions">Cash In Hand Transactions</string>
 </resources>
 

@@ -1,6 +1,7 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +30,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -120,7 +123,7 @@ public class AangadiaAccount extends Fragment {
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading Data...");
-        sharedPreferences = getActivity().getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(AANGADIA_UID_PREF, MODE_PRIVATE);
         userIdentifierSharedPreferences = getActivity().getSharedPreferences(USER_IDENTIFIER_PREF, MODE_PRIVATE);
 
         return view;
@@ -130,17 +133,58 @@ public class AangadiaAccount extends Fragment {
     public void onStart() {
         super.onStart();
 
-        String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-        if (TextUtils.equals(identity, "aangadia")) {
-            setBalanceAangadia();
-            LoadDataForAangadia();
-            ListLengthAangadia();
-        } else if (TextUtils.equals(identity, "admin")){
-            setBalanceAdmin();
-            LoadDataForAdmin();
-            ListLengthAdmin();
-        }
+        final String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
 
+        progressDialog.show();
+        new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
+            @Override
+            public void onConnectionSuccess() {
+                if (TextUtils.equals(identity, "aangadia")) {
+                    setBalanceAangadia();
+                    LoadDataForAangadia();
+                    ListLengthAangadia();
+                } else if (TextUtils.equals(identity, "admin")){
+                    setBalanceAdmin();
+                    LoadDataForAdmin();
+                    ListLengthAdmin();
+                }
+            }
+
+            @Override
+            public void onConnectionFail(String msg) {
+                progressDialog.dismiss();
+                try {
+                    new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
+                            .title("No Internet Access!")
+                            .titleColor(Color.BLACK)
+                            .content("No internet connectivity detected. Please make sure you have working internet connection and try again.")
+                            .icon(getResources().getDrawable(R.drawable.ic_no_internet_connection))
+                            .contentColor(getResources().getColor(R.color.black))
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveColor(getResources().getColor(R.color.green))
+                            .negativeText("Cancel")
+                            .negativeColor(getResources().getColor(R.color.red))
+                            .positiveText("Try Again!")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    onStart();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .cancelable(false)
+                            .show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).execute();
 
     }
     //    onStart
@@ -174,6 +218,7 @@ public class AangadiaAccount extends Fragment {
         final String key = sharedPreferences.getString(AANGADIA_UID,"");
         databaseReference.child("aangadiaCashInAccount")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try { //try
@@ -198,6 +243,7 @@ public class AangadiaAccount extends Fragment {
         final String key = userIdentifierSharedPreferences.getString(AANGADIA_KEY,"");
         databaseReference.child("aangadiaCashInAccount")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try { //try
@@ -347,7 +393,7 @@ public class AangadiaAccount extends Fragment {
     //    show empty page
     public void showEmptyPage(){
         try {
-            new MaterialDialog.Builder(getContext())
+            new MaterialDialog.Builder(Objects.requireNonNull(getContext()))
                     .title("Empty!")
                     .titleColor(Color.BLACK)
                     .content("Aangadia have not made any transaction yet.")

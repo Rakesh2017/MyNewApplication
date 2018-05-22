@@ -253,6 +253,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                                 mAuth.signOut();
 
                                 AangadiaHomePage.this.finish();
+                                finishAffinity();
                                 startActivity(new Intent(AangadiaHomePage.this, Login.class));
 
                                 // TODO

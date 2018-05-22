@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -124,7 +125,9 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
         if (id == R.id.la_btn){ //if 1
             userName_tx = userName_et.getText().toString().trim();
             password_tx = password_et.getText().toString().trim();
+
             if (editTextValidations()){ //if 2
+                progressDialog.show();
                 new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
                     @Override
                     public void onConnectionSuccess() {
@@ -148,13 +151,13 @@ public class AdminLogin extends Fragment implements View.OnClickListener {
         progressDialog.show();
 //                Signing in
         mAuth.signInWithEmailAndPassword(userName_tx, password_tx)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             progressDialog.dismiss();
 
-                            new MaterialDialog.Builder(getActivity())
+                            new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                                     .title(R.string.masterKey)
                                     .content("You have successfully Logged in. Now You need to enter master key to use owner account")
                                     .contentColorRes(R.color.appColor)

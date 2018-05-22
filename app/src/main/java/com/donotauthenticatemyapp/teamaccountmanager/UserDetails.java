@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +42,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private static final String USER_UID = "user_uid";
     private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
     private static final String USER_IDENTITY = "userIdentity";
+    private static final String USER_ID_DETAIL = "user_id_detail";
+    private static final String USER_NAME_DETAIL = "user_name_detail";
 
     private static final String UPDATE_PREF = "change_password_pref";
     private static final String OLD_PASSWORD = "old_password";
@@ -105,6 +108,11 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     public void onStart(){
         super.onStart();
 
+        //setting user-name and uid
+        String name = sharedPreferences.getString(USER_NAME_DETAIL, "");
+        String uid = sharedPreferences.getString(USER_ID_DETAIL, "");
+        userNameHeader_tv.setText(name+", "+uid);
+
         new CheckNetworkConnection(UserDetails.this, new CheckNetworkConnection.OnConnectionCallback() {
             @Override
             public void onConnectionSuccess() {
@@ -132,6 +140,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private void loadData() {
         final String key = sharedPreferences.getString(USER_UID, "");
         databaseReference.child("userProfile").child(key).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 name_tx = dataSnapshot.child("userName").getValue(String.class);
@@ -143,7 +152,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 state_tx = dataSnapshot.child("state").getValue(String.class);
                 city_tx = dataSnapshot.child("city").getValue(String.class);
 
-                userNameHeader_tv.setText(uid_tx+", "+name_tx);
+                userNameHeader_tv.setText(name_tx+", "+uid_tx);
                 name_tv.setText(name_tx);
                 uid_tv.setText(uid_tx);
                 password_tv.setText(password_tx);

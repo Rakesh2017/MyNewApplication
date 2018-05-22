@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -25,7 +26,6 @@ import java.util.List;
 
 public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerView.Adapter<ListOfAdminBalanceTransactionsRecyclerViewAdapter.ViewHolder> {
 
-    private Context context;
     private List<RecyclerViewListAangadiaData> UploadInfoList;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -36,7 +36,6 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
 
         this.UploadInfoList = TempList;
 
-        this.context = context;
     }
 
     @NonNull
@@ -49,6 +48,7 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final RecyclerViewListAangadiaData UploadInfo = UploadInfoList.get(position);
@@ -66,6 +66,8 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
             NumberFormat formatter = new DecimalFormat("#,###");
             String formatted_balance = formatter.format(Long.parseLong(UploadInfo.getCommission()));
             holder.commission_tv.setText("Rs "+formatted_balance+" ("+UploadInfo.getCommission_rate()+"%)");
+            if (TextUtils.isEmpty(UploadInfo.getCommission_rate()) || TextUtils.equals(UploadInfo.getCommission_rate(), null))
+                holder.commission_tv.setText("Rs "+formatted_balance+" (0%)");
         }
 
         databaseReference.child("userProfile")

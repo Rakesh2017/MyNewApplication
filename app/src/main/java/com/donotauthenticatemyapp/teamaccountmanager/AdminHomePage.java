@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -172,12 +173,13 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     private void setAdminBalance() {
         databaseReference.child("adminBalance")
                 .addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String balance = dataSnapshot.child("total_balance").getValue(String.class);
-                        adminBalance_tv.setText("Rs "+balance+"/-");
+                        adminBalance_tv.setText(" Rs "+balance+"/-");
                         if (TextUtils.isEmpty(balance)){
-                            adminBalance_tv.setText("Rs "+0.0+"/-");
+                            adminBalance_tv.setText(" Rs "+0.0+"/-");
                         }
                     }
 
@@ -192,12 +194,13 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     private void SetCommission() {
         databaseReference.child("adminCommission")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String commission = dataSnapshot.child("commission").getValue(String.class);
                         currentCommission_tv.setText(commission+"%");
                         if (TextUtils.isEmpty(commission)){
-                            currentCommission_tv.setText("not set");
+                            currentCommission_tv.setText(" NA");
                         }
                     }
 
@@ -287,6 +290,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                                 mAuth.signOut();
 
                                 AdminHomePage.this.finish();
+                                finishAffinity();
                                 startActivity(new Intent(AdminHomePage.this, Login.class));
 
                                 // TODO
@@ -351,6 +355,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
     public void FinallySetCommission(){
         databaseReference.child("adminCommission").child("commission").setValue(commission_tx)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(Void aVoid) {
                         new MaterialDialog.Builder(AdminHomePage.this)

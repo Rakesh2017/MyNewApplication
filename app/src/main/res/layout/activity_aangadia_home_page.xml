@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="@color/appColor"
-            />
+            android:contentDescription="@string/todo" />
 
     </RelativeLayout>
 
@@ -118,7 +118,7 @@
                     android:id="@+id/ahp_cashTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cash In Hand Transactions"
+                    android:text="@string/cash_in_hand_transactions"
                     android:layout_toEndOf="@+id/ahp_cashButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -130,7 +130,7 @@
                     android:id="@+id/ahp_totalTransactionTextView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Transactions: "
+                    android:text="@string/transactions"
                     android:drawableStart="@drawable/ic_pointing_arrow"
                     android:drawablePadding="@dimen/drawablePadding"
                     android:gravity="center"
@@ -140,6 +140,7 @@
                     android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
+                    android:textColor="@color/black90"
                     />
 
                 <TextView
@@ -152,6 +153,7 @@
                     style="@style/MyCustomTextStyleSmall"
                     android:layout_marginStart="4dp"
                     android:textStyle="bold"
+                    android:textColorHint="@color/black"
                     />
 
 
@@ -185,7 +187,7 @@
                     android:id="@+id/ahp_addUserTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add User"
+                    android:text="@string/add_user"
                     android:layout_toEndOf="@+id/ahp_addUserButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -196,7 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ahp_addUserTextView"
-                    android:text="User details will be visible in All Users Module."
+                    android:text="@string/user_details_will_be_visible_in_all_users_module"
                     android:layout_toEndOf="@+id/ahp_addUserButton"
                     android:layout_marginTop="4dp"
                     style="@style/MyCustomTextStyleSmall"
@@ -235,7 +237,7 @@
                     android:id="@+id/ahp_allUsersTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All Users"
+                    android:text="@string/all_users"
                     android:layout_toEndOf="@+id/ahp_allUsersButton"
                     android:layout_marginTop="10dp"
                     style="@style/MyCustomTextStyleMedium"
@@ -257,6 +259,7 @@
                     android:layout_marginStart="15dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
+                    android:textColor="@color/black90"
                     />
 
                 <TextView
@@ -269,6 +272,7 @@
                     style="@style/MyCustomTextStyleSmall"
                     android:layout_marginStart="4dp"
                     android:textStyle="bold"
+                    android:textColorHint="@color/black"
                     />
 
             </RelativeLayout>

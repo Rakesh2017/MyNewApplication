@@ -437,9 +437,9 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String temp = null;
-                        commission = dataSnapshot.child("commission").getValue(String.class);
-                        if (!TextUtils.isEmpty(commission)){
+                        String temp;
+                        commission = dataSnapshot.child("commission").getValue(String.class); //in %
+                        if (!TextUtils.isEmpty(commission) && !TextUtils.equals(commission, null)){
                             double double_commission = Double.parseDouble(commission);
                             temp = transactionAmount_tx = amountToBeSent_tx;
                             final int transact_balance_after_commission = (int)(Double.parseDouble(amountToBeSent_tx)
@@ -449,6 +449,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         }
 
                         else {
+                            commission = "0";
                             commissionDeducted_tx = "0";
                             temp = amountToBeSent_tx;
                         }
@@ -581,6 +582,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         if (TextUtils.isEmpty(receiver_balance)) receiver_balance = "0";
                         final int updated_balance_of_receiving_user = Integer.parseInt(receiver_balance) +
                                 Integer.parseInt(amountToBeSent_tx);
+
                         databaseReference.child("userBalance").child(userKeyToSendMoney_tx).child("total_balance")
                                 .setValue(String.valueOf(updated_balance_of_receiving_user));
 //    adding commission to admin account
@@ -624,7 +626,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         DatabaseReference databaseReferenceAdminAccount = databaseReference.child("adminAccount").child(push_key);
                         databaseReferenceAdminAccount.child("dateTime").setValue(today_dateTime);
                         databaseReferenceAdminAccount.child("commission").setValue(commissionDeducted_tx);
-                        databaseReferenceAdminAccount.child("transaction_amount").setValue(transactionAmount_tx);
+                        databaseReferenceAdminAccount.child("transaction_amount").setValue(amountToBeSent_tx);
                         databaseReferenceAdminAccount.child("sender_key").setValue(myKey);
                         databaseReferenceAdminAccount.child("receiver_key").setValue(userKeyToSendMoney_tx);
                         databaseReferenceAdminAccount.child("commission_rate").setValue(commission);
@@ -765,6 +767,7 @@ private void setTotalBalance() {
                         mAuth.signOut();
 
                         UserHomePage.this.finish();
+                        finishAffinity();
                         startActivity(new Intent(UserHomePage.this, Login.class));
 
                         // TODO
