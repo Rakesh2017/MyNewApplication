@@ -54,6 +54,7 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
         final RecyclerViewListAangadiaData UploadInfo = UploadInfoList.get(position);
 
         holder.dateTime_tv.setText(UploadInfo.getDateTime());
+        holder.transactionID_tv.setText(UploadInfo.getTransaction_id());
 
         if (!TextUtils.isEmpty(UploadInfo.getTransaction_amount())){
             NumberFormat formatter = new DecimalFormat("#,###");
@@ -123,7 +124,7 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView commission_tv, sender_tv, receiver_tv, amount_tv, dateTime_tv;
+        TextView commission_tv, sender_tv, receiver_tv, amount_tv, dateTime_tv, transactionID_tv;
         CardView cardView;
 
         ViewHolder(View itemView) {
@@ -134,6 +135,7 @@ public class ListOfAdminBalanceTransactionsRecyclerViewAdapter extends RecyclerV
             receiver_tv = itemView.findViewById(R.id.abt_receiverTextView);
             amount_tv = itemView.findViewById(R.id.abt_transactionAmountTextView);
             dateTime_tv = itemView.findViewById(R.id.abt_dateTextView);
+            transactionID_tv = itemView.findViewById(R.id.td_transactionIDTextView);
 
             cardView = itemView.findViewById(R.id.abt_cardview);
 

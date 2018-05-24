@@ -34,12 +34,33 @@
             android:textStyle="bold"
             />
 
+        <!--transaction id-->
+        <TextView
+            android:id="@+id/td_transactionID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/abt_dateTextView"
+            android:text="Transaction ID:  "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/td_transactionIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/td_transactionID"
+            android:layout_below="@+id/abt_dateTextView"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black"
+            />
+
         <!--commission-->
         <TextView
             android:id="@+id/td_commission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/abt_dateTextView"
+            android:layout_below="@+id/td_transactionIDTextView"
             android:text="Commission: "
             style="@style/MyCustomTextStyleSmall"
             />
@@ -49,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/td_commission"
-            android:layout_below="@+id/abt_dateTextView"
+            android:layout_below="@+id/td_transactionIDTextView"
             android:textStyle="bold"
             style="@style/MyCustomTextStyleSmall"
             android:textColor="@color/green"
