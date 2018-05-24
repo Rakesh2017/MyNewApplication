@@ -35,13 +35,34 @@
             android:textStyle="bold"
             />
 
+        <!--transaction id-->
+        <TextView
+            android:id="@+id/rva_transactionID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rva_dateTextView"
+            android:text="Transaction ID:  "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/rva_transactionIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/rva_transactionID"
+            android:layout_below="@+id/rva_dateTextView"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black"
+            />
+
         <!--money added-->
         <TextView
             android:id="@+id/rva_balanceCredited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rva_dateTextView"
-            android:text="Balance Added:  "
+            android:layout_below="@+id/rva_transactionIDTextView"
+            android:text="Credit:  "
             style="@style/MyCustomTextStyleSmall"
             />
 
@@ -50,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/rva_balanceCredited"
-            android:layout_below="@+id/rva_dateTextView"
+            android:layout_below="@+id/rva_transactionIDTextView"
             android:textStyle="bold"
             style="@style/MyCustomTextStyleSmall"
             android:textColor="@color/orangeDark"

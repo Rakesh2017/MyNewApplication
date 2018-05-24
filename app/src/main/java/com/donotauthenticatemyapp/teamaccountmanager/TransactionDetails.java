@@ -36,7 +36,7 @@ public class TransactionDetails extends Fragment {
 
     TextView dateTime_tv, balanceCredited_tv, mode_tv, transactionBy_tv
             , transactionBy_tv0, previousBalance_tv, balanceAfterTransaction_tv, commission_tv, commission1_tv
-            ,serialNumber_tv, transactionID_tv, remarks_tv;
+            ,serialNumber_tv, transactionID_tv, remarks_tv, remarks1_tv, balanceCredited1_tv;
 
     String dateTime_tx, balanceCredited_tx, mode_tx, transactionBy_tx, previousBalance_tx
             , aangadiaKey_tx, balanceAfterTransaction_tx, commission_tx, serialNumber_tx, transactionID_tx, remarks_tx;
@@ -79,6 +79,7 @@ public class TransactionDetails extends Fragment {
 
         dateTime_tv = view.findViewById(R.id.td_dateTimeTextView);
         balanceCredited_tv = view.findViewById(R.id.td_balanceAddedTextView);
+        balanceCredited1_tv = view.findViewById(R.id.td_balanceAdded);
         mode_tv = view.findViewById(R.id.td_modeTextView);
         transactionBy_tv = view.findViewById(R.id.td_moneyAddedByTextView);
         transactionBy_tv0 = view.findViewById(R.id.td_moneyAddedBy);
@@ -89,6 +90,7 @@ public class TransactionDetails extends Fragment {
         transactionID_tv = view.findViewById(R.id.td_transactionIDTextView);
         serialNumber_tv = view.findViewById(R.id.td_serialNumberTextView);
         remarks_tv = view.findViewById(R.id.td_remarksTextView);
+        remarks1_tv = view.findViewById(R.id.td_remarks);
 
         relativeLayout = view.findViewById(R.id.td_relativeLayout);
 
@@ -137,12 +139,15 @@ public class TransactionDetails extends Fragment {
         dateTime_tv.setText(dateTime_tx);
         transactionID_tv.setText(transactionID_tx);
         serialNumber_tv.setText("Sr No: "+serialNumber_tx);
-        setRemarks();
+        CreditAndDebitTransactionBy();
 
 //        if mode is money Add
         if(TextUtils.equals(mode_tx, "moneyAdd")) {
+            remarks_tv.setVisibility(View.GONE);
+            remarks1_tv.setVisibility(View.GONE);
             commission_tv.setVisibility(View.GONE);
             commission1_tv.setVisibility(View.GONE);
+            balanceCredited1_tv.setText("Credit: ");
             balanceCredited_tx = transactionSharedPreferences.getString(MONEY_ADDED, "");
             transactionBy_tx = transactionSharedPreferences.getString(MONEY_ADDED_BY, "");
             previousBalance_tx = transactionSharedPreferences.getString(PREVIOUS_BALANCE, "");
@@ -189,7 +194,10 @@ public class TransactionDetails extends Fragment {
 
 //        if mode is credit
         else if (TextUtils.equals(mode_tx, "credit")){
+              balanceCredited1_tv.setText("Credit: ");
+              setRemarks();
               transactionBy_tv0.setHint("Credited By: ");
+
 
               transactionBy_tx = transactionSharedPreferences.getString(SENDER_KEY, "");
               balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_CREDITED, "");
@@ -239,6 +247,8 @@ public class TransactionDetails extends Fragment {
 
         //        if mode is debit
         else if (TextUtils.equals(mode_tx, "debit")){
+            balanceCredited1_tv.setText("Debit: ");
+            setRemarks();
             transactionBy_tv0.setHint("Debited To: ");
 
             transactionBy_tx = transactionSharedPreferences.getString(RECEIVER_KEY, "");
@@ -283,7 +293,6 @@ public class TransactionDetails extends Fragment {
                 commission_tv.setText("Rs 0 (0%)");
             }
 
-            CreditAndDebitTransactionBy();
         }
 
     }

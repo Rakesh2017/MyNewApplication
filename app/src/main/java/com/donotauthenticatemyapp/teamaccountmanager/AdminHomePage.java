@@ -198,7 +198,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String commission = dataSnapshot.child("commission").getValue(String.class);
-                        currentCommission_tv.setText(commission+"%");
+                        currentCommission_tv.setText("  "+commission+"%");
                         if (TextUtils.isEmpty(commission)){
                             currentCommission_tv.setText(" NA");
                         }

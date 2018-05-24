@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:hint="Transaction Amount: "
+            android:hint="cr/db"
             style="@style/MyCustomTextStyleSmall"
             android:textColorHint="@color/black"
             android:layout_marginTop="5dp"

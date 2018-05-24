@@ -53,6 +53,7 @@ public class ListOfAangadiaAccountRecyclerViewAdapter extends RecyclerView.Adapt
         final RecyclerViewListAangadiaData UploadInfo = UploadInfoList.get(position);
 
         holder.dateTime_tv.setText(UploadInfo.getDateTime());
+        holder.transactionIDtv.setText(UploadInfo.getTransaction_id());
 
         if (!TextUtils.isEmpty(UploadInfo.getMoney_added())){
             NumberFormat formatter = new DecimalFormat("#,###");
@@ -111,7 +112,7 @@ public class ListOfAangadiaAccountRecyclerViewAdapter extends RecyclerView.Adapt
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView user_tv, amount_tv, dateTime_tv;
+        TextView user_tv, amount_tv, dateTime_tv, transactionIDtv;
 
         CardView cardView;
 
@@ -122,6 +123,7 @@ public class ListOfAangadiaAccountRecyclerViewAdapter extends RecyclerView.Adapt
             amount_tv = itemView.findViewById(R.id.rva_balanceCreditedTextView);
             dateTime_tv = itemView.findViewById(R.id.rva_dateTextView);
             cardView = itemView.findViewById(R.id.rva_cardview);
+            transactionIDtv = itemView.findViewById(R.id.rva_transactionIDTextView);
 
 
         }

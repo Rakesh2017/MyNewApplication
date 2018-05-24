@@ -359,6 +359,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                         databaseReferenceMoneyAddedByAangadia.child(MODE).setValue("moneyAdd");
                         databaseReferenceMoneyAddedByAangadia.child(DATE_TIME).setValue(today_dateTime);
                         databaseReferenceMoneyAddedByAangadia.child(AANGADIA_KEY).setValue(aangadia_key);
+                        databaseReferenceMoneyAddedByAangadia.child("transaction_id").setValue(timestamp_unique_key);
 
 //                        setting data in aangadia cash in account
                         String aangadia_key = userIdentifierSharedPreferences.getString(AANGADIA_KEY, "");
@@ -367,6 +368,8 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                         databaseReferenceMoneyAddedInCashInAccount.child(MONEY_ADDED).setValue(money_tx);
                         databaseReferenceMoneyAddedInCashInAccount.child(DATE_TIME).setValue(today_dateTime);
                         databaseReferenceMoneyAddedInCashInAccount.child("user_key").setValue(key);
+                        databaseReferenceMoneyAddedInCashInAccount.child("transaction_id").setValue(timestamp_unique_key);
+
 
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(getActivity())
@@ -435,6 +438,8 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                         databaseReferenceMoneyAddedByADMIN.child(PREVIOUS_BALANCE).setValue(previous_total_balance);
                         databaseReferenceMoneyAddedByADMIN.child(MODE).setValue("moneyAdd");
                         databaseReferenceMoneyAddedByADMIN.child(DATE_TIME).setValue(today_dateTime);
+                        databaseReferenceMoneyAddedByADMIN.child("transaction_id").setValue(timestamp_unique_key);
+
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(getActivity())
                                 .title("Transaction Successful")
