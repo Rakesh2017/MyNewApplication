@@ -190,10 +190,30 @@
 
         </LinearLayout>
 
+
+        <!--remarks-->
+        <EditText
+            android:id="@+id/auh_remarksEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingBetweenET"
+            android:layout_below="@+id/auh_linearLayout1"
+            style="@style/MyCustomEditTextStyle"
+            android:background="@color/wheat"
+            android:hint="Remarks"
+            android:drawableStart="@drawable/ic_remarks"
+            android:inputType="textMultiLine"
+            android:maxLength="200"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
+            tools:ignore="LabelFor"
+            android:textColor="@color/black90"
+            />
+
         <!--send money-->
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/auh_sendMoneyButton"
-            android:layout_below="@+id/auh_linearLayout1"
+            android:layout_below="@+id/auh_remarksEditText"
             android:layout_marginTop="9dp"
             android:layout_marginStart="@dimen/activity_start_margin"
             android:layout_marginEnd="@dimen/activity_end_margin"

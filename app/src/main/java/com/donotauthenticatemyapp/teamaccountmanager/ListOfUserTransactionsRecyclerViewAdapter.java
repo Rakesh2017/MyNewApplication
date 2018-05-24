@@ -1,5 +1,6 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -31,7 +32,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
     private Context context;
     private List<RecyclerViewListAangadiaData> MainImageUploadInfoList;
-    SharedPreferences transactionSharedPreferences;
+    private SharedPreferences transactionSharedPreferences;
     private final String transactionPref = "transactionPref";
     private final String AANGADIA_KEY = "aangadia_key";
     private final String CURRENT_BALANCE = "current_balance";
@@ -48,6 +49,8 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
     private final String SENDER_KEY = "sender_key";
     private final String COMMISSION = "commission";
     private final String COMMISSION_RATE = "commission_rate";
+    private final String SERIAL_NUMBER = "serial_number";
+    private final String TRANSACTION_ID = "transaction_id"; // same as pushed key
 
     SharedPreferences userIdentifierSharedPreferences;
 
@@ -73,14 +76,14 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final RecyclerViewListAangadiaData UploadInfo = MainImageUploadInfoList.get(position);
 
         String money_added_to_account = null;
-
+        holder.serialNumber_tv.setText(String.valueOf(position+1));
         holder.date_tv.setText(UploadInfo.getDateTime());
-
 
         //if money add
         if (TextUtils.equals(UploadInfo.getMode(),"moneyAdd")){
@@ -148,7 +151,8 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                         editor.putString(COMMISSION_RATE, UploadInfo.getCommission_rate());
                     }
 
-
+                    editor.putString(SERIAL_NUMBER, String.valueOf(position+1));
+                    editor.putString(TRANSACTION_ID, UploadInfo.getTransaction_id());
                     editor.putString(MODE, UploadInfo.getMode());
                     editor.putString(DATE_TIME, UploadInfo.getDateTime());
                     editor.putString(CURRENT_BALANCE, UploadInfo.getCurrent_balance());
@@ -204,7 +208,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date_tv, balanceCredited_tv, modeOFTransaction_tv, balanceCredited;
+        TextView date_tv, balanceCredited_tv, modeOFTransaction_tv, balanceCredited, serialNumber_tv;
         CardView cardView;
         RelativeLayout relativeLayout;
         ImageButton button;
@@ -216,6 +220,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
             balanceCredited_tv = itemView.findViewById(R.id.lut_balanceCreditedTextView);
             balanceCredited = itemView.findViewById(R.id.lut_balanceCredited);
             modeOFTransaction_tv = itemView.findViewById(R.id.lut_modeOfTransactionTextView);
+            serialNumber_tv = itemView.findViewById(R.id.lut_lut_serialNumberTextView);
 
             cardView = itemView.findViewById(R.id.lut_cardview);
             relativeLayout = itemView.findViewById(R.id.lut_relativeLayout);

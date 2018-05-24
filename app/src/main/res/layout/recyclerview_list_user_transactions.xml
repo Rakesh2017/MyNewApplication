@@ -25,6 +25,25 @@
         android:padding="8dp"
         >
 
+        <!--transaction-->
+        <TextView
+            android:id="@+id/lut_serialNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Serial:  "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/lut_lut_serialNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/lut_serialNumber"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+
         <!--date-->
         <TextView
             android:id="@+id/lut_dateTextView"
@@ -45,9 +64,9 @@
             android:layout_below="@+id/lut_dateTextView"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="@dimen/activity_vertical_margin"
-            />
+            app:ignore="ContentDescription" />
 
-        <!--credited by-->
+        <!--transaction-->
         <TextView
             android:id="@+id/lut_balanceCredited"
             android:layout_width="wrap_content"

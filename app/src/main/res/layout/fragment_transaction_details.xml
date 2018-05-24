@@ -25,35 +25,49 @@
             android:layout_alignParentEnd="true"
             android:hint="date time"
             style="@style/MyCustomTextStyleMedium"
+            android:textColor="@color/carrot"
             android:textStyle="bold"
              />
+
+        <!--Serial Number-->
+        <TextView
+            android:id="@+id/td_serialNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/td_dateTimeTextView"
+            android:layout_marginTop="2dp"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black90"
+            android:textStyle="bold"
+            />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/MyCustomTextStyleSmall"
-            android:text="Transctions\nDetails"
+            android:text="Transaction\nDetails"
             android:textStyle="bold"
             android:gravity="start"
             android:layout_marginStart="8dp"
             />
 
-
-        <!--balance added-->
+        <!--transaction id-->
         <TextView
-            android:id="@+id/td_balanceAdded"
+            android:id="@+id/td_transactionID"
             android:layout_below="@+id/td_dateTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:hint="Transaction: "
+            android:hint="Transaction ID: "
             style="@style/MyCustomTextStyleSmall"
             android:layout_marginTop="32dp"
             android:textColorHint="@color/black"
             />
         <TextView
-            android:id="@+id/td_balanceAddedTextView"
-            android:layout_toEndOf="@+id/td_balanceAdded"
+            android:id="@+id/td_transactionIDTextView"
+            android:layout_toEndOf="@+id/td_transactionID"
             android:layout_below="@+id/td_dateTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,10 +77,60 @@
             android:layout_marginTop="32dp"
             />
 
+
+
+        <!--balance added-->
+        <TextView
+            android:id="@+id/td_balanceAdded"
+            android:layout_below="@+id/td_transactionIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Transaction Amount: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/td_balanceAddedTextView"
+            android:layout_toEndOf="@+id/td_balanceAdded"
+            android:layout_below="@+id/td_transactionIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            />
+
+        <!--remarks-->
+        <TextView
+            android:id="@+id/td_remarks"
+            android:layout_below="@+id/td_balanceAddedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Remarks: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/td_remarksTextView"
+            android:layout_toEndOf="@+id/td_remarks"
+            android:layout_below="@+id/td_balanceAddedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            />
+
         <!--mode-->
         <TextView
             android:id="@+id/td_modeAdded"
-            android:layout_below="@+id/td_balanceAddedTextView"
+            android:layout_below="@+id/td_remarksTextView"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +142,7 @@
         <TextView
             android:id="@+id/td_modeTextView"
             android:layout_toEndOf="@+id/td_modeAdded"
-            android:layout_below="@+id/td_balanceAddedTextView"
+            android:layout_below="@+id/td_remarksTextView"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

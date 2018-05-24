@@ -49,7 +49,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     TextView uid_tv, totalBalance_tv, transaction_tv, amountInWords_tv;
     FontTextView userName_ftv;
 
-    EditText amountToBeSent_et, userUIDToSendMoney_et;
+    EditText amountToBeSent_et, userUIDToSendMoney_et, remarks_et;
 
     SharedPreferences userIdentifierSharedPreferences;
     private static final String USER_IDENTIFIER_PREF = "userIdentifierPref";
@@ -63,7 +63,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     private static final String TOTAL_BALANCE = "total_balance";
 
     String userUID_tx, amountToBeSent_tx, userUIDToSendMoney_tx, userKeyToSendMoney_tx, today_dateTime
-            , commissionDeducted_tx, transactionAmount_tx, commission;
+            , commissionDeducted_tx, transactionAmount_tx, commission, remarks_tx;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -87,6 +87,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         transaction_tv = findViewById(R.id.auh_transaction);
         amountToBeSent_et = findViewById(R.id.auh_amountEditText);
         userUIDToSendMoney_et = findViewById(R.id.auh_userUIDEditText);
+        remarks_et = findViewById(R.id.auh_remarksEditText);
         amountInWords_tv = findViewById(R.id.auh_numberToEnglishTextView);
         userName_ftv = findViewById(R.id.auh_userNameTextView);
 
@@ -262,6 +263,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
     private void SendMoney() {
         userUIDToSendMoney_tx = userUIDToSendMoney_et.getText().toString().trim();
         amountToBeSent_tx = amountToBeSent_et.getText().toString().trim();
+        remarks_tx = remarks_et.getText().toString().trim();
         if (Validations()) { //if 1
             progressDialogWait.show();
             if (CheckIfSendingToItSelf()){//if 2
@@ -600,36 +602,49 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
 
                         final String push_key = databaseReference.push().getKey();
 
+                        final String transaction_money_without_commission = amountToBeSent_et.getText().toString().trim();
+
 //                        setting sender transaction
                         DatabaseReference databaseReferenceSender = databaseReference.child("transactions").child(myKey).child(push_key);
                         databaseReferenceSender.child("mode").setValue("debit");
-                        databaseReferenceSender.child("balance_debited").setValue(amountToBeSent_tx);
+                       // databaseReferenceSender.child("balance_debited").setValue(amountToBeSent_tx);
+                        databaseReferenceSender.child("balance_debited").setValue(transaction_money_without_commission);
                         databaseReferenceSender.child("current_balance").setValue(sender_balance);
                         databaseReferenceSender.child("receiver_key").setValue(userKeyToSendMoney_tx);
                         databaseReferenceSender.child("balance_after_debit").setValue(Integer.toString(my_deducted_balance));
                         databaseReferenceSender.child("dateTime").setValue(today_dateTime);
                         databaseReferenceSender.child("commission").setValue(commissionDeducted_tx);
                         databaseReferenceSender.child("commission_rate").setValue(commission);
+                        databaseReferenceSender.child("transaction_id").setValue(push_key);
 
 //                        setting receiver transaction
                         DatabaseReference databaseReferenceReceiver = databaseReference.child("transactions").child(userKeyToSendMoney_tx).child(push_key);
                         databaseReferenceReceiver.child("mode").setValue("credit");
-                        databaseReferenceReceiver.child("balance_credited").setValue(amountToBeSent_tx);
+                       // databaseReferenceReceiver.child("balance_credited").setValue(amountToBeSent_tx);
+                        databaseReferenceReceiver.child("balance_credited").setValue(transaction_money_without_commission);
                         databaseReferenceReceiver.child("current_balance").setValue(receiver_balance);
                         databaseReferenceReceiver.child("sender_key").setValue(myKey);
                         databaseReferenceReceiver.child("balance_after_credit").setValue(Integer.toString(updated_balance_of_receiving_user));
                         databaseReferenceReceiver.child("dateTime").setValue(today_dateTime);
                         databaseReferenceReceiver.child("commission").setValue(commissionDeducted_tx);
                         databaseReferenceReceiver.child("commission_rate").setValue(commission);
+                        databaseReferenceReceiver.child("transaction_id").setValue(push_key);
 
 //                        setting transaction record in admin account
                         DatabaseReference databaseReferenceAdminAccount = databaseReference.child("adminAccount").child(push_key);
                         databaseReferenceAdminAccount.child("dateTime").setValue(today_dateTime);
                         databaseReferenceAdminAccount.child("commission").setValue(commissionDeducted_tx);
-                        databaseReferenceAdminAccount.child("transaction_amount").setValue(amountToBeSent_tx);
+                       // databaseReferenceAdminAccount.child("transaction_amount").setValue(amountToBeSent_tx);
+                        databaseReferenceAdminAccount.child("transaction_amount").setValue(transaction_money_without_commission);
                         databaseReferenceAdminAccount.child("sender_key").setValue(myKey);
                         databaseReferenceAdminAccount.child("receiver_key").setValue(userKeyToSendMoney_tx);
                         databaseReferenceAdminAccount.child("commission_rate").setValue(commission);
+                        databaseReferenceAdminAccount.child("transaction_id").setValue(push_key);
+
+//                        adding remarks
+                        if (!TextUtils.isEmpty(remarks_tx)){
+                            databaseReference.child("transaction_remarks").child("remarks").child(push_key).setValue(remarks_tx);
+                        }
 
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(UserHomePage.this)
@@ -703,6 +718,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                     .show();
             return false;
         }
+
 
         return true;
     }
