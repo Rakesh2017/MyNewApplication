@@ -177,9 +177,9 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String balance = dataSnapshot.child("total_balance").getValue(String.class);
-                        adminBalance_tv.setText(" Rs "+balance+"/-");
+                        adminBalance_tv.setText("Rs "+balance+"/-");
                         if (TextUtils.isEmpty(balance)){
-                            adminBalance_tv.setText(" Rs "+0.0+"/-");
+                            adminBalance_tv.setText("Rs "+0.0+"/-");
                         }
                     }
 
@@ -198,7 +198,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String commission = dataSnapshot.child("commission").getValue(String.class);
-                        currentCommission_tv.setText("  "+commission+"%");
+                        currentCommission_tv.setText(commission+"%");
                         if (TextUtils.isEmpty(commission)){
                             currentCommission_tv.setText(" NA");
                         }

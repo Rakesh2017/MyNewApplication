@@ -252,8 +252,6 @@ public class AddUser extends Fragment implements View.OnClickListener {
 
         progressDialog.show();
 
-        Log.w("ray", "pain "+year);
-
         Random r = new Random();
         final int Low = 10000;
         int High = 100000;
@@ -282,8 +280,6 @@ public class AddUser extends Fragment implements View.OnClickListener {
                         else
                         {
                             String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
-                            Log.w("raky", "uid: "+mAuth1.getCurrentUser().getUid());
-                            Log.w("raky", "identity: "+identity);
 
                             if (TextUtils.equals(identity, "aangadia")){
                                 new CheckNetworkConnection(getActivity(), new CheckNetworkConnection.OnConnectionCallback() {
@@ -520,14 +516,14 @@ public void CreatingFirebaseAuthInstance(){
     public void changePassword(){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String newPassword = "password123";
-        Log.w("raky", "hit");
+
 
         user.updatePassword(newPassword)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            //Log.w("raky", user.getDisplayName());
+                            //("raky", user.getDisplayName());
                             Log.d("raky", "User password updated.");
                         }
                         else {

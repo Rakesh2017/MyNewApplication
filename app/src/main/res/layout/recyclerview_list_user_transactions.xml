@@ -25,22 +25,45 @@
         android:padding="8dp"
         >
 
-        <!--transaction-->
+        <!--Serial Number-->
         <TextView
             android:id="@+id/lut_serialNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Serial:  "
+            android:text="Sr No: "
             style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black90"
             />
 
         <TextView
-            android:id="@+id/lut_lut_serialNumberTextView"
+            android:id="@+id/lut_serialNumberTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/lut_serialNumber"
             android:textStyle="bold"
             style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black90"
+            />
+
+        <!--transaction id-->
+        <TextView
+            android:id="@+id/lut_transactionID"
+            android:layout_below="@+id/lut_serialNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transaction ID: "
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/lut_transactionIDTextView"
+            android:layout_below="@+id/lut_serialNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/lut_transactionID"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black"
             />
 
 
@@ -71,8 +94,7 @@
             android:id="@+id/lut_balanceCredited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lut_dateTextView"
-            android:text="Transaction:  "
+            android:layout_below="@+id/lut_transactionIDTextView"
             style="@style/MyCustomTextStyleSmall"
             />
 
@@ -81,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/lut_balanceCredited"
-            android:layout_below="@+id/lut_dateTextView"
+            android:layout_below="@+id/lut_transactionIDTextView"
             android:textStyle="bold"
             style="@style/MyCustomTextStyleSmall"
             />

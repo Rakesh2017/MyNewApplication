@@ -1,21 +1,16 @@
 package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -84,9 +79,11 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
         String money_added_to_account = null;
         holder.serialNumber_tv.setText(String.valueOf(position+1));
         holder.date_tv.setText(UploadInfo.getDateTime());
+        holder.transactionID_tv.setText(UploadInfo.getTransaction_id());
 
         //if money add
         if (TextUtils.equals(UploadInfo.getMode(),"moneyAdd")){
+            holder.balanceCredited.setText("Credit:  ");
             String BALANCE_ADD = "Balance Add";
             holder.modeOFTransaction_tv.setText(BALANCE_ADD);
             holder.balanceCredited_tv.setTextColor(context.getResources().getColor(R.color.green));
@@ -95,6 +92,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
 //        if debited
         else if (TextUtils.equals(UploadInfo.getMode(),"debit")){
+            holder.balanceCredited.setText("Debit:  ");
             String DEBIT = "Debit";
             holder.modeOFTransaction_tv.setText(DEBIT);
             holder.balanceCredited_tv.setTextColor(context.getResources().getColor(R.color.red));
@@ -103,6 +101,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
         //        if credited
         else if (TextUtils.equals(UploadInfo.getMode(),"credit")){
+            holder.balanceCredited.setText("Credit:  ");
             String CREDIT = "Credit";
             holder.modeOFTransaction_tv.setText(CREDIT);
             holder.balanceCredited_tv.setTextColor(context.getResources().getColor(R.color.green));
@@ -208,7 +207,8 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date_tv, balanceCredited_tv, modeOFTransaction_tv, balanceCredited, serialNumber_tv;
+        TextView date_tv, balanceCredited_tv, balanceCredited0_tv, modeOFTransaction_tv, balanceCredited, serialNumber_tv
+                ,transactionID_tv;
         CardView cardView;
         RelativeLayout relativeLayout;
         ImageButton button;
@@ -220,7 +220,8 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
             balanceCredited_tv = itemView.findViewById(R.id.lut_balanceCreditedTextView);
             balanceCredited = itemView.findViewById(R.id.lut_balanceCredited);
             modeOFTransaction_tv = itemView.findViewById(R.id.lut_modeOfTransactionTextView);
-            serialNumber_tv = itemView.findViewById(R.id.lut_lut_serialNumberTextView);
+            serialNumber_tv = itemView.findViewById(R.id.lut_serialNumberTextView);
+            transactionID_tv = itemView.findViewById(R.id.lut_transactionIDTextView);
 
             cardView = itemView.findViewById(R.id.lut_cardview);
             relativeLayout = itemView.findViewById(R.id.lut_relativeLayout);

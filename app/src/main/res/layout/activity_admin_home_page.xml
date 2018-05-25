@@ -140,6 +140,7 @@
                     android:layout_toEndOf="@+id/adh_adminAccount"
                     android:layout_below="@+id/adh_adminAccountHeaderTextView"
                     android:layout_marginTop="10dp"
+                    android:layout_marginStart="4dp"
                     android:hint="@string/hintPlaceholderSingle"
                     android:textColorHint="@color/black"
                     android:textStyle="bold"
@@ -475,6 +476,7 @@
                     android:layout_toEndOf="@+id/adh_currentCommission"
                     android:layout_below="@+id/adh_commissionTextView"
                     android:layout_marginTop="12dp"
+                    android:layout_marginStart="4dp"
                     style="@style/MyCustomTextStyleSmall"
                     android:textStyle="bold"
                     />

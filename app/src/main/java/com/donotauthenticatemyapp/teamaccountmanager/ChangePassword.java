@@ -163,7 +163,7 @@ public class ChangePassword extends Fragment {
     public void updatePassword(){
 
         progressDialog.show();
-        Log.w("raky", uid_tx+" "+oldPassword_tx);
+
         uid_tx = uid_tx.concat(PLAY_EMAIL);
         mAuth2.signInWithEmailAndPassword(uid_tx, oldPassword_tx)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {

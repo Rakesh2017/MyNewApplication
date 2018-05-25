@@ -243,7 +243,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     RecyclerViewListAangadiaData aangadiaData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
-                    //  Log.w("raky", "user: "+aangadiaData.getUserName());
+                    //  ("raky", "user: "+aangadiaData.getUserName());
                     String str = aangadiaData.getUid();
                     String str1 = aangadiaData.getUserName();
                     String findStr = uid_tx;
@@ -286,7 +286,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     RecyclerViewListAangadiaData aangadiaData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
-                    //  Log.w("raky", "user: "+aangadiaData.getUserName());
+                    //  ("raky", "user: "+aangadiaData.getUserName());
                     String str = aangadiaData.getUid();
                     String findStr = uid_tx;
                     if (str.split(findStr, -1).length-1 > 0) list.add(aangadiaData);
@@ -324,7 +324,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     RecyclerViewListAangadiaData aangadiaData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
-                  //  Log.w("raky", "user: "+aangadiaData.getUserName());
+                  //  ("raky", "user: "+aangadiaData.getUserName());
                     String str = aangadiaData.getUserName();
                     String findStr = name_tx;
                     if (str.split(findStr, -1).length-1 > 0) list.add(aangadiaData);
@@ -363,7 +363,7 @@ public class ListOfAangadias extends AppCompatActivity implements View.OnClickLi
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     RecyclerViewListAangadiaData aangadiaData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
-                    Log.w("raky", "user: "+aangadiaData.getUserName());
+
                     list.add(aangadiaData);
                 }
 

@@ -35,6 +35,28 @@
             android:textStyle="bold"
             />
 
+
+        <!--Serial Number-->
+        <TextView
+            android:id="@+id/rva_serialNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sr No:  "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black90"
+            />
+
+        <TextView
+            android:id="@+id/rva_serialNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/rva_serialNumber"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black90"
+            />
+
+
         <!--transaction id-->
         <TextView
             android:id="@+id/rva_transactionID"

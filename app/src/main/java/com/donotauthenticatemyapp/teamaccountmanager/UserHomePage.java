@@ -554,7 +554,6 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
 
                         //MakeTransaction();
                     } catch (IOException e) {
-                        Log.w("raky", e.getCause());
                         progressDialog.dismiss();
                     }
                 }//for

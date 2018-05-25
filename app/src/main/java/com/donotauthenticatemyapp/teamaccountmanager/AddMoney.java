@@ -271,17 +271,16 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                                 Date dateTime = null;
                                 NTPUDPClient timeClient = new NTPUDPClient();
                                 timeClient.setDefaultTimeout(1000);
-                                Log.w("raky", "count: "+count);
+
                                 for (int retries = 7; retries >= 0; retries--) { // for
                                     try {
                                         count++;
                                         InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
-                                        Log.w("raky", "in: "+inetAddress);
+
                                         TimeInfo timeInfo = timeClient.getTime(inetAddress);
                                         long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
                                         dateTime = new Date(returnTime);
 
-                                        Log.w("raky", "date: "+dateTime);
                                         String myDate = String.valueOf(dateTime);
                                         String date, time, year, month;
                                         date = myDate.substring(8, 10);
@@ -297,10 +296,9 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                                             break;
                                         }
 
-                                        Log.w("raky", "q"+count);
 
                                     } catch (IOException e) {
-                                        Log.w("raky", e.getCause());
+
                                         progressDialog.dismiss();
                                     }
                                 }//for

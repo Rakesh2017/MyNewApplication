@@ -242,7 +242,6 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
 
             progressDialog.show();
 
-           Log.w("ray", "pain "+year);
 
             Random r = new Random();
             int Low = 10000;

@@ -34,6 +34,26 @@
             android:textStyle="bold"
             />
 
+        <!--serial-->
+        <TextView
+            android:id="@+id/td_serialNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sr No: "
+            android:textColor="@color/black90"
+            style="@style/MyCustomTextStyleSmall"
+            />
+
+        <TextView
+            android:id="@+id/td_serialNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/td_serialNumber"
+            android:textStyle="bold"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black90"
+            />
+
         <!--transaction id-->
         <TextView
             android:id="@+id/td_transactionID"

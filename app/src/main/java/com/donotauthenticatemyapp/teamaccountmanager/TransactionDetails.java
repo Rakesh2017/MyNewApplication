@@ -139,7 +139,7 @@ public class TransactionDetails extends Fragment {
         dateTime_tv.setText(dateTime_tx);
         transactionID_tv.setText(transactionID_tx);
         serialNumber_tv.setText("Sr No: "+serialNumber_tx);
-        CreditAndDebitTransactionBy();
+
 
 //        if mode is money Add
         if(TextUtils.equals(mode_tx, "moneyAdd")) {
@@ -185,15 +185,22 @@ public class TransactionDetails extends Fragment {
             }
 
 
-            if (TextUtils.equals(transactionBy_tx, "aangadia") && !TextUtils.isEmpty(transactionBy_tx))
+            if (TextUtils.equals(transactionBy_tx, "aangadia") && !TextUtils.isEmpty(transactionBy_tx)){
+                transactionBy_tv0.setText("Credited by: ");
                 setAangadiaDetails();
-            else if ((TextUtils.equals(transactionBy_tx, "admin") && !TextUtils.isEmpty(transactionBy_tx)))
-                transactionBy_tv.setText("Admin");
+            }
+
+            else if ((TextUtils.equals(transactionBy_tx, "admin") && !TextUtils.isEmpty(transactionBy_tx))){
+                transactionBy_tv0.setText("Credited by: ");
+                transactionBy_tv.setText("Owner");
+            }
+
         }// if mode is money add
 
 
 //        if mode is credit
         else if (TextUtils.equals(mode_tx, "credit")){
+              CreditAndDebitTransactionBy();
               balanceCredited1_tv.setText("Credit: ");
               setRemarks();
               transactionBy_tv0.setHint("Credited By: ");
@@ -241,12 +248,12 @@ public class TransactionDetails extends Fragment {
                 commission_tv.setText("Rs 0 (0%)");
             }
 
-              CreditAndDebitTransactionBy();
         }
 
 
         //        if mode is debit
         else if (TextUtils.equals(mode_tx, "debit")){
+            CreditAndDebitTransactionBy();
             balanceCredited1_tv.setText("Debit: ");
             setRemarks();
             transactionBy_tv0.setHint("Debited To: ");
