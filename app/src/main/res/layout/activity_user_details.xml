@@ -12,6 +12,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         >
 
 
@@ -139,21 +140,48 @@
                 android:layout_marginTop="12dp"
                 />
 
-
-            <TextView
-                android:id="@+id/ud_transaction"
-                android:layout_below="@+id/ud_linearLayout1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Transactions"
-                style="@style/MyCustomTextStyleMedium"
-                android:textColor="@color/black90"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_below="@+id/ud_linearLayout1"
                 android:layout_marginTop="24dp"
-                android:drawableEnd="@drawable/ic_transactions"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                />
+                >
+
+                <!--transactions-->
+                <TextView
+                    android:id="@+id/ud_transaction"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transactions"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:textColor="@color/black90"
+                    android:drawableStart="@drawable/ic_transactions"
+                    android:drawablePadding="8dp"
+                    android:textStyle="bold"
+                    />
+
+                <!--Passbook-->
+                <TextView
+                    android:id="@+id/ud_passbook"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Passbook"
+                    style="@style/MyCustomTextStyleMedium"
+                    android:textColor="@color/black90"
+                    android:drawableEnd="@drawable/ic_passbook"
+                    android:drawablePadding="8dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    />
+
+
+            </LinearLayout>
+
 
 
 

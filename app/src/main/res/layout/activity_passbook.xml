@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Passbook">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/main.appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/whiteSmoke"
+        android:fitsSystemWindows="true"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/main.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/white"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
+            android:background="@color/whiteSmoke"
+            tools:targetApi="lollipop">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/appColor"
+                >
+
+                <ImageButton
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/ic_back"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/apx_backButton"
+                    android:layout_marginStart="5dp"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_toEndOf="@+id/apx_backButton"
+                    android:id="@+id/apx_linearLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
+                    >
+                    <!--ist part-->
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        >
+                        <!--balance-->
+                        <TextView
+                            android:id="@+id/apx_totalMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Balance: "
+                            style="@style/MyCustomTextStyleSmall"
+                            android:textColor="@color/black90"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/apx_totalMoneyTextView"
+                            android:layout_toEndOf="@+id/apx_totalMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hintPlaceholderSingle"
+                            style="@style/MyCustomTextStyleSmall"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            />
+
+                    </RelativeLayout>
+
+                    <!--2nd part-->
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        >
+
+                        <!--user uid and user name-->
+                        <TextView
+                            android:id="@+id/apx_userUidTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            style="@style/MyCustomTextStyleSmall"
+                            android:textStyle="bold"
+                            />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:id="@+id/apx_ll"
+            android:background="@color/white"
+            android:elevation="@dimen/elevation_5"
+            tools:targetApi="lollipop"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            >
+
+
+            <TextView
+                android:id="@+id/apx_listLengthTextView"
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Total : _______"
+                android:layout_gravity="center"
+                style="@style/MyCustomTextStyleSmall"
+                android:gravity="center"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:id="@+id/apx_limitEditText"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="Limit To"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/paddingBetweenET"
+                style="@style/MyCustomEditTextStyle"
+                android:inputType="number"
+                android:maxLength="5"
+                android:elevation="@dimen/elevation_5"
+                tools:targetApi="lollipop"
+                tools:ignore="LabelFor" />
+
+            <TextView
+                android:id="@+id/apx_setLimitTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                style="@style/MyCustomTextStyleMedium"
+                android:text="Set"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                />
+
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/apx_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/fading_app_color"
+            android:layout_below="@id/apx_ll"
+            />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

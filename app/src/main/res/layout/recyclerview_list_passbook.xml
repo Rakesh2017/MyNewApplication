@@ -1,0 +1,257 @@
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/rlp_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="5dp"
+    card_view:cardMaxElevation="5dp"
+    android:alwaysDrawnWithCache="true"
+    app:cardBackgroundColor="@color/white"
+    android:background="@color/white"
+    android:layout_centerHorizontal="true"
+    app:cardPreventCornerOverlap="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlp_relativeLayout"
+        android:background="@color/white"
+        xmlns:app="http://schemas.android.com/tools"
+        android:padding="8dp"
+        >
+
+        <!--date time-->
+        <TextView
+            android:id="@+id/lpx_dateTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:hint="date time"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/carrot"
+            android:textStyle="bold"
+            />
+
+        <!--Serial Number-->
+        <TextView
+            android:id="@+id/lpx_serialNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Sr No: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/black90"
+            android:textStyle="bold"
+            />
+
+        <!--transaction id-->
+        <TextView
+            android:id="@+id/lpx_transactionID"
+            android:layout_below="@+id/lpx_dateTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Transaction ID: "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginTop="5dp"
+            android:textColorHint="@color/black"
+            />
+        <TextView
+            android:id="@+id/lpx_transactionIDTextView"
+            android:layout_toEndOf="@+id/lpx_transactionID"
+            android:layout_below="@+id/lpx_dateTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            />
+
+
+
+        <!--balance added-->
+        <TextView
+            android:id="@+id/lpx_balanceAdded"
+            android:layout_below="@+id/lpx_transactionIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="cr/db"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/lpx_balanceAddedTextView"
+            android:layout_toEndOf="@+id/lpx_balanceAdded"
+            android:layout_below="@+id/lpx_transactionIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            />
+
+        <!--remarks-->
+        <TextView
+            android:id="@+id/lpx_remarks"
+            android:layout_below="@+id/lpx_balanceAddedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Remarks: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/lpx_remarksTextView"
+            android:layout_toEndOf="@+id/lpx_remarks"
+            android:layout_below="@+id/lpx_balanceAddedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            />
+
+        <!--mode-->
+        <TextView
+            android:id="@+id/lpx_modeAdded"
+            android:layout_below="@+id/lpx_remarksTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Mode: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            />
+        <TextView
+            android:id="@+id/lpx_modeTextView"
+            android:layout_toEndOf="@+id/lpx_modeAdded"
+            android:layout_below="@+id/lpx_remarksTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+        <!--credited/debited by-->
+        <TextView
+            android:id="@+id/lpx_moneyAddedBy"
+            android:layout_below="@+id/lpx_modeTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Tr. By: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            />
+        <TextView
+            android:id="@+id/lpx_moneyAddedByTextView"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/lpx_moneyAddedBy"
+            android:layout_below="@+id/lpx_modeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+        <!--previous balance-->
+        <TextView
+            android:id="@+id/lpx_previousBalance"
+            android:layout_below="@+id/lpx_moneyAddedByTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Previous Balance: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            />
+        <TextView
+            android:id="@+id/lpx_previousBalanceTextView"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/lpx_previousBalance"
+            android:layout_below="@+id/lpx_moneyAddedByTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+        <!--balance after transaction-->
+        <TextView
+            android:id="@+id/lpx_balanceAfterTransaction"
+            android:layout_below="@+id/lpx_previousBalanceTextView"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Balance After Transaction: "
+            style="@style/MyCustomTextStyleSmall"
+            android:textColorHint="@color/black"
+            />
+        <TextView
+            android:id="@+id/lpx_balanceAfterTransactionTextView"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/lpx_balanceAfterTransaction"
+            android:layout_below="@+id/lpx_previousBalanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textStyle="bold"
+            />
+
+        <!--commission-->
+        <TextView
+            android:id="@+id/lpx_commission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/lpx_balanceAfterTransactionTextView"
+            android:hint="Commission: "
+            style="@style/MyCustomTextStyleSmall"
+            android:layout_marginStart="8dp"
+            android:textColorHint="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/lpx_commissionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/lpx_commission"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/lpx_balanceAfterTransactionTextView"
+            android:textStyle="bold"
+            android:hint="@string/hintPlaceholderSingle"
+            style="@style/MyCustomTextStyleSmall"
+            android:textColor="@color/orangeDark"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            android:layout_below="@+id/lpx_commissionTextView"
+            android:layout_marginTop="8dp"
+            />
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

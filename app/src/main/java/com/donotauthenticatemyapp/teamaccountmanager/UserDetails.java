@@ -29,7 +29,7 @@ import java.text.NumberFormat;
 public class UserDetails extends AppCompatActivity implements View.OnClickListener {
 
     TextView name_tv, uid_tv, password_tv, question_tv, answer_tv, phone_tv, state_tv, city_tv, addMoney_tv
-            , totalBalance_tv, transaction_tv, userNameHeader_tv;
+            , totalBalance_tv, transaction_tv, userNameHeader_tv, passbook_tv;
     String name_tx, uid_tx, password_tx, question_tx, answer_tx, phone_tx, state_tx, city_tx;
 
     ImageButton back_btn, editPassword_btn, editName_btn, editPhone_btn, home_btn;
@@ -77,6 +77,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         addMoney_tv = findViewById(R.id.ud_addMoneyTextView);
         totalBalance_tv = findViewById(R.id.ud_totalMoneyTextView);
         transaction_tv = findViewById(R.id.ud_transaction);
+        passbook_tv = findViewById(R.id.ud_passbook);
 
         editPassword_btn = findViewById(R.id.ud_editPasswordButton);
         editName_btn = findViewById(R.id.ud_editNameButton);
@@ -101,6 +102,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         editPhone_btn.setOnClickListener(this);
         addMoney_tv.setOnClickListener(this);
         transaction_tv.setOnClickListener(this);
+        passbook_tv.setOnClickListener(this);
         expandTextView_btn.setOnClickListener(this);
     }
 
@@ -315,6 +317,16 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
                 }
                 catch (IllegalStateException e)
+                {
+//                    exception
+                }
+                break;
+            case R.id.ud_passbook:
+                try {
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_user_details, new UserTransactions()).addToBackStack("transactions").commit();
+                      startActivity(new Intent(UserDetails.this, Passbook.class));
+                }
+                catch (IllegalStateException | ActivityNotFoundException e)
                 {
 //                    exception
                 }

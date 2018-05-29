@@ -200,18 +200,19 @@ public class TransactionDetails extends Fragment {
 
 //        if mode is credit
         else if (TextUtils.equals(mode_tx, "credit")){
+
+            transactionBy_tx = transactionSharedPreferences.getString(SENDER_KEY, "");
+            balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_CREDITED, "");
+            previousBalance_tx = transactionSharedPreferences.getString(CURRENT_BALANCE, "");
+            balanceAfterTransaction_tx = transactionSharedPreferences.getString(BALANCE_AFTER_CREDIT, "");
+            commission_tx = transactionSharedPreferences.getString(COMMISSION, "");
+            String commission_rate = transactionSharedPreferences.getString(COMMISSION_RATE, "");
+
               CreditAndDebitTransactionBy();
               balanceCredited1_tv.setText("Credit: ");
               setRemarks();
               transactionBy_tv0.setHint("Credited By: ");
 
-
-              transactionBy_tx = transactionSharedPreferences.getString(SENDER_KEY, "");
-              balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_CREDITED, "");
-              previousBalance_tx = transactionSharedPreferences.getString(CURRENT_BALANCE, "");
-              balanceAfterTransaction_tx = transactionSharedPreferences.getString(BALANCE_AFTER_CREDIT, "");
-              commission_tx = transactionSharedPreferences.getString(COMMISSION, "");
-              String commission_rate = transactionSharedPreferences.getString(COMMISSION_RATE, "");
 
             String credit = "Credit";
             mode_tv.setText(credit);
@@ -253,10 +254,6 @@ public class TransactionDetails extends Fragment {
 
         //        if mode is debit
         else if (TextUtils.equals(mode_tx, "debit")){
-            CreditAndDebitTransactionBy();
-            balanceCredited1_tv.setText("Debit: ");
-            setRemarks();
-            transactionBy_tv0.setHint("Debited To: ");
 
             transactionBy_tx = transactionSharedPreferences.getString(RECEIVER_KEY, "");
             balanceCredited_tx = transactionSharedPreferences.getString(BALANCE_DEBITED, "");
@@ -264,6 +261,11 @@ public class TransactionDetails extends Fragment {
             balanceAfterTransaction_tx = transactionSharedPreferences.getString(BALANCE_AFTER_DEBIT, "");
             commission_tx = transactionSharedPreferences.getString(COMMISSION, "");
             String commission_rate = transactionSharedPreferences.getString(COMMISSION_RATE, "");
+
+            CreditAndDebitTransactionBy();
+            balanceCredited1_tv.setText("Debit: ");
+            setRemarks();
+            transactionBy_tv0.setHint("Debited To: ");
 
             String debit = "Debit";
             mode_tv.setText(debit);
@@ -299,12 +301,11 @@ public class TransactionDetails extends Fragment {
             } else {
                 commission_tv.setText("Rs 0 (0%)");
             }
-
         }
-
     }
 
-//    setting transaction ID
+
+    //    setting transaction ID
     private void setRemarks() {
         databaseReference.child("transaction_remarks").child("remarks")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
