@@ -2,6 +2,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -46,7 +47,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
 
     ImageButton logout_ib;
     FancyButton sendMoney_btn;
-    TextView uid_tv, totalBalance_tv, transaction_tv, amountInWords_tv;
+    TextView uid_tv, totalBalance_tv, transaction_tv, amountInWords_tv, passbook_tv;
     FontTextView userName_ftv;
 
     EditText amountToBeSent_et, userUIDToSendMoney_et, remarks_et;
@@ -90,6 +91,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         remarks_et = findViewById(R.id.auh_remarksEditText);
         amountInWords_tv = findViewById(R.id.auh_numberToEnglishTextView);
         userName_ftv = findViewById(R.id.auh_userNameTextView);
+        passbook_tv = findViewById(R.id.auh_passbook);
 
         loadingGIf = findViewById(R.id.auh_loadingGif);
 
@@ -154,6 +156,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
         logout_ib.setOnClickListener(this);
         transaction_tv.setOnClickListener(this);
         sendMoney_btn.setOnClickListener(this);
+        passbook_tv.setOnClickListener(this);
     }
 
 //    onStart
@@ -254,6 +257,15 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.auh_sendMoneyButton: // send money to other uid
                 SendMoney();
+                break;
+            case R.id.auh_passbook:
+                try {
+                    startActivity(new Intent(UserHomePage.this, Passbook.class));
+
+                }
+                catch (ActivityNotFoundException e){
+//                    exception
+                }
                 break;
         }
 
@@ -610,11 +622,16 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceSender.child("balance_debited").setValue(transaction_money_without_commission);
                         databaseReferenceSender.child("current_balance").setValue(sender_balance);
                         databaseReferenceSender.child("receiver_key").setValue(userKeyToSendMoney_tx);
+                        databaseReferenceSender.child("receiver_uid").setValue(userUIDToSendMoney_tx);
                         databaseReferenceSender.child("balance_after_debit").setValue(Integer.toString(my_deducted_balance));
                         databaseReferenceSender.child("dateTime").setValue(today_dateTime);
                         databaseReferenceSender.child("commission").setValue(commissionDeducted_tx);
                         databaseReferenceSender.child("commission_rate").setValue(commission);
                         databaseReferenceSender.child("transaction_id").setValue(push_key);
+                        //                        adding remarks
+                        if (!TextUtils.isEmpty(remarks_tx)){
+                            databaseReferenceSender.child("transaction_remarks").setValue(remarks_tx);
+                        }
 
 //                        setting receiver transaction
                         DatabaseReference databaseReferenceReceiver = databaseReference.child("transactions").child(userKeyToSendMoney_tx).child(push_key);
@@ -623,11 +640,16 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceReceiver.child("balance_credited").setValue(transaction_money_without_commission);
                         databaseReferenceReceiver.child("current_balance").setValue(receiver_balance);
                         databaseReferenceReceiver.child("sender_key").setValue(myKey);
+                        databaseReferenceReceiver.child("sender_uid").setValue(userUID_tx);
                         databaseReferenceReceiver.child("balance_after_credit").setValue(Integer.toString(updated_balance_of_receiving_user));
                         databaseReferenceReceiver.child("dateTime").setValue(today_dateTime);
                         databaseReferenceReceiver.child("commission").setValue(commissionDeducted_tx);
                         databaseReferenceReceiver.child("commission_rate").setValue(commission);
                         databaseReferenceReceiver.child("transaction_id").setValue(push_key);
+                        //                        adding remarks
+                        if (!TextUtils.isEmpty(remarks_tx)){
+                            databaseReferenceReceiver.child("transaction_remarks").setValue(remarks_tx);
+                        }
 
 //                        setting transaction record in admin account
                         DatabaseReference databaseReferenceAdminAccount = databaseReference.child("adminAccount").child(push_key);
@@ -640,10 +662,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                         databaseReferenceAdminAccount.child("commission_rate").setValue(commission);
                         databaseReferenceAdminAccount.child("transaction_id").setValue(push_key);
 
-//                        adding remarks
-                        if (!TextUtils.isEmpty(remarks_tx)){
-                            databaseReference.child("transaction_remarks").child("remarks").child(push_key).setValue(remarks_tx);
-                        }
+
 
                         progressDialog.dismiss();
                         new MaterialDialog.Builder(UserHomePage.this)

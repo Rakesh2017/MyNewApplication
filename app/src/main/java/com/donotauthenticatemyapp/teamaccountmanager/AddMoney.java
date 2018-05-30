@@ -43,6 +43,7 @@ import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -69,6 +70,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
     private static final String CURRENT_BALANCE = "current_balance";
     private static final String DATE_TIME = "dateTime";
     private static final String AANGADIA_KEY = "aangadia_key";
+    private static final String AANGADIA_UID = "aangadia_uid";
     private SharedPreferences sharedPreferences, userIdentifierSharedPreferences;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -213,7 +215,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
     public boolean MoneyValidation(){
         try {
             if (TextUtils.isEmpty(money_tx)){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Failed")
                         .titleColor(Color.WHITE)
                         .content("Please Enter Amount")
@@ -225,7 +227,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                 return false;
             }
             else if (Integer.parseInt(money_tx) < 1){
-                new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                         .title("Failed")
                         .titleColor(Color.WHITE)
                         .content("Please Enter Amount")
@@ -247,7 +249,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
 //    add money function
     public void AddMoneyFunction(){
 
-        new MaterialDialog.Builder(getActivity())
+        new MaterialDialog.Builder(Objects.requireNonNull(getActivity()))
                 .title("Are you sure to Add Money!")
                 .content("Rs "+money_tx+"/- will be added to Account with UID:"+uid_tx
                         +", User Name: "+userName_tx)
@@ -357,6 +359,7 @@ public class AddMoney extends Fragment implements View.OnClickListener {
                         databaseReferenceMoneyAddedByAangadia.child(MODE).setValue("moneyAdd");
                         databaseReferenceMoneyAddedByAangadia.child(DATE_TIME).setValue(today_dateTime);
                         databaseReferenceMoneyAddedByAangadia.child(AANGADIA_KEY).setValue(aangadia_key);
+                        databaseReferenceMoneyAddedByAangadia.child(AANGADIA_UID).setValue(uid_tx);
                         databaseReferenceMoneyAddedByAangadia.child("transaction_id").setValue(timestamp_unique_key);
 
 //                        setting data in aangadia cash in account

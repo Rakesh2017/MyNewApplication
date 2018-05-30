@@ -154,7 +154,7 @@ public class UserTransactions extends Fragment {
             public void onConnectionSuccess() {
                 String identity = userIdentifierSharedPreferences.getString(USER_IDENTITY, "");
                 if (TextUtils.equals(identity, "aangadia") || TextUtils.equals(identity, "admin")){
-                    setUIDAndUserNameForAangaisaAndAdmin();
+                    setUIDAndUserNameForAangadiaAndAdmin();
                     setBalanceForAangadiaAndAdmin();
                     ListLengthAdminAndAangadia();
                     LoadTransactionsForAangadiaAndAdmin();
@@ -297,6 +297,9 @@ public class UserTransactions extends Fragment {
                     list.add(userData);
                 }
 
+                if (list.isEmpty())
+                    showEmptyPage();
+
                 adapter = new ListOfUserTransactionsRecyclerViewAdapter(getContext(), list);
 
                 recyclerView.setAdapter(adapter);
@@ -340,7 +343,7 @@ public class UserTransactions extends Fragment {
 //    set balance
 
     //    setting username and uid
-    private void setUIDAndUserNameForAangaisaAndAdmin() {
+    private void setUIDAndUserNameForAangadiaAndAdmin() {
         String uid = sharedPreferences.getString(UID, "");
         String user_name = sharedPreferences.getString(USER_NAME, "");
         uid_tv.setText(uid);

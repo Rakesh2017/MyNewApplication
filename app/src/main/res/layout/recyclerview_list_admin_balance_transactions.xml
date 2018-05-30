@@ -20,7 +20,9 @@
         android:id="@+id/abt_relativeLayout"
         android:background="@color/white"
         xmlns:app="http://schemas.android.com/tools"
-        android:padding="@dimen/activity_horizontal_margin"
+        android:paddingTop="8dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         >
 
         <!--date-->

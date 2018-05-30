@@ -4,6 +4,7 @@ package com.donotauthenticatemyapp.teamaccountmanager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -61,6 +62,7 @@ public class TransactionDetails extends Fragment {
     private final String COMMISSION_RATE = "commission_rate";
     private final String SERIAL_NUMBER = "serial_number";
     private final String TRANSACTION_ID = "transaction_id";
+    private final String TRANSACTION_REMARKS = "transaction_remarks";
 
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -307,39 +309,13 @@ public class TransactionDetails extends Fragment {
 
     //    setting transaction ID
     private void setRemarks() {
-        databaseReference.child("transaction_remarks").child("remarks")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        try {
-                            if (dataSnapshot.hasChild(transactionID_tx)){
-                                String remarks = dataSnapshot.child(transactionID_tx).getValue(String.class);
-                                if (!TextUtils.isEmpty(remarks))
-                                    remarks_tv.setText(remarks);
-                                else {
-                                    remarks_tv.setTextColor(getResources().getColor(R.color.black90));
-                                    remarks_tv.setText("NO REMARKS");
-                                }
-
-                            }
-                            else{
-                                remarks_tv.setTextColor(getResources().getColor(R.color.black90));
-                                remarks_tv.setText("NO REMARKS");
-                            }
-
-                        }
-                        catch (DatabaseException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+        String remarks = transactionSharedPreferences.getString(TRANSACTION_REMARKS, "");
+        if (!TextUtils.isEmpty(remarks))
+            remarks_tv.setText(remarks);
+        else {
+            remarks_tv.setTextColor(Color.GRAY);
+            remarks_tv.setText("NO REMARKS");
+        }
     }
 
 

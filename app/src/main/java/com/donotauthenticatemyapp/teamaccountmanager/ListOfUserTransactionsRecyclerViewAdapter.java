@@ -46,6 +46,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
     private final String COMMISSION_RATE = "commission_rate";
     private final String SERIAL_NUMBER = "serial_number";
     private final String TRANSACTION_ID = "transaction_id"; // same as pushed key
+    private final String TRANSACTION_REMARKS = "transaction_remarks";
 
     SharedPreferences userIdentifierSharedPreferences;
 
@@ -139,6 +140,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                         editor.putString(SENDER_KEY, UploadInfo.getSender_key());
                         editor.putString(COMMISSION, UploadInfo.getCommission());
                         editor.putString(COMMISSION_RATE, UploadInfo.getCommission_rate());
+                        editor.putString(TRANSACTION_REMARKS, UploadInfo.getTransaction_remarks());
                     }
 
                     //debit
@@ -148,6 +150,7 @@ public class ListOfUserTransactionsRecyclerViewAdapter extends RecyclerView.Adap
                         editor.putString(RECEIVER_KEY, UploadInfo.getReceiver_key());
                         editor.putString(COMMISSION, UploadInfo.getCommission());
                         editor.putString(COMMISSION_RATE, UploadInfo.getCommission_rate());
+                        editor.putString(TRANSACTION_REMARKS, UploadInfo.getTransaction_remarks());
                     }
 
                     editor.putString(SERIAL_NUMBER, String.valueOf(position+1));

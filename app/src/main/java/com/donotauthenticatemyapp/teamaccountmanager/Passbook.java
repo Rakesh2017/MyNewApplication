@@ -31,7 +31,7 @@ public class Passbook extends AppCompatActivity {
     TextView balance_tv, uidAndUserName_tv, setLimit_tv, listLength_tv;
     EditText limit_et;
 
-    int limit = 10;
+    int limit = 20;
 
     RecyclerView recyclerView;
 
@@ -285,6 +285,9 @@ public class Passbook extends AppCompatActivity {
                     RecyclerViewListAangadiaData userData = postSnapshot.getValue(RecyclerViewListAangadiaData.class);
                     list.add(userData);
                 }
+
+                if (list.isEmpty())
+                    showEmptyPage();
 
                 adapter = new PassbookListRecyclerViewAdapter(Passbook.this, list);
 

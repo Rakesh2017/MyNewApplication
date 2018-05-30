@@ -5,7 +5,7 @@ public class RecyclerViewListAangadiaData {
     String userName, uid, key, state, city, aangadia_userName, created_by, mode, dateTime, money_added
             ,aangadia_key, money_added_by, previous_balance, balance_debited, balance_credited, sender_key, receiver_key
             ,balance_after_debit, balance_after_credit, current_balance, commission, commission_rate, transaction_amount
-            , user_key, transaction_id;
+            , user_key, transaction_id, sender_uid, receiver_uid, transaction_remarks, aangadia_uid;
 
     public RecyclerViewListAangadiaData(){
 
@@ -60,6 +60,14 @@ public class RecyclerViewListAangadiaData {
     public String getUser_key(){ return user_key; }
 
     public String getTransaction_id(){ return transaction_id; }
+
+    public String getSender_uid(){ return sender_uid; }
+
+    public String getReceiver_uid(){ return receiver_uid; }
+
+    public String getTransaction_remarks(){ return transaction_remarks; }
+
+    public String getAangadia_uid(){ return aangadia_uid; }
 
 
 }

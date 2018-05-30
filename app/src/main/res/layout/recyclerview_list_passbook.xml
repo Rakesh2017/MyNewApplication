@@ -20,7 +20,7 @@
         android:id="@+id/rlp_relativeLayout"
         android:background="@color/white"
         xmlns:app="http://schemas.android.com/tools"
-        android:padding="8dp"
+        android:padding="5dp"
         >
 
         <!--date time-->
@@ -31,7 +31,7 @@
             android:layout_alignParentEnd="true"
             android:hint="date time"
             style="@style/MyCustomTextStyleSmall"
-            android:textColor="@color/carrot"
+            android:textColor="@color/black"
             android:textStyle="bold"
             />
 
@@ -56,7 +56,7 @@
             android:layout_marginStart="8dp"
             android:hint="Transaction ID: "
             style="@style/MyCustomTextStyleSmall"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:textColorHint="@color/black"
             />
         <TextView
@@ -68,7 +68,7 @@
             android:hint="@string/hintPlaceholderSingle"
             style="@style/MyCustomTextStyleSmall"
             android:textStyle="bold"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             />
 
 
@@ -76,25 +76,26 @@
         <!--balance added-->
         <TextView
             android:id="@+id/lpx_balanceAdded"
-            android:layout_below="@+id/lpx_transactionIDTextView"
+            android:layout_below="@+id/lpx_dateTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:hint="cr/db"
+            android:layout_toStartOf="@+id/lpx_balanceAddedTextView"
             style="@style/MyCustomTextStyleSmall"
             android:textColorHint="@color/black"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             />
         <TextView
             android:id="@+id/lpx_balanceAddedTextView"
-            android:layout_toEndOf="@+id/lpx_balanceAdded"
-            android:layout_below="@+id/lpx_transactionIDTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/lpx_dateTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderSingle"
             style="@style/MyCustomTextStyleSmall"
             android:textStyle="bold"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             />
 
         <!--remarks-->
@@ -107,7 +108,7 @@
             android:hint="Remarks: "
             style="@style/MyCustomTextStyleSmall"
             android:textColorHint="@color/black"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             />
         <TextView
             android:id="@+id/lpx_remarksTextView"
@@ -118,14 +119,15 @@
             android:hint="@string/hintPlaceholderSingle"
             style="@style/MyCustomTextStyleSmall"
             android:textStyle="bold"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
+            android:textColor="@color/appColor"
             />
 
         <!--mode-->
         <TextView
             android:id="@+id/lpx_modeAdded"
             android:layout_below="@+id/lpx_remarksTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -137,7 +139,7 @@
             android:id="@+id/lpx_modeTextView"
             android:layout_toEndOf="@+id/lpx_modeAdded"
             android:layout_below="@+id/lpx_remarksTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderSingle"
@@ -149,7 +151,7 @@
         <TextView
             android:id="@+id/lpx_moneyAddedBy"
             android:layout_below="@+id/lpx_modeTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -159,7 +161,7 @@
             />
         <TextView
             android:id="@+id/lpx_moneyAddedByTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_toEndOf="@+id/lpx_moneyAddedBy"
             android:layout_below="@+id/lpx_modeTextView"
             android:layout_width="wrap_content"
@@ -172,7 +174,7 @@
         <TextView
             android:id="@+id/lpx_previousBalance"
             android:layout_below="@+id/lpx_moneyAddedByTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -182,7 +184,7 @@
             />
         <TextView
             android:id="@+id/lpx_previousBalanceTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_toEndOf="@+id/lpx_previousBalance"
             android:layout_below="@+id/lpx_moneyAddedByTextView"
             android:layout_width="wrap_content"
@@ -196,7 +198,7 @@
         <TextView
             android:id="@+id/lpx_balanceAfterTransaction"
             android:layout_below="@+id/lpx_previousBalanceTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -206,7 +208,7 @@
             />
         <TextView
             android:id="@+id/lpx_balanceAfterTransactionTextView"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_toEndOf="@+id/lpx_balanceAfterTransaction"
             android:layout_below="@+id/lpx_previousBalanceTextView"
             android:layout_width="wrap_content"
@@ -221,7 +223,7 @@
             android:id="@+id/lpx_commission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_below="@+id/lpx_balanceAfterTransactionTextView"
             android:hint="Commission: "
             style="@style/MyCustomTextStyleSmall"
@@ -234,7 +236,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/lpx_commission"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:layout_below="@+id/lpx_balanceAfterTransactionTextView"
             android:textStyle="bold"
             android:hint="@string/hintPlaceholderSingle"
@@ -247,7 +249,7 @@
             android:layout_height="2dp"
             android:background="@color/black"
             android:layout_below="@+id/lpx_commissionTextView"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             />
 
 

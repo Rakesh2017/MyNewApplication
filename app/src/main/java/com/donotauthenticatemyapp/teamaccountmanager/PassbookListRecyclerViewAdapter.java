@@ -131,7 +131,8 @@ public class PassbookListRecyclerViewAdapter extends RecyclerView.Adapter<Passbo
 
             if (TextUtils.equals(transactionBy_tx, "aangadia") && !TextUtils.isEmpty(transactionBy_tx)){
                 holder.transactionBy_tv0.setText("Credited by: ");
-                databaseReference.child("AangadiaProfile").child(aangadiaKey_tx)
+                holder.transactionBy_tv.setText("Aangadia"+" ("+UploadInfo.getAangadia_uid()+")");
+               /* databaseReference.child("AangadiaProfile").child(aangadiaKey_tx)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @SuppressLint("SetTextI18n")
                             @Override
@@ -146,7 +147,7 @@ public class PassbookListRecyclerViewAdapter extends RecyclerView.Adapter<Passbo
                             public void onCancelled(DatabaseError databaseError) {
 
                             }
-                        });
+                        });*/
             }
 
             else if ((TextUtils.equals(transactionBy_tx, "admin") && !TextUtils.isEmpty(transactionBy_tx))){
@@ -159,8 +160,8 @@ public class PassbookListRecyclerViewAdapter extends RecyclerView.Adapter<Passbo
 
 //        if mode is credit
         else if (TextUtils.equals(mode_tx, "credit")){
-            holder.remarks_tv.setVisibility(View.VISIBLE);
-            holder.remarks1_tv.setVisibility(View.VISIBLE);
+
+            holder.balanceCredited1_tv.setText("Credit: ");
             transactionBy_tx = UploadInfo.getSender_key();
             balanceCredited_tx = UploadInfo.getBalance_credited();
             previousBalance_tx = UploadInfo.getCurrent_balance();
@@ -168,56 +169,16 @@ public class PassbookListRecyclerViewAdapter extends RecyclerView.Adapter<Passbo
             commission_tx = UploadInfo.getCommission();
             String commission_rate = UploadInfo.getCommission_rate();
 
-            databaseReference.child("userProfile")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String uid = dataSnapshot.child(transactionBy_tx).child("uid").getValue(String.class);
-                            String name = dataSnapshot.child(transactionBy_tx).child("userName").getValue(String.class);
-                            holder.transactionBy_tv.setText(uid+", "+name);
-                        }
+            String remarks = UploadInfo.getTransaction_remarks();
+            if (!TextUtils.isEmpty(remarks))
+                holder.remarks_tv.setText(remarks);
+            else {
+                holder.remarks_tv.setTextColor(Color.GRAY);
+                holder.remarks_tv.setText("NO REMARKS");
+            }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-            holder.balanceCredited1_tv.setText("Credit: ");
-            databaseReference.child("transaction_remarks").child("remarks")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            try {
-                                if (dataSnapshot.hasChild(transactionID_tx)){
-                                    String remarks = dataSnapshot.child(transactionID_tx).getValue(String.class);
-                                    if (!TextUtils.isEmpty(remarks))
-                                        holder.remarks_tv.setText(remarks);
-                                    else {
-                                        holder.remarks_tv.setTextColor(Color.GRAY);
-                                        holder.remarks_tv.setText("NO REMARKS");
-                                    }
-
-                                }
-                                else{
-                                    holder.remarks_tv.setTextColor(Color.GRAY);
-                                    holder.remarks_tv.setText("NO REMARKS");
-                                }
-
-                            }
-                            catch (DatabaseException e){
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
             holder.transactionBy_tv0.setHint("Credited By: ");
+            holder.transactionBy_tv.setText(UploadInfo.getSender_uid());
 
 
             String credit = "Credit";
@@ -260,12 +221,11 @@ public class PassbookListRecyclerViewAdapter extends RecyclerView.Adapter<Passbo
 
         //        if mode is debit
         else if (TextUtils.equals(mode_tx, "debit")) {
-            holder.remarks_tv.setVisibility(View.VISIBLE);
-            holder.remarks1_tv.setVisibility(View.VISIBLE);
-            holder.transactionBy_tv0.setVisibility(View.VISIBLE);
-            holder.transactionBy_tv.setVisibility(View.VISIBLE);
 
+            holder.balanceCredited1_tv.setText("Debit: ");
             holder.transactionBy_tv0.setHint("Debited To: ");
+            holder.transactionBy_tv.setText(UploadInfo.getReceiver_uid());
+
 
             transactionBy_tx = UploadInfo.getReceiver_key();
             balanceCredited_tx = UploadInfo.getBalance_debited();
@@ -273,57 +233,15 @@ public class PassbookListRecyclerViewAdapter extends RecyclerView.Adapter<Passbo
             balanceAfterTransaction_tx = UploadInfo.getBalance_after_debit();
             commission_tx = UploadInfo.getCommission();
             String commission_rate = UploadInfo.getCommission_rate();
-
-            databaseReference.child("userProfile")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String uid = dataSnapshot.child(transactionBy_tx).child("uid").getValue(String.class);
-                            String name = dataSnapshot.child(transactionBy_tx).child("userName").getValue(String.class);
-                            holder.transactionBy_tv.setText(uid+", "+name);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
             holder.balanceCredited1_tv.setText("Debit: ");
-            databaseReference.child("transaction_remarks").child("remarks")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            try {
-                                if (dataSnapshot.hasChild(transactionID_tx)){
-                                    String remarks = dataSnapshot.child(transactionID_tx).getValue(String.class);
-                                    if (!TextUtils.isEmpty(remarks))
-                                        holder.remarks_tv.setText(remarks);
-                                    else {
-                                        holder.remarks_tv.setTextColor(Color.GRAY);
-                                        holder.remarks_tv.setText("NO REMARKS");
-                                    }
 
-                                }
-                                else{
-                                    holder.remarks_tv.setTextColor(Color.GRAY);
-                                    holder.remarks_tv.setText("NO REMARKS");
-                                }
-
-                            }
-                            catch (DatabaseException e){
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
+            String remarks = UploadInfo.getTransaction_remarks();
+            if (!TextUtils.isEmpty(remarks))
+                holder.remarks_tv.setText(remarks);
+            else {
+                holder.remarks_tv.setTextColor(Color.GRAY);
+                holder.remarks_tv.setText("NO REMARKS");
+            }
 
             String debit = "Debit";
             holder.mode_tv.setText(debit);
