@@ -396,7 +396,7 @@ public class AddAangadia extends Fragment implements View.OnClickListener{
             timeClient.setDefaultTimeout(1000);
             for (int retries = 7; retries >= 0; retries--) { // for
                 try {
-                    InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
+                    InetAddress inetAddress = InetAddress.getByName("sg.pool.ntp.org");
                     TimeInfo timeInfo = timeClient.getTime(inetAddress);
                     long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
                     dateTime = new Date(returnTime);

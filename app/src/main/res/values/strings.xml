@@ -9,7 +9,7 @@
     <string name="answer">Answer</string>
     <string name="answerQuestion">Answer Security Question</string>
     <string name="owner">owner: admin@a.com</string>
-    <string name="owner1">owner</string>
+    <string name="owner1">OWNER</string>
     <string name="aangadia">AANGADIA</string>
     <string name="addAangadia">ADD \nAANGADIA</string>
     <string name="addUser">ADD USER</string>
@@ -60,5 +60,6 @@
     <string name="add_commission">Add Commission</string>
     <string name="current_commission">Current Commission:</string>
     <string name="cash_in_hand_transactions">Cash In Hand Transactions</string>
+    <string name="NTPTIMESERVER">sg.pool.ntp.org</string>
 </resources>
 

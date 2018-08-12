@@ -56,10 +56,9 @@
         <TextView
             android:id="@+id/rla_uidTextView1"
             android:layout_below="@+id/rla_nameTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Unique Id(uid):   "
+            android:text="Unique Id (UID): "
             style="@style/MyCustomTextStyleSmall"
             />
 
@@ -67,7 +66,6 @@
             android:id="@+id/rla_uidTextView"
             android:layout_toEndOf="@+id/rla_uidTextView1"
             android:layout_below="@+id/rla_nameTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderSingle"

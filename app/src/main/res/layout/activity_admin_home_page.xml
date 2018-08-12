@@ -22,11 +22,22 @@
            android:background="@drawable/loading_gif"
            android:layout_alignParentBottom="true"
            android:layout_marginBottom="@dimen/activity_vertical_margin"
-           android:layout_toStartOf="@+id/adh_logoutButton"
+           android:layout_toStartOf="@+id/adh_refreshImageButton"
            android:layout_marginEnd="@dimen/activity_vertical_margin"
            android:visibility="gone"
            />
 
+        <!--refresh button-->
+        <ImageButton
+            android:id="@+id/adh_refreshImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_refresh_round_symbol"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_toStartOf="@+id/adh_logoutButton"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            />
 
         <!--admin-->
         <util.android.textviews.FontTextView

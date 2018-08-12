@@ -56,7 +56,6 @@
         <TextView
             android:id="@+id/ufa_uidTextView1"
             android:layout_below="@+id/ufa_nameTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Unique Id(uid):  "
@@ -67,7 +66,6 @@
             android:id="@+id/ufa_uidTextView"
             android:layout_toEndOf="@+id/ufa_uidTextView1"
             android:layout_below="@+id/ufa_nameTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderSingle"
@@ -79,7 +77,6 @@
         <TextView
             android:id="@+id/ufa_createdByTextView1"
             android:layout_below="@+id/ufa_uidTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Created By: "
@@ -90,7 +87,6 @@
             android:id="@+id/ufa_createdByTextView"
             android:layout_toEndOf="@+id/ufa_createdByTextView1"
             android:layout_below="@+id/ufa_uidTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderSingle"
@@ -102,7 +98,6 @@
         <TextView
             android:id="@+id/ufa_aangadiaNameTextView1"
             android:layout_below="@+id/ufa_createdByTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aangadia User Name: "
@@ -114,7 +109,6 @@
             android:id="@+id/ufa_aangadiaNameTextView"
             android:layout_toEndOf="@+id/ufa_aangadiaNameTextView1"
             android:layout_below="@+id/ufa_createdByTextView"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hintPlaceholderSingle"

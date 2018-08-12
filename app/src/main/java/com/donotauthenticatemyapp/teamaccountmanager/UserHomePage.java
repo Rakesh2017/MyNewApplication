@@ -533,7 +533,7 @@ public class UserHomePage extends AppCompatActivity implements View.OnClickListe
                 for (int retries = 7; retries >= 0; retries--) { // for
                     try {
                         count++;
-                        InetAddress inetAddress = InetAddress.getByName("in.pool.ntp.org");
+                        InetAddress inetAddress = InetAddress.getByName("sg.pool.ntp.org");
                         TimeInfo timeInfo = timeClient.getTime(inetAddress);
                         long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
                         dateTime = new Date(returnTime);

@@ -36,7 +36,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class AdminHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton addAangadia_btn, addUser_btn,logout_ib, allAangadias_btn, allUsers_btn, adminBalance_btn;
+    ImageButton addAangadia_btn, addUser_btn,logout_ib, allAangadias_btn, allUsers_btn, adminBalance_btn, refresh_ib;
 
     private static final String LANDING_ACTIVITY = "landingActivity";
     private static final String FIRST_SCREEN = "firstScreen";
@@ -69,6 +69,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         loadingGIf = findViewById(R.id.aap_loadingGif);
 
         logout_ib = findViewById(R.id.adh_logoutButton);
+        refresh_ib = findViewById(R.id.adh_refreshImageButton);
 
         totalAangadia_tv = findViewById(R.id.adh_totalAangadiasTextView);
         totalUsers_tv = findViewById(R.id.adh_totalUsersTextView);
@@ -85,6 +86,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
         allAangadias_btn.setOnClickListener(this);
         allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
+        refresh_ib.setOnClickListener(this);
         submitCommission_btn.setOnClickListener(this);
         adminBalance_btn.setOnClickListener(this);
 
@@ -102,7 +104,7 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                 TotalUsers();
                 SetCommission();
                 setTotalAangadiaTransactions();
-                loadingGIf.setVisibility(View.GONE);
+              //  loadingGIf.setVisibility(View.GONE);
             }
             @Override
             public void onConnectionFail(String msg) {
@@ -161,9 +163,16 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
                                 totalAangadiaTransactions_tv.setText("Rs "+formatted_balance+"/-");
                             }
                             else totalAangadiaTransactions_tv.setText("Rs 0.0");
+                            loadingGIf.setVisibility(View.GONE);   // finally stop rotating gif when all values are loaded
                         }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
+                        try {
+                            loadingGIf.setVisibility(View.GONE);
+                        }
+                        catch (Exception e){
+                            // do nothing
+                        }
 
                     }
                 });
@@ -327,6 +336,17 @@ public class AdminHomePage extends AppCompatActivity implements View.OnClickList
             case R.id.adh_adminAccountButton:
                 getSupportFragmentManager().beginTransaction().replace(R.id.adh_fragment_container, new AdminBalance()).addToBackStack("adminBalance").commit();
                 break;
+
+//                refresh button
+            case R.id.adh_refreshImageButton:
+                try{
+                    onStart();
+                }
+                catch (IllegalStateException e){
+//                    exception
+                }
+                break;
+
         }//switch ends
 
     }//onclick

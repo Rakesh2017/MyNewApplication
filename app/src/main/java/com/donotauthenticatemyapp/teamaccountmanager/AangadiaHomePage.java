@@ -35,7 +35,7 @@ import util.android.textviews.FontTextView;
 
 public class AangadiaHomePage extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton logout_ib, addUser_ib, allUsers_btn, account_btn;
+    ImageButton logout_ib, addUser_ib, allUsers_btn, account_btn, refresh_ib;
     TextView allUsersCount_tv, uid_tv, totalAangadiaTransactions_tv;
     FontTextView aangadiaName_ftv;
 
@@ -65,6 +65,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
 
         logout_ib = findViewById(R.id.ahp_logoutButton);
         addUser_ib = findViewById(R.id.ahp_addUserButton);
+        refresh_ib = findViewById(R.id.ahp_refreshImageButton);
         allUsers_btn = findViewById(R.id.ahp_allUsersButton);
         account_btn = findViewById(R.id.ahp_cashButton);
         allUsersCount_tv = findViewById(R.id.ahp_totalUsersTextView);
@@ -76,6 +77,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
         loadingGIf = findViewById(R.id.ahp_loadingGif);
 
         addUser_ib.setOnClickListener(this);
+        refresh_ib.setOnClickListener(this);
         allUsers_btn.setOnClickListener(this);
         logout_ib.setOnClickListener(this);
         account_btn.setOnClickListener(this);
@@ -99,7 +101,7 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                 setTotalTransactionAmount();
                 AllUsersCount();
                 setUserName();
-                loadingGIf.setVisibility(View.GONE);
+              //  loadingGIf.setVisibility(View.GONE);
             }
 
             @Override
@@ -193,12 +195,17 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                         SharedPreferences.Editor editor = userIdentifierSharedPreferences.edit();
                         editor.putString(AANGADIA_NAME_FTV, name);
                         editor.apply();
-
+                        loadingGIf.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        try {
+                            loadingGIf.setVisibility(View.GONE);
+                        }
+                        catch (Exception e){
+                            //do nothing
+                        }
                     }
                 });
     }
@@ -221,6 +228,8 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
             }
         });
     }
+
+
 
     //    onclick
     @Override
@@ -298,6 +307,16 @@ public class AangadiaHomePage extends AppCompatActivity implements View.OnClickL
                 try{
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_aangadia_home_page, new AangadiaAccount()).addToBackStack("aangadiaAccount").commit();
 
+                }
+                catch (IllegalStateException e){
+//                    exception
+                }
+                break;
+
+//                refresh button
+            case R.id.ahp_refreshImageButton:
+                try{
+                  onStart();
                 }
                 catch (IllegalStateException e){
 //                    exception
